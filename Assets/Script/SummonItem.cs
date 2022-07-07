@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// アイテム選択画面のアイテム生成するひと。
+/// </summary>
 public class SummonItem : MonoBehaviour
 {
     [SerializeField] List<GameObject> myList;

@@ -4,18 +4,38 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
-    [SerializeField] Player1Move controller1;
-    //[SerializeField] Player2Move controller2;
-    //[SerializeField] Player3Move controller3;
-    //[SerializeField] Player4Move controller4;
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
             if (other.name == "Player1")
             {
-                controller1.enabled = false;
+                Player1Move playerscript;
+                GameObject obj = GameObject.Find("Player1");
+                playerscript = obj.GetComponent<Player1Move>();
+                playerscript.enabled = false;
             }
+            //    if (other.name == "Player2")
+            //    {
+            //        Player1Move playerscript;
+            //        GameObject obj = GameObject.Find("Player2");
+            //        playerscript = obj.GetComponent<Player2Move>();
+            //        playerscript.enabled = false;
+            //    }
+            //    if (other.name == "Player3")
+            //    {
+            //        Player1Move playerscript;
+            //        GameObject obj = GameObject.Find("Player3");
+            //        playerscript = obj.GetComponent<Player3Move>();
+            //        playerscript.enabled = false;
+            //    }
+            //    if (other.name == "Player4")
+            //    {
+            //        Player1Move playerscript;
+            //        GameObject obj = GameObject.Find("Player4");
+            //        playerscript = obj.GetComponent<Player4Move>();
+            //        playerscript.enabled = false;
+            //    }
         }
     }
 }

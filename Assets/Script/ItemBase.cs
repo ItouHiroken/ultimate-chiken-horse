@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// アイテムたち共通の機能
+/// </summary>
 public abstract class ItemBase : MonoBehaviour
 {
     Vector2 _CursorPosition;
@@ -65,16 +68,30 @@ public abstract class ItemBase : MonoBehaviour
     //    script._lostItem += 1;
     //    Destroy(gameObject);
     //}
+
+    /// <summary>
+    /// アイテム選択時、アイテムにカーソル合わさると色が変わる。
+    /// </summary>
+    /// <param name="cursorcheck"></param>
     private void ChangeColor(bool cursorcheck)
     {
         Color color = cursorcheck ? new Color(0, 0, 0, 200) : new Color(0, 0, 0, 255);
         GetComponent<Renderer>().material.color = color;
     }
+
+    /// <summary>
+    /// アイテムにカーソルを合わせたあと、何かしらの操作をすると、ついてきてほしい。
+    /// </summary>
     void FollowCursor()
     {
         _CursorPosition = _followingCursor.transform.position;
         this.transform.position = _CursorPosition;
     }
+
+    /// <summary>
+    /// 選択されたらコライダーが全部なくなっててほしい、また置くときはコライダーまた戻ってもらう。
+    /// </summary>
+    /// <param name="colliderSwitch"></param>
     void ColliderOnOff(bool colliderSwitch)
     {
         GetComponent<BoxCollider2D>().enabled = colliderSwitch;

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// プレイヤーの移動に関するもの
+/// </summary>
 public class Player1Move : MonoBehaviour
 {
     /// <summary>左右移動する力</summary>

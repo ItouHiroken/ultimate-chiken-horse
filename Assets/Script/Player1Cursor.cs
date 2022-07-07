@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// プレイヤーがアイテム選択画面に来た時使うカーソル 
+/// </summary>
 public class Player1Cursor : MonoBehaviour
 {
     [Tooltip("移動速度")] public float _speed = 10.0f;
