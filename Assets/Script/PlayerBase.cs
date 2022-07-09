@@ -42,8 +42,10 @@ public abstract class PlayerBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         Vector2 dir = new Vector2(_horizontal,0).normalized;
-        dir.y = _rb.velocity.y;
+        if (Input.GetMouseButtonDown(1))
+        {
+            Debug.Log(_deBuff);
+        }
         _horizontal = Input.GetAxisRaw("Horizontal");
         // ê›íËÇ…âûÇ∂Çƒç∂âEÇîΩì]Ç≥ÇπÇÈ
         if (_flipX)
@@ -72,13 +74,21 @@ public abstract class PlayerBase : MonoBehaviour
 
             }
         }
+        if (_deBuff == DeBuff.Default)
+        {
+            _speed = 5f;
+        }
         if (_deBuff == DeBuff.Slow)
         {
-            _rb.velocity = dir *_speed / 2;
-         //   _rb.velocity = dir * _jumpPower / 2;
+            _speed = 2.5f;
+        }
+        if (_deBuff == DeBuff.Split)
+        {
+            _speed = 7.5f;
         }
         if ((_deBuff & DeBuff.Slow) == DeBuff.Slow)
         {
+
         }
 
 
