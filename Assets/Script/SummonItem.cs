@@ -11,12 +11,12 @@ public class SummonItem : MonoBehaviour
     [SerializeField] List<GameObject> itemList;
     public List<GameObject> useList = new List<GameObject>();
     private GameObject randomObj;
+    public GameObject[] itemPrefabs;
+    private int _random;
     private int choiceNum;
     [SerializeField] List<GameObject> SummonPositionList;
 
-    //[SerializeField] GameObject SummonPosition1;
-    //[SerializeField] GameObject SummonPosition2;
-    //[SerializeField] GameObject SummonPosition3;
+    public bool _isChoiceItem;
     private void Start()
     {
         //myListの中からランダムで1つを選ぶ
@@ -28,5 +28,22 @@ public class SummonItem : MonoBehaviour
         //choiceNum = myList.IndexOf(randomObj);
         ////同じリスト番号をmyListから削除
         //myList.RemoveAt(choiceNum);
+    }
+    private void Update()
+    {
+        if (_isChoiceItem == true)
+        {
+            SpawnRandomItem();
+        }
+    }
+    /// <summary>
+    /// アイテムをランダムに自分のところに召喚する。
+    /// </summary>
+    /// <param name="spawnPos">自分の場所</param>
+    void SpawnRandomItem()
+    {
+        Vector2 spawnPos = this.gameObject.transform.position;
+        int N = Random.Range(0, itemPrefabs.Length);
+        Instantiate(itemPrefabs[N], spawnPos, itemPrefabs[N].transform.rotation);
     }
 }

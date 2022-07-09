@@ -49,7 +49,7 @@ public abstract class ItemBase : MonoBehaviour
         //    }
         //}
     }
-    private void OnTriggerExit(Collider2D collider)
+    private void OnTriggerExit2D(Collider2D collider)
     {
         if (playername == "Player")
         {

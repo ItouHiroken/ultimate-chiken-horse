@@ -58,7 +58,7 @@ public class Player1 : MonoBehaviour
 
         // Ý’è‚É‰ž‚¶‚Ä¶‰E‚ð”½“]‚³‚¹‚é
         if (_flipX)
-        {   
+        {
             FlipX(m_h);
         }
     }
@@ -120,14 +120,14 @@ public class Player1 : MonoBehaviour
             {
                 Debug.Log("ue");
                 _rb.AddForce(new Vector2(0, _jumpPower * 40));
-                _rb.AddForce(Vector2.left *100, ForceMode2D.Impulse);
+                _rb.AddForce(Vector2.left * 100, ForceMode2D.Impulse);
 
             }
             if (jumpcheker == 1 && collision.gameObject.tag != "Ground" && collision.gameObject.tag == "Wall" && horizontalKey > 0)
             {
                 Debug.Log("sita");
                 _rb.AddForce(new Vector2(0, _jumpPower * 40));
-                _rb.AddForce(Vector2.right *100, ForceMode2D.Impulse);
+                _rb.AddForce(Vector2.right * 100, ForceMode2D.Impulse);
 
             }
         }

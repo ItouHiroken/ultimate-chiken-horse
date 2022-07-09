@@ -2,17 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// プレイヤーがゴールに入ったあと起こる事のさまざま
+/// メモ
+/// 1.プレイヤーの移動能力を奪う
+/// 2.プレイヤーが生存しているかどうか判断する
+/// 3.プレイヤーが入ってきた順番を覚える
+/// </summary>
 public class Goal : MonoBehaviour
 {
-    void OnTriggerStay2D(Collider2D other)
+    [Tooltip("ポイントマネージャーに渡すゴール順番リスト")][SerializeField] private List<GameObject> goalPlayers = new List<GameObject>();
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.tag == "Player")
+        if (collision.tag == "Player")
         {
-            if (other.name == "Player1")
+            if (collision.name == "Player1")
             {
                 Player1Move playerscript;
-                GameObject obj = GameObject.Find("Player1");
-                playerscript = obj.GetComponent<Player1Move>();
+                // GameObject obj = GameObject.Find("Player1");
+                playerscript = collision.GetComponent<Player1Move>();
+                playerscript.enabled = false;
+                if (playerscript.isGoal1 == false)
+                {
+                    goalPlayers.Add(collision.gameObject);
+                    playerscript.isGoal1 = true;
+                }
+                ///何かしらで渡す量を決める、これはポイントを管理するスクリプトを作ってから考えよう。
+                if (playerscript.isDead == true)///プレイヤーが入った瞬間、死んでいた場合ポイントが減る
+                {
+
+                }
+                else///生きてたらより多くのポイントが手に入る
+                {
+                    
+                }
+            }
+        }
+    }
+            void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            if (collision.name == "Player1")
+            {
+                Player1Move playerscript;
+               // GameObject obj = GameObject.Find("Player1");
+                playerscript = collision.GetComponent<Player1Move>();
                 playerscript.enabled = false;
             }
             //    if (other.name == "Player2")
