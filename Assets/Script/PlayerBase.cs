@@ -7,7 +7,11 @@ public abstract class PlayerBase : MonoBehaviour
     [SerializeField] private DeBuff _deBuff = DeBuff.Default;
     [SerializeField] private GotScore _gotScore = GotScore.Default;
     /// <summary>左右移動する力</summary>
-    [SerializeField] float _speed = 5f;
+    [Tooltip("現在速度")][SerializeField] float _speed;
+    [Tooltip("通常速度")][SerializeField] float _defaultSpeed;
+    [Tooltip("スロウ速度")][SerializeField] float _slowSpeed;
+    [Tooltip("滑った速度")][SerializeField] float _splitSpeed;
+    [Tooltip("速度制限")][SerializeField] float _speedLimiter;
     /// <summary>ジャンプする力</summary>
     [SerializeField] float _jumpPower = default;
     /// <summary>水平方向の入力値</summary>
@@ -36,7 +40,8 @@ public abstract class PlayerBase : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-
+        _slowSpeed = _defaultSpeed / 2;
+        _splitSpeed = _defaultSpeed * 2;
     }
 
     // Update is called once per frame
@@ -76,15 +81,15 @@ public abstract class PlayerBase : MonoBehaviour
         }
         if (_deBuff == DeBuff.Default)
         {
-            _speed = 5f;
+            _speed = _defaultSpeed;
         }
         if (_deBuff == DeBuff.Slow)
         {
-            _speed = 2.5f;
+            _speed = _slowSpeed;
         }
         if (_deBuff == DeBuff.Split)
         {
-            _speed = 7.5f;
+            _speed = _splitSpeed;
         }
         if ((_deBuff & DeBuff.Slow) == DeBuff.Slow)
         {
@@ -111,34 +116,29 @@ public abstract class PlayerBase : MonoBehaviour
         {
             _rb.AddForce(Vector2.left * _speed, ForceMode2D.Impulse);
         }
-        //ボタンを話すと止まる
-        else
+        if (_rb.velocity.y < -_speedLimiter)
         {
-            // _rb.velocity = Vector2.zero;
-        }
-        if (_rb.velocity.y < -30.0f)
-        {
-            _rb.velocity = new Vector2(_rb.velocity.x, -30.0f);
+            _rb.velocity = new Vector2(_rb.velocity.x, -_speedLimiter);
         }
 
-        //if (_wallCheck)
-        //{
-        //    if (_rb.velocity.y < -15.0f)
-        //    {
-        //        _rb.velocity = new Vector2(_rb.velocity.x, -15.0f);
-        //    }
-        //}
-        if (_rb.velocity.y > 30.0f)
+        if (_wallCheck)
         {
-            _rb.velocity = new Vector2(_rb.velocity.x, 30.0f);
+            if (_rb.velocity.y < -_speedLimiter/2)
+            {
+                _rb.velocity = new Vector2(_rb.velocity.x, -_speedLimiter/2);
+            }
         }
-        if (_rb.velocity.x > 30.0f)
+        if (_rb.velocity.y > _speedLimiter)
         {
-            _rb.velocity = new Vector2(30.0f, _rb.velocity.y);
+            _rb.velocity = new Vector2(_rb.velocity.x, _speedLimiter);
         }
-        if (_rb.velocity.x < -30.0f)
+        if (_rb.velocity.x > _speedLimiter)
         {
-            _rb.velocity = new Vector2(-30.0f, _rb.velocity.y);
+            _rb.velocity = new Vector2(_speedLimiter, _rb.velocity.y);
+        }
+        if (_rb.velocity.x < -_speedLimiter)
+        {
+            _rb.velocity = new Vector2(-_speedLimiter, _rb.velocity.y);
         }
     }
 
@@ -156,27 +156,8 @@ public abstract class PlayerBase : MonoBehaviour
     void OnCollisionStay2D(Collision2D collision)
     {
         jumpcheker = 1;
-        //float horizontalKey = Input.GetAxis("Horizontal");
         startPosition = collision.gameObject.transform.position.x;
         myPosition = this.transform.position.x;
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-
-        //    if (jumpcheker == 1 && collision.gameObject.tag != "Ground" && collision.gameObject.tag == "Wall" && myPosition > startPosition)
-        //    {
-        //        Debug.Log("ue");
-        //        _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-        //        _rb.AddForce(Vector2.right * 10, ForceMode2D.Impulse);
-
-        //    }
-        //    if (jumpcheker == 1 && collision.gameObject.tag != "Ground" && collision.gameObject.tag == "Wall" && myPosition < startPosition)
-        //    {
-        //        Debug.Log("sita");
-        //        _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-        //        _rb.AddForce(Vector2.left * 10, ForceMode2D.Impulse);
-
-        //    }
-        //}
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -189,7 +170,6 @@ public abstract class PlayerBase : MonoBehaviour
             _wallCheck = true;
         }
         jumpcheker = 0;
-        Debug.Log("i");
     }
     void FlipX(float horizontal)
     {
