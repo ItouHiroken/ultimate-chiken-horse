@@ -21,7 +21,7 @@ public class Player1 : MonoBehaviour
     //public int C = 0;
     public object AddForce { get; private set; }
 
-    public bool isreturn = false;
+    private bool isreturn = false;
 
     void Start()
     {

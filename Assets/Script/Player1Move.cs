@@ -70,6 +70,5 @@ public class Player1Move : PlayerBase
             Rb.velocity = new Vector2(-SpeedLimiter, Rb.velocity.y);
         }
     }
-
 }
 
