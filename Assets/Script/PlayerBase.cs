@@ -1,27 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// プレイヤーのベース
+/// </summary>
 public abstract class PlayerBase : MonoBehaviour
 {
     [SerializeField] private DeBuff _deBuff = DeBuff.Default;
     [SerializeField] private GotScore _gotScore = GotScore.Default;
     /// <summary>左右移動する力</summary>
     [Tooltip("現在速度")][SerializeField] private float _speed;
-    public float Speed{ get { return _speed; } }
-    [Tooltip("通常速度")][SerializeField] private float _defaultSpeed;
+    public float Speed { get { return _speed; } }
+    [Tooltip("通常速度")] private float _defaultSpeed = 5f;
     public float DefaultSpeed { get { return _defaultSpeed; } }
 
-    [Tooltip("スロウ速度")][SerializeField] private float _slowSpeed;
+    [Tooltip("スロウ速度")] private float _slowSpeed = default;
     public float SlowSpeed { get { return _slowSpeed; } }
 
-    [Tooltip("滑った速度")][SerializeField] private float _splitSpeed;
+    [Tooltip("滑った速度")] private float _splitSpeed = default;
     public float SplitSpeed { get { return _splitSpeed; } }
 
-    [Tooltip("速度制限")][SerializeField] private float _speedLimiter;
-    public float SpeedLimiter{ get { return _speedLimiter; } }
+    [Tooltip("速度制限")][SerializeField] private float _speedLimiter = 30f;
+    public float SpeedLimiter { get { return _speedLimiter; } }
     /// <summary>ジャンプする力</summary>
-    [Tooltip("ジャンプ力")][SerializeField] float _jumpPower = default;
+    [Tooltip("ジャンプ力")][SerializeField] float _jumpPower = 40f;
     public float JumpPower { get { return _jumpPower; } }
     /// <summary>水平方向の入力値</summary>
     float _horizontal = default;
@@ -32,7 +34,7 @@ public abstract class PlayerBase : MonoBehaviour
     public bool isreturn = false;
 
     Rigidbody2D _rb = default;
-    public Rigidbody2D Rb {  get { return _rb; } }
+    public Rigidbody2D Rb { get { return _rb; } }
 
     [SerializeField] private int _jumpChecker = 0;
     public int JumpChecker { get { return _jumpChecker; } }
@@ -56,6 +58,7 @@ public abstract class PlayerBase : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _speed = _defaultSpeed;
         _slowSpeed = _defaultSpeed / 2;
         _splitSpeed = _defaultSpeed * 2;
     }

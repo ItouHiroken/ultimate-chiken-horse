@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public class Player1Move : PlayerBase
 {
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
