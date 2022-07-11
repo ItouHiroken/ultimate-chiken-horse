@@ -7,13 +7,22 @@ public abstract class PlayerBase : MonoBehaviour
     [SerializeField] private DeBuff _deBuff = DeBuff.Default;
     [SerializeField] private GotScore _gotScore = GotScore.Default;
     /// <summary>左右移動する力</summary>
-    [Tooltip("現在速度")][SerializeField] float _speed;
-    [Tooltip("通常速度")][SerializeField] float _defaultSpeed;
-    [Tooltip("スロウ速度")][SerializeField] float _slowSpeed;
-    [Tooltip("滑った速度")][SerializeField] float _splitSpeed;
-    [Tooltip("速度制限")][SerializeField] float _speedLimiter;
+    [Tooltip("現在速度")][SerializeField] private float _speed;
+    public float Speed{ get { return _speed; } }
+    [Tooltip("通常速度")][SerializeField] private float _defaultSpeed;
+    public float DefaultSpeed { get { return _defaultSpeed; } }
+
+    [Tooltip("スロウ速度")][SerializeField] private float _slowSpeed;
+    public float SlowSpeed { get { return _slowSpeed; } }
+
+    [Tooltip("滑った速度")][SerializeField] private float _splitSpeed;
+    public float SplitSpeed { get { return _splitSpeed; } }
+
+    [Tooltip("速度制限")][SerializeField] private float _speedLimiter;
+    public float SpeedLimiter{ get { return _speedLimiter; } }
     /// <summary>ジャンプする力</summary>
-    [SerializeField] float _jumpPower = default;
+    [Tooltip("ジャンプ力")][SerializeField] float _jumpPower = default;
+    public float JumpPower { get { return _jumpPower; } }
     /// <summary>水平方向の入力値</summary>
     float _horizontal = default;
     /// <summary>入力に応じて左右を反転させるかどうかのフラグ</summary>
@@ -23,14 +32,21 @@ public abstract class PlayerBase : MonoBehaviour
     public bool isreturn = false;
 
     Rigidbody2D _rb = default;
+    public Rigidbody2D Rb {  get { return _rb; } }
 
-    [SerializeField] private int jumpcheker = 0;
+    [SerializeField] private int _jumpChecker = 0;
+    public int JumpChecker { get { return _jumpChecker; } }
 
     [SerializeField] bool _groundCheck;
+    public bool GroundCheck { get { return _groundCheck; } }
     [SerializeField] bool _wallCheck;
+    public bool WallCheck { get { return _wallCheck; } }
 
-    [SerializeField] float startPosition;
-    [SerializeField] float myPosition;
+    [SerializeField] float _startPosition;
+    public float StartPosition { get { return _startPosition; } }
+
+    [SerializeField] float _myPosition;
+    public float MyPosition { get { return _myPosition; } }
 
     public bool isDead;
     public bool isGoal1 = false;
@@ -47,37 +63,11 @@ public abstract class PlayerBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            Debug.Log(_deBuff);
-        }
         _horizontal = Input.GetAxisRaw("Horizontal");
         // 設定に応じて左右を反転させる
         if (_flipX)
         {
             FlipX(_horizontal);
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (jumpcheker == 1 && _groundCheck)
-            {
-                Debug.Log("a");
-                _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-            }
-            if (jumpcheker == 1 && !_groundCheck && _wallCheck && myPosition > startPosition)
-            {
-                Debug.Log("ue");
-                _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-                _rb.AddForce(Vector2.right * 40, ForceMode2D.Impulse);
-
-            }
-            if (jumpcheker == 1 && !_groundCheck && _wallCheck && myPosition < startPosition)
-            {
-                Debug.Log("shita");
-                _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-                _rb.AddForce(Vector2.left * 40, ForceMode2D.Impulse);
-
-            }
         }
         if (_deBuff == DeBuff.Default)
         {
@@ -97,48 +87,9 @@ public abstract class PlayerBase : MonoBehaviour
         }
 
 
-        //if (_wallCheck)
-        //{
-        //    _rb.AddForce(Vector2.down * 0.3f, ForceMode2D.Impulse);
-        //}
-    }
-    private void FixedUpdate()
-    {
-        float horizontalKey = Input.GetAxis("Horizontal");
-
-        //右入力で左向きに動く
-        if (horizontalKey > 0)
+        if (WallCheck)
         {
-            _rb.AddForce(Vector2.right * _speed, ForceMode2D.Impulse);
-        }
-        //左入力で左向きに動く
-        else if (horizontalKey < 0)
-        {
-            _rb.AddForce(Vector2.left * _speed, ForceMode2D.Impulse);
-        }
-        if (_rb.velocity.y < -_speedLimiter)
-        {
-            _rb.velocity = new Vector2(_rb.velocity.x, -_speedLimiter);
-        }
-
-        if (_wallCheck)
-        {
-            if (_rb.velocity.y < -_speedLimiter/2)
-            {
-                _rb.velocity = new Vector2(_rb.velocity.x, -_speedLimiter/2);
-            }
-        }
-        if (_rb.velocity.y > _speedLimiter)
-        {
-            _rb.velocity = new Vector2(_rb.velocity.x, _speedLimiter);
-        }
-        if (_rb.velocity.x > _speedLimiter)
-        {
-            _rb.velocity = new Vector2(_speedLimiter, _rb.velocity.y);
-        }
-        if (_rb.velocity.x < -_speedLimiter)
-        {
-            _rb.velocity = new Vector2(-_speedLimiter, _rb.velocity.y);
+            Rb.AddForce(Vector2.down * 0.3f, ForceMode2D.Impulse);
         }
     }
 
@@ -155,9 +106,9 @@ public abstract class PlayerBase : MonoBehaviour
     }
     void OnCollisionStay2D(Collision2D collision)
     {
-        jumpcheker = 1;
-        startPosition = collision.gameObject.transform.position.x;
-        myPosition = this.transform.position.x;
+        _jumpChecker = 1;
+        _startPosition = collision.gameObject.transform.position.x;
+        _myPosition = this.transform.position.x;
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -169,7 +120,7 @@ public abstract class PlayerBase : MonoBehaviour
         {
             _wallCheck = true;
         }
-        jumpcheker = 0;
+        _jumpChecker = 0;
     }
     void FlipX(float horizontal)
     {
@@ -189,6 +140,7 @@ public abstract class PlayerBase : MonoBehaviour
             isreturn = true;
         }
     }
+
 }
 
 public enum DeBuff
