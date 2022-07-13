@@ -20,4 +20,5 @@ public class Player1Cursor : MonoBehaviour
         float horizontalInput = _speed * Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(horizontalInput, verticalInput);
     }
+
 }

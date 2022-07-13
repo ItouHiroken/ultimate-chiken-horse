@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/// <summary>
-/// プレイヤーのベース
-/// </summary>
 public abstract class PlayerBase : MonoBehaviour
 {
     [SerializeField] private DeBuff _deBuff = DeBuff.Default;
@@ -20,8 +17,11 @@ public abstract class PlayerBase : MonoBehaviour
     [Tooltip("滑った速度")] private float _splitSpeed = default;
     public float SplitSpeed { get { return _splitSpeed; } }
 
-    [Tooltip("速度制限")][SerializeField] private float _speedLimiter = 30f;
-    public float SpeedLimiter { get { return _speedLimiter; } }
+    [Tooltip("速度制限")][SerializeField] private float _walkSpeedLimiter = 30f;
+    public float WalkSpeedLimiter { get { return _walkSpeedLimiter; } }
+
+    [Tooltip("走るときの速度制限")][SerializeField] private float _runSpeedLimiter = default;
+    public float RunSpeedLimiter { get { return _runSpeedLimiter; } }
     /// <summary>ジャンプする力</summary>
     [Tooltip("ジャンプ力")][SerializeField] float _jumpPower = 40f;
     public float JumpPower { get { return _jumpPower; } }
@@ -61,6 +61,7 @@ public abstract class PlayerBase : MonoBehaviour
         _speed = _defaultSpeed;
         _slowSpeed = _defaultSpeed / 2;
         _splitSpeed = _defaultSpeed * 2;
+        _runSpeedLimiter = _walkSpeedLimiter * 2;
     }
 
     // Update is called once per frame

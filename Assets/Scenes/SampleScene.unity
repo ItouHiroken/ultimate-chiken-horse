@@ -1030,16 +1030,21 @@ MonoBehaviour:
   _deBuff: 1
   _gotScore: 1
   _speed: 10
+  _walkSpeedLimiter: 30
+  _runSpeedLimiter: 30
   _jumpPower: 47.02
   _flipX: 0
   isreturn: 0
-  jumpcheker: 0
+  _jumpChecker: 0
   _groundCheck: 0
   _wallCheck: 0
-  startPosition: 0
-  myPosition: 0
+  _startPosition: 0
+  _myPosition: 0
   isDead: 0
   isGoal1: 0
+  _targetTime: 1
+  _currentTime: 0
+  _speedLimiter: 0
 --- !u!1 &2030088605
 GameObject:
   m_ObjectHideFlags: 0

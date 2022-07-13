@@ -6,9 +6,21 @@ using UnityEngine;
 /// </summary>
 public class Player1Move : PlayerBase
 {
-
+    [SerializeField][Tooltip("ダッシュコマンド時間")] private float _targetTime = default;
+    [SerializeField][Tooltip("ダッシュチェック時間を0秒に戻す用のやつ")] private float _currentTime = default;
+    bool _dashCheck;
+    [SerializeField]private float _speedLimiter;
+    private void Start()
+    {
+        _speedLimiter = WalkSpeedLimiter;
+    }
     private void Update()
     {
+        _currentTime += Time.deltaTime;
+        if (_currentTime <= _targetTime)
+        {
+            _dashCheck = true;
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (JumpChecker == 1 && GroundCheck)
@@ -39,35 +51,49 @@ public class Player1Move : PlayerBase
         if (horizontalKey > 0)
         {
             Rb.AddForce(Vector2.right * Speed, ForceMode2D.Impulse);
+            _currentTime = 0;
+            if (_dashCheck == true)
+            {
+                _speedLimiter = RunSpeedLimiter;
+            }
         }
         //左入力で左向きに動く
         else if (horizontalKey < 0)
         {
             Rb.AddForce(Vector2.left * Speed, ForceMode2D.Impulse);
+            _currentTime = 0;
+            if (_dashCheck == true)
+            {
+                _speedLimiter = RunSpeedLimiter;
+            }
         }
-        if (Rb.velocity.y < -SpeedLimiter)
+        if (horizontalKey == 0)
         {
-            Rb.velocity = new Vector2(Rb.velocity.x, -SpeedLimiter);
+            _speedLimiter = WalkSpeedLimiter;
+        }
+        if (Rb.velocity.y < -_speedLimiter)
+        {
+            Rb.velocity = new Vector2(Rb.velocity.x, -_speedLimiter);
         }
 
         if (WallCheck)
         {
-            if (Rb.velocity.y < -SpeedLimiter / 2)
+            if (Rb.velocity.y < -_speedLimiter / 2)
             {
-                Rb.velocity = new Vector2(Rb.velocity.x, -SpeedLimiter / 2);
+                Rb.velocity = new Vector2(Rb.velocity.x, -_speedLimiter / 2);
             }
         }
-        if (Rb.velocity.y > SpeedLimiter)
+        if (Rb.velocity.y > _speedLimiter)
         {
-            Rb.velocity = new Vector2(Rb.velocity.x, SpeedLimiter);
+            Rb.velocity = new Vector2(Rb.velocity.x, _speedLimiter);
         }
-        if (Rb.velocity.x > SpeedLimiter)
+        if (Rb.velocity.x > _speedLimiter)
         {
-            Rb.velocity = new Vector2(SpeedLimiter, Rb.velocity.y);
+            Rb.velocity = new Vector2(_speedLimiter, Rb.velocity.y);
         }
-        if (Rb.velocity.x < -SpeedLimiter)
+        if (Rb.velocity.x < -_speedLimiter)
         {
-            Rb.velocity = new Vector2(-SpeedLimiter, Rb.velocity.y);
+            Rb.velocity = new Vector2(-_speedLimiter, Rb.velocity.y);
         }
     }
 }
