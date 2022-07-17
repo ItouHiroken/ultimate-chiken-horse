@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Player1State;
 public abstract class PlayerBase : MonoBehaviour
 {
+    [Tooltip("現在速度")][SerializeField] private int _playerHp;
+    public int Hp { get { return _playerHp; } }
+
     [SerializeField] private DeBuff _deBuff = DeBuff.Default;
-    [SerializeField] private GotScore _gotScore = GotScore.Default;
+    [SerializeField] private GetScore _getScore = GetScore.Default;
     /// <summary>左右移動する力</summary>
     [Tooltip("現在速度")][SerializeField] private float _speed;
     public float Speed { get { return _speed; } }
@@ -33,8 +37,8 @@ public abstract class PlayerBase : MonoBehaviour
 
     public bool isreturn = false;
 
-    Rigidbody2D _rb = default;
-    public Rigidbody2D Rb { get { return _rb; } }
+    [SerializeField] public Rigidbody2D _rb = default;
+    [SerializeField] public Rigidbody2D Rb;
 
     [SerializeField] private int _jumpChecker = 0;
     public int JumpChecker { get { return _jumpChecker; } }
@@ -52,21 +56,29 @@ public abstract class PlayerBase : MonoBehaviour
 
     public bool isDead;
     public bool isGoal1 = false;
-
+    [SerializeField][Tooltip("違うレイヤーで当たり判定とるよ！")] private LayerMask levelMask;
 
     // Start is called before the first frame update
     void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        Rb = GetComponent<Rigidbody2D>();
         _speed = _defaultSpeed;
         _slowSpeed = _defaultSpeed / 2;
         _splitSpeed = _defaultSpeed * 2;
         _runSpeedLimiter = _walkSpeedLimiter * 2;
+        SpeedController();
+    }
+    protected virtual void SpeedController()
+    {
     }
 
     // Update is called once per frame
     void Update()
     {
+        StartCoroutine(WallCheker(Vector3.right)); // 右に広げる
+        StartCoroutine(WallCheker(Vector3.left)); // 左に広げる
+        StartCoroutine(GroundCheker(Vector3.down)); // 下に広げる
+
         _horizontal = Input.GetAxisRaw("Horizontal");
         // 設定に応じて左右を反転させる
         if (_flipX)
@@ -89,12 +101,11 @@ public abstract class PlayerBase : MonoBehaviour
         {
 
         }
-
-
         if (WallCheck)
         {
             Rb.AddForce(Vector2.down * 0.3f, ForceMode2D.Impulse);
         }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -122,9 +133,20 @@ public abstract class PlayerBase : MonoBehaviour
         }
         if (collision.gameObject.tag == "Wall")
         {
-            _wallCheck = true;
+            _wallCheck = false;
         }
         _jumpChecker = 0;
+    }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.TryGetComponent(out DamageController damage))
+        {
+            _playerHp -= damage.Damage;
+            if (_playerHp <= 0)
+            {
+
+            }
+        }
     }
     void FlipX(float horizontal)
     {
@@ -144,21 +166,44 @@ public abstract class PlayerBase : MonoBehaviour
             isreturn = true;
         }
     }
+    private IEnumerator WallCheker(Vector3 direction)
+    {
+        for (int i = 1; i < 2; i++)
+        {
+            // ブロックとの当たり判定の結果を格納する変数
+            RaycastHit2D hit = Physics2D.Raycast(transform.position , direction, 1, levelMask);
+            // 左右に何も存在しない場合
+            if (!hit.collider)
+            {
+                _wallCheck = false;
+            }
+            // 左右にブロックが存在する場合
+            else
+            {
+                _wallCheck = true;
+            }
 
-}
-
-public enum DeBuff
-{
-    Default = 1 << 0,
-    Slow = 1 << 1,
-    Split = 1 << 2
-}
-public enum GotScore
-{
-    Default = 1 << 0,
-    isGoal = 1 << 1,
-    Solo = 1 << 2,
-    First = 1 << 3,
-    Death = 1 << 4,
-    Coin = 1 << 5
+            yield return new WaitForSeconds(0);
+        }
+    }
+    private IEnumerator GroundCheker(Vector3 direction)
+    {
+        for (int i = 1; i < 2; i++)
+        {
+            // ブロックとの当たり判定の結果を格納する変数
+            RaycastHit2D hit = Physics2D.Raycast(transform.position  , direction, 1, levelMask);
+            Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0) + direction * i, direction);
+            // 下に何も存在しない場合
+            if (!hit.collider)
+            {
+                _groundCheck = false;
+            }
+            // 下にブロックが存在する場合
+            else
+            {
+                _groundCheck = true;
+            }
+        }
+        yield return new WaitForSeconds(0);
+    }
 }

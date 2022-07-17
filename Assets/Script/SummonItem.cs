@@ -22,12 +22,12 @@ public class SummonItem : MonoBehaviour
         //myListの中からランダムで1つを選ぶ
         randomObj = myList[Random.Range(0, myList.Count)];
         ////選んだオブジェクトをuseListに追加
-        //useList.Add(randomObj);
-        ////randomObj.layer = LayerMask.NameToLayer("Mejirushi");
+        useList.Add(randomObj);
+        randomObj.layer = LayerMask.NameToLayer("Mejirushi");
         ////選んだオブジェクトのリスト番号を取得
-        //choiceNum = myList.IndexOf(randomObj);
+        choiceNum = myList.IndexOf(randomObj);
         ////同じリスト番号をmyListから削除
-        //myList.RemoveAt(choiceNum);
+        myList.RemoveAt(choiceNum);
     }
     private void Update()
     {

@@ -8,9 +8,9 @@ public class Player1Move : PlayerBase
 {
     [SerializeField][Tooltip("ダッシュコマンド時間")] private float _targetTime = default;
     [SerializeField][Tooltip("ダッシュチェック時間を0秒に戻す用のやつ")] private float _currentTime = default;
-    bool _dashCheck;
-    [SerializeField]private float _speedLimiter;
-    private void Start()
+    [Tooltip("走れるかどうかチェック")] bool _dashCheck;
+    [SerializeField] private float _speedLimiter;
+    protected override void SpeedController()
     {
         _speedLimiter = WalkSpeedLimiter;
     }
@@ -23,6 +23,7 @@ public class Player1Move : PlayerBase
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
+           
             if (JumpChecker == 1 && GroundCheck)
             {
                 Debug.Log("a");
