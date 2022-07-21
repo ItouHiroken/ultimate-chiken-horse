@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    enum Turn
+    public Turn NowTurn;
+    void TurnChange()
+    {
+    }
+    public enum Turn
     { 
         GamePlay,
         Result,

@@ -7,8 +7,8 @@ public abstract class PlayerBase : MonoBehaviour
     [Tooltip("現在速度")][SerializeField] private int _playerHp;
     public int Hp { get { return _playerHp; } }
 
-    [SerializeField] private DeBuff _deBuff = DeBuff.Default;
-    [SerializeField] private GetScore _getScore = GetScore.Default;
+    public DeBuff _deBuff = DeBuff.Default;
+    public GetScore _getScore = GetScore.Default;
     /// <summary>左右移動する力</summary>
     [Tooltip("現在速度")][SerializeField] private float _speed;
     public float Speed { get { return _speed; } }
@@ -58,9 +58,12 @@ public abstract class PlayerBase : MonoBehaviour
     public bool isGoal1 = false;
     [SerializeField][Tooltip("違うレイヤーで当たり判定とるよ！")] private LayerMask levelMask;
 
+    GameManager gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         Rb = GetComponent<Rigidbody2D>();
         _speed = _defaultSpeed;
         _slowSpeed = _defaultSpeed / 2;
@@ -105,9 +108,24 @@ public abstract class PlayerBase : MonoBehaviour
         {
             Rb.AddForce(Vector2.down * 0.3f, ForceMode2D.Impulse);
         }
-
+        if (gameManager.NowTurn == GameManager.Turn.GamePlay)
+        {
+            //ここで自分の事をoffにしたい
+        }
     }
 
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        Debug.Log(collision.gameObject);
+        _jumpChecker = 1;
+        _startPosition = collision.gameObject.transform.position.x;
+        _myPosition = this.transform.position.x;
+    }
+
+    /// <summary>
+    /// タグでオンオフさせてる、やめたいやつ
+    /// </summary>
+    /// <param name = "collision" ></ param >
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
@@ -119,12 +137,11 @@ public abstract class PlayerBase : MonoBehaviour
             _wallCheck = true;
         }
     }
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        _jumpChecker = 1;
-        _startPosition = collision.gameObject.transform.position.x;
-        _myPosition = this.transform.position.x;
-    }
+
+    /// <summary>
+    /// タグでオンオフさせてる、やめたいやつ
+    /// </summary>
+    /// <param name = "collision" ></ param >
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
@@ -137,6 +154,11 @@ public abstract class PlayerBase : MonoBehaviour
         }
         _jumpChecker = 0;
     }
+
+    /// <summary>
+    /// ダメージ受ける用
+    /// </summary>
+    /// <param name="collision"></param>
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent(out DamageController damage))
@@ -148,6 +170,11 @@ public abstract class PlayerBase : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// 自分の絵を左右反転させる
+    /// </summary>
+    /// <param name="horizontal"></param>
     void FlipX(float horizontal)
     {
         /*
@@ -166,12 +193,18 @@ public abstract class PlayerBase : MonoBehaviour
             isreturn = true;
         }
     }
+
+    /// <summary>
+    /// 両脇にレイ飛ばしてウォールチェックをonoffする、できてない
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns></returns>
     private IEnumerator WallCheker(Vector3 direction)
     {
         for (int i = 1; i < 2; i++)
         {
             // ブロックとの当たり判定の結果を格納する変数
-            RaycastHit2D hit = Physics2D.Raycast(transform.position , direction, 1, levelMask);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 10, levelMask);
             // 左右に何も存在しない場合
             if (!hit.collider)
             {
@@ -186,12 +219,18 @@ public abstract class PlayerBase : MonoBehaviour
             yield return new WaitForSeconds(0);
         }
     }
+
+    /// <summary>
+    /// 足元にレイ飛ばしてグラウンドチェックをonoffする、できてない
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns></returns>
     private IEnumerator GroundCheker(Vector3 direction)
     {
         for (int i = 1; i < 2; i++)
         {
             // ブロックとの当たり判定の結果を格納する変数
-            RaycastHit2D hit = Physics2D.Raycast(transform.position  , direction, 1, levelMask);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 10, levelMask);
             Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0) + direction * i, direction);
             // 下に何も存在しない場合
             if (!hit.collider)
