@@ -6,39 +6,37 @@ using UnityEngine;
 /// </summary>
 public class Player1Move : PlayerBase
 {
-    [SerializeField][Tooltip("ダッシュコマンド時間")] private float _targetTime = default;
-    [SerializeField][Tooltip("ダッシュチェック時間を0秒に戻す用のやつ")] private float _currentTime = default;
     [Tooltip("走れるかどうかチェック")] bool _dashCheck;
-    [SerializeField] private float _speedLimiter;
+    [SerializeField] private float _horizonSpeedLimiter;
+    [SerializeField] private float _jumpSpeedLimiter;
     protected override void SpeedController()
     {
-        _speedLimiter = WalkSpeedLimiter;
+        _horizonSpeedLimiter = WalkSpeedLimiter;
+        _jumpSpeedLimiter = 30f;
     }
-    private void Update()
+
+    protected new void Update()/////←←←←←←←←←←←これnewつけるとなにかを非表示にするらしい、なにがなんなのかわかんないから聞く
     {
-        _currentTime += Time.deltaTime;
-        if (_currentTime <= _targetTime)
+        base.Update();
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            _dashCheck = true;
+            _dashCheck = !_dashCheck;
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-           
+
             if (JumpChecker == 1 && GroundCheck)
             {
-                Debug.Log("a");
                 Rb.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
             }
-            if (JumpChecker == 1 && !GroundCheck && WallCheck && MyPosition > StartPosition)
+            if (JumpChecker == 1 && !GroundCheck && RightWallCheck)
             {
-                Debug.Log("ue");
                 Rb.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
                 Rb.AddForce(Vector2.right * 40, ForceMode2D.Impulse);
 
             }
-            if (JumpChecker == 1 && !GroundCheck && WallCheck && MyPosition < StartPosition)
+            if (JumpChecker == 1 && !GroundCheck && LeftWallCheck)
             {
-                Debug.Log("shita");
                 Rb.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
                 Rb.AddForce(Vector2.left * 40, ForceMode2D.Impulse);
             }
@@ -52,49 +50,47 @@ public class Player1Move : PlayerBase
         if (horizontalKey > 0)
         {
             Rb.AddForce(Vector2.right * Speed, ForceMode2D.Impulse);
-            _currentTime = 0;
             if (_dashCheck == true)
             {
-                _speedLimiter = RunSpeedLimiter;
+                _horizonSpeedLimiter = RunSpeedLimiter;
             }
         }
         //左入力で左向きに動く
         else if (horizontalKey < 0)
         {
             Rb.AddForce(Vector2.left * Speed, ForceMode2D.Impulse);
-            _currentTime = 0;
             if (_dashCheck == true)
             {
-                _speedLimiter = RunSpeedLimiter;
+                _horizonSpeedLimiter = RunSpeedLimiter;
             }
         }
-        if (horizontalKey == 0)
+        if (_dashCheck == false)
         {
-            _speedLimiter = WalkSpeedLimiter;
+            _horizonSpeedLimiter = WalkSpeedLimiter;
         }
-        if (Rb.velocity.y < -_speedLimiter)
+        if (Rb.velocity.y < -_jumpSpeedLimiter)
         {
-            Rb.velocity = new Vector2(Rb.velocity.x, -_speedLimiter);
+            Rb.velocity = new Vector2(Rb.velocity.x, -_jumpSpeedLimiter);
         }
 
-        if (WallCheck)
+        if (RightWallCheck || LeftWallCheck)
         {
-            if (Rb.velocity.y < -_speedLimiter / 2)
+            if (Rb.velocity.y < -_jumpSpeedLimiter / 2)
             {
-                Rb.velocity = new Vector2(Rb.velocity.x, -_speedLimiter / 2);
+                Rb.velocity = new Vector2(Rb.velocity.x, -_jumpSpeedLimiter / 2);
             }
         }
-        if (Rb.velocity.y > _speedLimiter)
+        if (Rb.velocity.y > _jumpSpeedLimiter)
         {
-            Rb.velocity = new Vector2(Rb.velocity.x, _speedLimiter);
+            Rb.velocity = new Vector2(Rb.velocity.x, _jumpSpeedLimiter);
         }
-        if (Rb.velocity.x > _speedLimiter)
+        if (Rb.velocity.x > _horizonSpeedLimiter)
         {
-            Rb.velocity = new Vector2(_speedLimiter, Rb.velocity.y);
+            Rb.velocity = new Vector2(_horizonSpeedLimiter, Rb.velocity.y);
         }
-        if (Rb.velocity.x < -_speedLimiter)
+        if (Rb.velocity.x < -_horizonSpeedLimiter)
         {
-            Rb.velocity = new Vector2(-_speedLimiter, Rb.velocity.y);
+            Rb.velocity = new Vector2(-_horizonSpeedLimiter, Rb.velocity.y);
         }
     }
 }

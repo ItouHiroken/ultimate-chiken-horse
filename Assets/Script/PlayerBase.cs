@@ -21,7 +21,7 @@ public abstract class PlayerBase : MonoBehaviour
     [Tooltip("滑った速度")] private float _splitSpeed = default;
     public float SplitSpeed { get { return _splitSpeed; } }
 
-    [Tooltip("速度制限")][SerializeField] private float _walkSpeedLimiter = 30f;
+    [Tooltip("歩いた時の速度制限")][SerializeField] private float _walkSpeedLimiter = 30f;
     public float WalkSpeedLimiter { get { return _walkSpeedLimiter; } }
 
     [Tooltip("走るときの速度制限")][SerializeField] private float _runSpeedLimiter = default;
@@ -45,14 +45,10 @@ public abstract class PlayerBase : MonoBehaviour
 
     [SerializeField] bool _groundCheck;
     public bool GroundCheck { get { return _groundCheck; } }
-    [SerializeField] bool _wallCheck;
-    public bool WallCheck { get { return _wallCheck; } }
-
-    [SerializeField] float _startPosition;
-    public float StartPosition { get { return _startPosition; } }
-
-    [SerializeField] float _myPosition;
-    public float MyPosition { get { return _myPosition; } }
+    [SerializeField] bool _rightWallCheck;
+    public bool LeftWallCheck { get { return _rightWallCheck; } }
+    [SerializeField] bool _leftWallCheck;
+    public bool RightWallCheck { get { return _leftWallCheck; } }
 
     public bool isDead;
     public bool isGoal1 = false;
@@ -76,11 +72,11 @@ public abstract class PlayerBase : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
-        StartCoroutine(WallCheker(Vector3.right)); // 右に広げる
-        StartCoroutine(WallCheker(Vector3.left)); // 左に広げる
-        StartCoroutine(GroundCheker(Vector3.down)); // 下に広げる
+        RightWallCheker(Vector3.right); // 右に広げる
+        LeftWallCheker(Vector3.left); // 左に広げる
+        GroundCheker(Vector3.down); // 下に広げる
 
         _horizontal = Input.GetAxisRaw("Horizontal");
         // 設定に応じて左右を反転させる
@@ -104,7 +100,7 @@ public abstract class PlayerBase : MonoBehaviour
         {
 
         }
-        if (WallCheck)
+        if (RightWallCheck || LeftWallCheck)
         {
             Rb.AddForce(Vector2.down * 0.3f, ForceMode2D.Impulse);
         }
@@ -116,26 +112,7 @@ public abstract class PlayerBase : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D collision)
     {
-        Debug.Log(collision.gameObject);
         _jumpChecker = 1;
-        _startPosition = collision.gameObject.transform.position.x;
-        _myPosition = this.transform.position.x;
-    }
-
-    /// <summary>
-    /// タグでオンオフさせてる、やめたいやつ
-    /// </summary>
-    /// <param name = "collision" ></ param >
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            _groundCheck = true;
-        }
-        if (collision.gameObject.tag == "Wall")
-        {
-            _wallCheck = true;
-        }
     }
 
     /// <summary>
@@ -144,14 +121,6 @@ public abstract class PlayerBase : MonoBehaviour
     /// <param name = "collision" ></ param >
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground")
-        {
-            _groundCheck = false;
-        }
-        if (collision.gameObject.tag == "Wall")
-        {
-            _wallCheck = false;
-        }
         _jumpChecker = 0;
     }
 
@@ -195,28 +164,50 @@ public abstract class PlayerBase : MonoBehaviour
     }
 
     /// <summary>
-    /// 両脇にレイ飛ばしてウォールチェックをonoffする、できてない
+    /// 右にレイ飛ばしてウォールチェックをonoffする、できてない
     /// </summary>
     /// <param name="direction"></param>
     /// <returns></returns>
-    private IEnumerator WallCheker(Vector3 direction)
+    private void RightWallCheker(Vector3 direction)
     {
         for (int i = 1; i < 2; i++)
         {
             // ブロックとの当たり判定の結果を格納する変数
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 10, levelMask);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1, levelMask);
             // 左右に何も存在しない場合
             if (!hit.collider)
             {
-                _wallCheck = false;
+                _rightWallCheck = false;
             }
             // 左右にブロックが存在する場合
             else
             {
-                _wallCheck = true;
+                _rightWallCheck = true;
             }
+        }
+    }
 
-            yield return new WaitForSeconds(0);
+    /// <summary>
+    /// 左にレイ飛ばしてウォールチェックをonoffする、できてない
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns></returns>
+    private void LeftWallCheker(Vector3 direction)
+    {
+        for (int i = 1; i < 2; i++)
+        {
+            // ブロックとの当たり判定の結果を格納する変数
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1, levelMask);
+            // 左右に何も存在しない場合
+            if (!hit.collider)
+            {
+                _leftWallCheck = false;
+            }
+            // 左右にブロックが存在する場合
+            else
+            {
+                _leftWallCheck = true;
+            }
         }
     }
 
@@ -225,13 +216,12 @@ public abstract class PlayerBase : MonoBehaviour
     /// </summary>
     /// <param name="direction"></param>
     /// <returns></returns>
-    private IEnumerator GroundCheker(Vector3 direction)
+    private void GroundCheker(Vector3 direction)
     {
         for (int i = 1; i < 2; i++)
         {
             // ブロックとの当たり判定の結果を格納する変数
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 10, levelMask);
-            Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0) + direction * i, direction);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1, levelMask);
             // 下に何も存在しない場合
             if (!hit.collider)
             {
@@ -243,6 +233,5 @@ public abstract class PlayerBase : MonoBehaviour
                 _groundCheck = true;
             }
         }
-        yield return new WaitForSeconds(0);
     }
 }
