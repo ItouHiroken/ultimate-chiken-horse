@@ -2,11 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// プレイヤー人数選択フェイズ
+/// 1、プレイヤー人数選択
+/// 2、プレイヤー色選択
+/// ゲームフェイズ
+/// 1、ゲームプレイのターン
+/// 全員が死んだらポイント集計のターンへ
+/// 2、ポイント集計のターン
+/// →→→もし誰かが目標点数達成したら、または一定ターン数経ったら終了フェイズへ
+/// 3、アイテム選択ターン
+/// →→→全員がアイテム選択したら、または一定時間経ったらアイテム設置ターンへ
+/// 4、アイテム設置ターン
+/// →→→全員がアイテム設置したら、または一定時間経ったらゲームプレイターンへ
+/// 誰かが時間切れまで設置していなかったら、今の場所に設置される
+/// 終了フェイズ
+/// 1、勝利したひとがドアップされる
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public Turn NowTurn;
     void TurnChange()
     {
+
     }
     public enum Turn
     { 

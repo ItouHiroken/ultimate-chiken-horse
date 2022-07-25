@@ -60,14 +60,7 @@ public abstract class ItemBase : MonoBehaviour
         //    ChangeColor(false);
         //}
     }
-    //public void LostItemIncrease()
-    //{
-    //    MonoOtosuHito script; //呼ぶスクリプトにあだなつける
-    //    GameObject obj = GameObject.Find("Sorakarabusshi"); //Playerっていうオブジェクトを探す
-    //    script = obj.GetComponent<MonoOtosuHito>(); //付いているスクリプトを取得
-    //    script._lostItem += 1;
-    //    Destroy(gameObject);
-    //}
+
 
     /// <summary>
     /// アイテム選択時、アイテムにカーソル合わさると色が変わる。
