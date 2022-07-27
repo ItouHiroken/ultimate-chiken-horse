@@ -5,10 +5,13 @@ using UnityEngine;
 /// プレイヤーの移動に関するもの
 /// </summary>
 public class Player1Move : PlayerBase
-{
+{ 
+    [SerializeField][Tooltip("体力")] private int _hp = default;
     [Tooltip("走れるかどうかチェック")] bool _dashCheck;
     [SerializeField] private float _horizonSpeedLimiter;
     [SerializeField] private float _jumpSpeedLimiter;
+    [SerializeField][Tooltip("自分の動きonoffするため")] Player1Move controller;
+
     protected override void SpeedController()
     {
         _horizonSpeedLimiter = WalkSpeedLimiter;
@@ -91,6 +94,21 @@ public class Player1Move : PlayerBase
         if (Rb.velocity.x < -_horizonSpeedLimiter)
         {
             Rb.velocity = new Vector2(-_horizonSpeedLimiter, Rb.velocity.y);
+        }
+    }
+    /// <summary>
+    /// ダメージ受ける用
+    /// </summary>
+    /// <param name="collision"></param>
+    protected void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.TryGetComponent(out DamageController damage))
+        {
+            _hp -= damage.Damage;
+            if (_hp <= 0)
+            {
+                controller.enabled = false;
+            }
         }
     }
 }

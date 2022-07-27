@@ -1,11 +1,15 @@
+using System;
+
 namespace Player1State
 {
+    [Flags]
     public enum DeBuff
     {
         Default = 1 << 0,
         Slow = 1 << 1,
         Split = 1 << 2
     }
+    [Flags]
     public enum GetScore
     {
         Default = 1 << 0,
@@ -18,12 +22,14 @@ namespace Player1State
 }
 namespace Player2State
 {
+    [Flags]
     public enum DeBuff
     {
         Default = 1 << 0,
         Slow = 1 << 1,
         Split = 1 << 2
     }
+    [Flags]
     public enum GetScore
     {
         Default = 1 << 0,
@@ -36,12 +42,14 @@ namespace Player2State
 }
 namespace Player3State
 {
+    [Flags]
     public enum DeBuff
     {
         Default = 1 << 0,
         Slow = 1 << 1,
         Split = 1 << 2
     }
+    [Flags]
     public enum GetScore
     {
         Default = 1 << 0,
@@ -54,12 +62,14 @@ namespace Player3State
 }
 namespace Player4State
 {
+    [Flags]
     public enum DeBuff
     {
         Default = 1 << 0,
         Slow = 1 << 1,
         Split = 1 << 2
     }
+    [Flags]
     public enum GetScore
     {
         Default = 1 << 0,

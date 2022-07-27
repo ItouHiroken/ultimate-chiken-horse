@@ -21,16 +21,30 @@ using UnityEngine;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] Player1Move p1;
+    //[SerializeField] Player2Move p2;
+    //[SerializeField] Player3Move p3;
+    //[SerializeField] Player4Move p4;
     public Turn NowTurn;
     void TurnChange()
     {
-
+        //if(GameManager.Turn.GamePlay==true)
     }
+
     public enum Turn
-    { 
+    {
+        
         GamePlay,
         Result,
         SelectItem,
         SetItem,
+    }
+
+    private void Update()
+    {
+        if (p1.enabled == false/*&& p2.enabled == false&&p3.enabled == false&&p4.enabled == false*/)
+        {
+            TurnChange();
+        }
     }
 }

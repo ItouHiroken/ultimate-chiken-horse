@@ -4,9 +4,6 @@ using UnityEngine;
 using Player1State;
 public abstract class PlayerBase : MonoBehaviour
 {
-    [Tooltip("現在速度")][SerializeField] private int _playerHp;
-    public int Hp { get { return _playerHp; } }
-
     public DeBuff _deBuff = DeBuff.Default;
     public GetScore _getScore = GetScore.Default;
     /// <summary>左右移動する力</summary>
@@ -122,22 +119,6 @@ public abstract class PlayerBase : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         _jumpChecker = 0;
-    }
-
-    /// <summary>
-    /// ダメージ受ける用
-    /// </summary>
-    /// <param name="collision"></param>
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.TryGetComponent(out DamageController damage))
-        {
-            _playerHp -= damage.Damage;
-            if (_playerHp <= 0)
-            {
-
-            }
-        }
     }
 
     /// <summary>

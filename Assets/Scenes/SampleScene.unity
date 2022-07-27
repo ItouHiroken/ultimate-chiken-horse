@@ -1125,6 +1125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d6696b8646cfc4faad1e7e4a0a9a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  p1: {fileID: 1982765607}
   NowTurn: 0
 --- !u!1 &441302706
 GameObject:
@@ -1182,7 +1183,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.074151754, y: 0.07248294}
@@ -1294,7 +1295,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39eaba788027b2046a33d9f96ba7baae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myList: []
+  myList:
+  - {fileID: 1680564128}
+  - {fileID: 1075145466}
+  - {fileID: 1380983217}
   itemList: []
   useList: []
   itemPrefabs: []
@@ -4916,8 +4920,8 @@ Transform:
   m_Children:
   - {fileID: 1926746400}
   - {fileID: 2030088607}
-  - {fileID: 1316280472}
   - {fileID: 2040222815}
+  - {fileID: 1316280472}
   - {fileID: 903897995}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -5322,7 +5326,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1075127125}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1316280473
 BoxCollider2D:
@@ -5693,7 +5697,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1680564128}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.76, y: -2.79, z: -0.009413216}
+  m_LocalPosition: {x: 8.86, y: -15.26, z: -0.009413216}
   m_LocalScale: {x: 0.20697065, y: 0.19620122, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6049,7 +6053,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 448f356b4bbb02f428fd86d6630f8f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerHp: 0
   _deBuff: 1
   _getScore: 1
   _speed: 5
@@ -6069,8 +6072,10 @@ MonoBehaviour:
   levelMask:
     serializedVersion: 2
     m_Bits: 1
+  _hp: 0
   _horizonSpeedLimiter: 0
   _jumpSpeedLimiter: 0
+  controller: {fileID: 1982765607}
 --- !u!1 &1989420680
 GameObject:
   m_ObjectHideFlags: 0
@@ -6316,7 +6321,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2040222814}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -25.08, y: 20.88, z: 0}
+  m_LocalPosition: {x: -25.079996, y: 20.88, z: 0}
   m_LocalScale: {x: 6.614824, y: 3.4643943, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6325,7 +6330,7 @@ Transform:
   - {fileID: 939081496}
   - {fileID: 823999594}
   m_Father: {fileID: 1075127125}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2040222816
 MonoBehaviour:
@@ -6343,10 +6348,11 @@ MonoBehaviour:
   Player2Point: {fileID: 154808590}
   Player3Point: {fileID: 939081495}
   Player4Point: {fileID: 823999593}
-  Player1: {fileID: 0}
+  Player1: {fileID: 1982765601}
   Player2: {fileID: 0}
   Player3: {fileID: 0}
   Player4: {fileID: 0}
+  p1: {fileID: 0}
   PlaySceneStart: 0
 --- !u!61 &2040222817
 BoxCollider2D:

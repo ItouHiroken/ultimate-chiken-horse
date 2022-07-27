@@ -14,6 +14,11 @@ public class StartingPoint : MonoBehaviour
     [SerializeField] GameObject Player3;
     [SerializeField] GameObject Player4;
 
+    [SerializeField] Player1Move p1;
+    //[SerializeField] Player2Move p2;
+    //[SerializeField] Player3Move p3;
+    //[SerializeField] Player4Move p4;
+
     public bool PlaySceneStart;
     private void Start()
     {
@@ -30,6 +35,10 @@ public class StartingPoint : MonoBehaviour
             Player2.transform.position = Player2Point.transform.position;
             Player3.transform.position = Player3Point.transform.position;
             Player4.transform.position = Player4Point.transform.position;
+            p1.enabled = true;
+            //p2.enabled = true;
+            //p3.enabled = true;
+            //p4.enabled = true;
             PlaySceneStart = false;
         }
     }
