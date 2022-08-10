@@ -7,4 +7,8 @@ using UnityEngine;
 /// </summary>
 public class ScoreManager : MonoBehaviour
 {
+    private void Awake()
+    {
+       
+    }
 }

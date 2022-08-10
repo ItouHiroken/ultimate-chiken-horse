@@ -5,7 +5,6 @@ using Player1State;
 public abstract class PlayerBase : MonoBehaviour
 {
     public DeBuff _deBuff = DeBuff.Default;
-    public GetScore _getScore = GetScore.Default;
     /// <summary>左右移動する力</summary>
     [Tooltip("現在速度")][SerializeField] private float _speed;
     public float Speed { get { return _speed; } }
@@ -52,6 +51,8 @@ public abstract class PlayerBase : MonoBehaviour
     [SerializeField][Tooltip("違うレイヤーで当たり判定とるよ！")] private LayerMask levelMask;
 
     GameManager gameManager;
+
+    
 
     // Start is called before the first frame update
     void Start()

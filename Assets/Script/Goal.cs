@@ -19,7 +19,6 @@ public class Goal : MonoBehaviour
             if (collision.name == "Player1")
             {
                 Player1Move playerscript;
-                // GameObject obj = GameObject.Find("Player1");
                 playerscript = collision.GetComponent<Player1Move>();
                 playerscript.enabled = false;
                 if (playerscript.isGoal1 == false)

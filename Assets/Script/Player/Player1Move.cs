@@ -11,11 +11,12 @@ public class Player1Move : PlayerBase
     [SerializeField] private float _horizonSpeedLimiter;
     [SerializeField] private float _jumpSpeedLimiter;
     [SerializeField][Tooltip("©•ª‚Ì“®‚«onoff‚·‚é‚½‚ß")] Player1Move controller;
+    private Player1State.GetScore Score;
 
     protected override void SpeedController()
     {
         _horizonSpeedLimiter = WalkSpeedLimiter;
-        _jumpSpeedLimiter = 30f;
+        _jumpSpeedLimiter = 50f;
     }
 
     protected new void Update()/////©©©©©©©©©©©‚±‚ênew‚Â‚¯‚é‚Æ‚È‚É‚©‚ğ”ñ•\¦‚É‚·‚é‚ç‚µ‚¢A‚È‚É‚ª‚È‚ñ‚È‚Ì‚©‚í‚©‚ñ‚È‚¢‚©‚ç•·‚­
@@ -108,8 +109,19 @@ public class Player1Move : PlayerBase
             if (_hp <= 0)
             {
                 controller.enabled = false;
+                Score = Score | Player1State.GetScore.Death;
+                Score &= ~Player1State.GetScore.Default;
             }
         }
+        if (collision.gameObject.tag == "Coin")
+        {
+            Score = Score | Player1State.GetScore.Coin;
+        }
+        if (collision.gameObject.name == "Goal")
+        {
+            Score = Score | Player1State.GetScore.isGoal;
+        }
+
     }
 }
 
