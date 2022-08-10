@@ -28,23 +28,42 @@ public class GameManager : MonoBehaviour
     public Turn NowTurn;
     void TurnChange()
     {
-        //if(GameManager.Turn.GamePlay==true)
+        switch (NowTurn)  
+        {
+            case Turn.GamePlay:
+                NowTurn = NowTurn | GameManager.Turn.Result;
+                NowTurn = NowTurn & ~GameManager.Turn.GamePlay;
+                break;
+            case Turn.Result:
+                NowTurn = NowTurn | GameManager.Turn.SelectItem;
+                NowTurn = NowTurn & ~GameManager.Turn.Result;
+                break;
+            case Turn.SelectItem:
+                NowTurn = NowTurn | GameManager.Turn.SetItem;
+                NowTurn = NowTurn & ~GameManager.Turn.SelectItem;
+                break;
+            case Turn.SetItem:
+                NowTurn = NowTurn | GameManager.Turn.GamePlay;
+                NowTurn = NowTurn & ~GameManager.Turn.SetItem;
+                break;
+        }
     }
-
     public enum Turn
     {
-        
         GamePlay,
         Result,
         SelectItem,
         SetItem,
     }
-
     private void Update()
     {
-        if (p1.enabled == false/*&& p2.enabled == false&&p3.enabled == false&&p4.enabled == false*/)
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             TurnChange();
         }
+        //if (p1.enabled == false/*&& p2.enabled == false&&p3.enabled == false&&p4.enabled == false*/)
+        //{
+        //    TurnChange();
+        //}
     }
 }
