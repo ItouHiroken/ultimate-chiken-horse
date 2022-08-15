@@ -46,8 +46,8 @@ public abstract class PlayerBase : MonoBehaviour
     [SerializeField] bool _leftWallCheck;
     public bool RightWallCheck { get { return _leftWallCheck; } }
 
-    public bool isDead;
-    public bool isGoal1 = false;
+    //public bool isDead;
+   // public bool isGoal1 = false;
     [SerializeField][Tooltip("ˆá‚¤ƒŒƒCƒ„[‚Å“–‚½‚è”»’è‚Æ‚é‚æI")] private LayerMask levelMask;
 
     GameManager gameManager;

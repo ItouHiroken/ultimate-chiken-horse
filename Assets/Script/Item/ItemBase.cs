@@ -10,13 +10,11 @@ public abstract class ItemBase : MonoBehaviour
     Vector2 _CursorPosition;
     private string playername;
     [SerializeField] int _Hp = 1;
-    public abstract void Activate1();
-    public abstract void Activate2();
+//    public abstract void Activate1();
+//    public abstract void Activate2();
 
     GameObject _followingCursor;
 
-
-   
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Cursor"))
@@ -25,12 +23,12 @@ public abstract class ItemBase : MonoBehaviour
             playername = collision.gameObject.name;
             if (playername == "Player1Cursor")
             {
-                Activate1();
+                //Activate1();
                 ChangeColor(true);
                 if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    ColliderOnOff(true);
+                {  
                     FollowCursor();
+                    ColliderOnOff(true);
                 }
             }
             //if (playername == "Player2Cursor")
@@ -62,7 +60,6 @@ public abstract class ItemBase : MonoBehaviour
         //    ChangeColor(false);
         //}
     }
-
 
     /// <summary>
     /// アイテム選択時、アイテムにカーソル合わさると色が変わる。

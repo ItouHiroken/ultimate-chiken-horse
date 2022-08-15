@@ -21,20 +21,21 @@ public class Goal : MonoBehaviour
                 Player1Move playerscript;
                 playerscript = collision.GetComponent<Player1Move>();
                 playerscript.enabled = false;
-                if (playerscript.isGoal1 == false)
+                if (playerscript.enabled == false)
                 {
                     goalPlayers.Add(collision.gameObject);
-                    playerscript.isGoal1 = true;
+                  //  playerscript.isGoal1 = true;
                 }
                 ///何かしらで渡す量を決める、これはポイントを管理するスクリプトを作ってから考えよう。
-                if (playerscript.isDead == true)///プレイヤーが入った瞬間、死んでいた場合ポイントが減る
-                {
+                //if (playerscript.isDead == true)///プレイヤーが入った瞬間、死んでいた場合ポイントが減る
+                //{
 
-                }
-                else///生きてたらより多くのポイントが手に入る
-                {
+                //}
+                //else///生きてたらより多くのポイントが手に入る
+                //{
                     
-                }
+                //}
+                //if(playerscript.)
             }
         }
     }

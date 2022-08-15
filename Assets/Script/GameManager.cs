@@ -31,20 +31,23 @@ public class GameManager : MonoBehaviour
         switch (NowTurn)  
         {
             case Turn.GamePlay:
-                NowTurn = NowTurn | GameManager.Turn.Result;
-                NowTurn = NowTurn & ~GameManager.Turn.GamePlay;
+                NowTurn = GameManager.Turn.Result;
+                //NowTurn = NowTurn & ~GameManager.Turn.GamePlay;
                 break;
             case Turn.Result:
-                NowTurn = NowTurn | GameManager.Turn.SelectItem;
-                NowTurn = NowTurn & ~GameManager.Turn.Result;
+                NowTurn = GameManager.Turn.SelectItem;
+                //NowTurn = NowTurn & ~GameManager.Turn.Result;
                 break;
             case Turn.SelectItem:
-                NowTurn = NowTurn | GameManager.Turn.SetItem;
-                NowTurn = NowTurn & ~GameManager.Turn.SelectItem;
+                NowTurn = GameManager.Turn.SetItem;
+                //NowTurn = NowTurn & ~GameManager.Turn.SelectItem;
                 break;
             case Turn.SetItem:
-                NowTurn = NowTurn | GameManager.Turn.GamePlay;
-                NowTurn = NowTurn & ~GameManager.Turn.SetItem;
+                NowTurn = GameManager.Turn.GamePlay;
+                //NowTurn = NowTurn & ~GameManager.Turn.SetItem;
+                break;
+
+            default:
                 break;
         }
     }

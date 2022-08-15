@@ -26,9 +26,9 @@ public class Player1Move : PlayerBase
         {
             _dashCheck = !_dashCheck;
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        bool jump = Input.GetButtonDown("Jump")|| Input.GetKeyDown("joystick button 1");
+        if (jump==true )
         {
-
             if (JumpChecker == 1 && GroundCheck)
             {
                 Rb.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
@@ -111,17 +111,19 @@ public class Player1Move : PlayerBase
                 controller.enabled = false;
                 Score = Score | Player1State.GetScore.Death;
                 Score &= ~Player1State.GetScore.Default;
+                Debug.Log(Score);
             }
         }
         if (collision.gameObject.tag == "Coin")
         {
             Score = Score | Player1State.GetScore.Coin;
+            Debug.Log(Score);
         }
         if (collision.gameObject.name == "Goal")
         {
             Score = Score | Player1State.GetScore.isGoal;
+            Debug.Log(Score);
         }
-
     }
 }
 
