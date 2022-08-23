@@ -8,7 +8,7 @@ using UnityEngine;
 public class Player1Cursor : MonoBehaviour
 {
     [Tooltip("移動速度")] public float _speed = 10.0f;
-    [SerializeField,Tooltip("ゲームマネージャーから参照したい")]GameObject _gameManager;
+    [SerializeField][Tooltip("ゲームマネージャーから参照したい")]GameObject _gameManager;
     public  GameManager.Turn Turn;
     private Rigidbody2D rb;
     private void Start()

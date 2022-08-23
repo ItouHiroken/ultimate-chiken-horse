@@ -10,15 +10,16 @@ public abstract class ItemBase : MonoBehaviour
     Vector2 _CursorPosition;
     private string playername;
     [SerializeField] int _Hp = 1;
-//    public abstract void Activate1();
-//    public abstract void Activate2();
+    //    public abstract void Activate1();
+    //    public abstract void Activate2();
 
     GameObject _followingCursor;
-
-    void OnTriggerEnter2D(Collider2D collision)
+    bool _isFollowing;
+    void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Cursor"))
         {
+            Debug.Log("CursorTriggerEnter");
             _followingCursor = collision.gameObject;
             playername = collision.gameObject.name;
             if (playername == "Player1Cursor")
@@ -26,8 +27,13 @@ public abstract class ItemBase : MonoBehaviour
                 //Activate1();
                 ChangeColor(true);
                 if (Input.GetKeyDown(KeyCode.Space))
-                {  
-                    FollowCursor();
+                {
+                    _isFollowing = true;///←←←←←←←←←←←消せるようにしたい
+
+                }
+                if (_isFollowing)
+                {
+                    FollowCursor(collision.gameObject);
                     ColliderOnOff(true);
                 }
             }
@@ -67,15 +73,16 @@ public abstract class ItemBase : MonoBehaviour
     /// <param name="cursorcheck"></param>
     private void ChangeColor(bool cursorcheck)
     {
-        Color color = cursorcheck ? new Color(0, 0, 0, 200) : new Color(0, 0, 0, 255);
+        Color color = cursorcheck ? new Color(255, 255, 255, 200) : new Color(255, 255, 255, 255);
         GetComponent<Renderer>().material.color = color;
     }
 
     /// <summary>
     /// アイテムにカーソルを合わせたあと、何かしらの操作をすると、ついてきてほしい。
     /// </summary>
-    void FollowCursor()
+    void FollowCursor(GameObject gameObject)
     {
+        Debug.Log("followCursor");
         _CursorPosition = _followingCursor.transform.position;
         this.transform.position = _CursorPosition;
     }

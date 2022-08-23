@@ -26,6 +26,20 @@ public class GameManager : MonoBehaviour
     //[SerializeField] Player3Move p3;
     //[SerializeField] Player4Move p4;
     public Turn NowTurn;
+
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            TurnChange();
+        }
+        //if (p1.enabled == false/*&& p2.enabled == false&&p3.enabled == false&&p4.enabled == false*/)
+        //{
+        //    TurnChange();
+        //}
+    }   
     void TurnChange()
     {
         switch (NowTurn)  
@@ -60,16 +74,5 @@ public class GameManager : MonoBehaviour
         Result,
         SelectItem,
         SetItem,
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            TurnChange();
-        }
-        //if (p1.enabled == false/*&& p2.enabled == false&&p3.enabled == false&&p4.enabled == false*/)
-        //{
-        //    TurnChange();
-        //}
     }
 }
