@@ -44,6 +44,9 @@ public class GameManager : MonoBehaviour
                 break;
             case Turn.SetItem:
                 NowTurn = GameManager.Turn.GamePlay;
+
+                //←←←←←←←←←←←←←←←←ここでStartingPointのスクリプトのbool型をtrueにする
+
                 //NowTurn = NowTurn & ~GameManager.Turn.SetItem;
                 break;
 

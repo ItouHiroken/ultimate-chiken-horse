@@ -18,7 +18,9 @@ public class StartingPoint : MonoBehaviour
     //[SerializeField] Player2Move p2;
     //[SerializeField] Player3Move p3;
     //[SerializeField] Player4Move p4;
-
+    
+    [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
+    public GameManager.Turn Turn;
     public bool PlaySceneStart;
     private void Start()
     {
@@ -29,6 +31,9 @@ public class StartingPoint : MonoBehaviour
     }
     private void Update()
     {
+        if (Turn == GameManager.Turn.GamePlay)
+        {
+        }
         if (PlaySceneStart == true)
         {
             Player1.transform.position = Player1Point.transform.position;
@@ -41,5 +46,9 @@ public class StartingPoint : MonoBehaviour
             //p4.enabled = true;
             PlaySceneStart = false;
         }
+    }
+    void TurnChecker(GameObject a)
+    {
+        Turn = a.GetComponent<GameManager>().NowTurn;
     }
 }
