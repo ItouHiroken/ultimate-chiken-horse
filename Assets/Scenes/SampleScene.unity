@@ -1127,6 +1127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p1: {fileID: 1982765607}
   NowTurn: 0
+  startingPoint: {fileID: 2040222814}
 --- !u!1 &441302706
 GameObject:
   m_ObjectHideFlags: 0
@@ -5815,6 +5816,7 @@ GameObject:
   - component: {fileID: 1680564131}
   - component: {fileID: 1680564130}
   - component: {fileID: 1680564132}
+  - component: {fileID: 1680564133}
   m_Layer: 0
   m_Name: 1*1
   m_TagString: Untagged
@@ -5929,6 +5931,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kaitenIndex: 90
+--- !u!114 &1680564133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680564128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 938ea4f797d1fcc499022d0c5d9a846a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Hp: 1
 --- !u!1 &1926746397
 GameObject:
   m_ObjectHideFlags: 0
@@ -6497,8 +6512,8 @@ MonoBehaviour:
   Player2: {fileID: 0}
   Player3: {fileID: 0}
   Player4: {fileID: 0}
-  p1: {fileID: 0}
-  _gameManager: {fileID: 0}
+  p1: {fileID: 1982765607}
+  _gameManager: {fileID: 336041240}
   Turn: 0
   PlaySceneStart: 0
 --- !u!61 &2040222817

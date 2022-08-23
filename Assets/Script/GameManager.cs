@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
     //[SerializeField] Player4Move p4;
     public Turn NowTurn;
 
+    [SerializeField] GameObject startingPoint;
+    
+
 
 
     private void Update()
@@ -60,7 +63,7 @@ public class GameManager : MonoBehaviour
                 NowTurn = GameManager.Turn.GamePlay;
 
                 //←←←←←←←←←←←←←←←←ここでStartingPointのスクリプトのbool型をtrueにする
-
+                startingPoint.GetComponent<StartingPoint>().PlaySceneStart =true ;
                 //NowTurn = NowTurn & ~GameManager.Turn.SetItem;
                 break;
 

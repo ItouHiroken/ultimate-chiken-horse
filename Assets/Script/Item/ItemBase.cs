@@ -82,7 +82,6 @@ public abstract class ItemBase : MonoBehaviour
     /// </summary>
     void FollowCursor(GameObject gameObject)
     {
-        Debug.Log("followCursor");
         _CursorPosition = _followingCursor.transform.position;
         this.transform.position = _CursorPosition;
     }
@@ -94,6 +93,6 @@ public abstract class ItemBase : MonoBehaviour
     void ColliderOnOff(bool colliderSwitch)
     {
         GetComponent<BoxCollider2D>().enabled = colliderSwitch;
-        GetComponent<CircleCollider2D>().enabled = colliderSwitch;
+      //  GetComponent<CircleCollider2D>().enabled = colliderSwitch;
     }
 }

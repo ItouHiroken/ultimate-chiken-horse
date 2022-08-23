@@ -31,15 +31,13 @@ public class StartingPoint : MonoBehaviour
     }
     private void Update()
     {
-        if (Turn == GameManager.Turn.GamePlay)
-        {
-        }
+        TurnChecker(_gameManager);
         if (PlaySceneStart == true)
         {
             Player1.transform.position = Player1Point.transform.position;
-            Player2.transform.position = Player2Point.transform.position;
-            Player3.transform.position = Player3Point.transform.position;
-            Player4.transform.position = Player4Point.transform.position;
+            //Player2.transform.position = Player2Point.transform.position;
+            //Player3.transform.position = Player3Point.transform.position;
+            //Player4.transform.position = Player4Point.transform.position;
             p1.enabled = true;
             //p2.enabled = true;
             //p3.enabled = true;
@@ -47,7 +45,7 @@ public class StartingPoint : MonoBehaviour
             PlaySceneStart = false;
         }
     }
-    void TurnChecker(GameObject a)
+    public void TurnChecker(GameObject a)
     {
         Turn = a.GetComponent<GameManager>().NowTurn;
     }

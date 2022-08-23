@@ -18,16 +18,20 @@ public class Player1Cursor : MonoBehaviour
     private void Update()
     {
         TurnChecker(_gameManager);
+        CursorMove();
+    }
+
+    void TurnChecker(GameObject a)
+    {
+        Turn = a.GetComponent<GameManager>().NowTurn;
+    }
+    void CursorMove()
+    {
         if (Turn == GameManager.Turn.SetItem || Turn == GameManager.Turn.SelectItem)
         {
             float verticalInput = _speed * Input.GetAxisRaw("Vertical");
             float horizontalInput = _speed * Input.GetAxisRaw("Horizontal");
             rb.velocity = new Vector2(horizontalInput, verticalInput);
         }
-    }
-
-    void TurnChecker(GameObject a)
-    {
-        Turn = a.GetComponent<GameManager>().NowTurn;
     }
 }
