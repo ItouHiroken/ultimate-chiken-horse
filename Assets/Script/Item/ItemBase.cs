@@ -14,7 +14,16 @@ public abstract class ItemBase : MonoBehaviour
     //    public abstract void Activate2();
 
     GameObject _followingCursor;
-    bool _isFollowing;
+    [SerializeField] bool _isFollowing;
+    bool p1Follow;
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.X)&&p1Follow)
+        {
+            Debug.Log("Xが押されたよ");
+            _isFollowing = !_isFollowing;///←←←←←←←←←←←消せるようにしたい
+        }
+    }
     void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Cursor"))
@@ -24,18 +33,19 @@ public abstract class ItemBase : MonoBehaviour
             playername = collision.gameObject.name;
             if (playername == "Player1Cursor")
             {
+                p1Follow = true;
                 //Activate1();
-                ChangeColor(true);
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (_isFollowing == true)
                 {
-                    _isFollowing = true;///←←←←←←←←←←←消せるようにしたい
-
-                }
-                if (_isFollowing)
-                {
-                    FollowCursor(collision.gameObject);
+                    FollowCursor(collision.gameObject, _isFollowing);
                     ColliderOnOff(true);
                 }
+                else
+                {
+                    FollowCursor(gameObject, _isFollowing);
+                    //ColliderOnOff(false);
+                }
+                ChangeColor(true);
             }
             //if (playername == "Player2Cursor")
             //{
@@ -43,6 +53,7 @@ public abstract class ItemBase : MonoBehaviour
             //    Activate2();
             //    ChangeColor(true);
             //}
+            
         }
 
         //if (collision.gameObject.TryGetComponent(out BombBlast bomb))
@@ -55,12 +66,25 @@ public abstract class ItemBase : MonoBehaviour
         //    }
         //}
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag=="Cursor")
+        {
+                ChangeColor(true);
+        }
+    }
     private void OnTriggerExit2D(Collider2D collider)
     {
-        if (playername == "Player")
+        if (collider.tag == "Cursor")
         {
             ChangeColor(false);
         }
+        p1Follow=false;
+
+
+       // p2Follow = false;
+
+
         //if (playername == "Player2")
         //{
         //    ChangeColor(false);
@@ -73,17 +97,21 @@ public abstract class ItemBase : MonoBehaviour
     /// <param name="cursorcheck"></param>
     private void ChangeColor(bool cursorcheck)
     {
-        Color color = cursorcheck ? new Color(255, 255, 255, 200) : new Color(255, 255, 255, 255);
-        GetComponent<Renderer>().material.color = color;
+        Debug.Log("色変わるマン");
+        Color color = cursorcheck ? new Color(100,100,100, 255) : new Color(255, 255, 255, 255);
+        gameObject.GetComponent<SpriteRenderer>().color = color;
     }
 
     /// <summary>
     /// アイテムにカーソルを合わせたあと、何かしらの操作をすると、ついてきてほしい。
     /// </summary>
-    void FollowCursor(GameObject gameObject)
+    void FollowCursor(GameObject gameObject, bool isFollowing)
     {
-        _CursorPosition = _followingCursor.transform.position;
-        this.transform.position = _CursorPosition;
+        if (isFollowing)
+        {
+            _CursorPosition = _followingCursor.transform.position;
+            this.transform.position = _CursorPosition;
+        }
     }
 
     /// <summary>
@@ -93,6 +121,6 @@ public abstract class ItemBase : MonoBehaviour
     void ColliderOnOff(bool colliderSwitch)
     {
         GetComponent<BoxCollider2D>().enabled = colliderSwitch;
-      //  GetComponent<CircleCollider2D>().enabled = colliderSwitch;
+        //      GetComponent<CircleCollider2D>().enabled = colliderSwitch;
     }
 }

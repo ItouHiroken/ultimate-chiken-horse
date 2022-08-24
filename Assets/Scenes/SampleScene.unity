@@ -5210,7 +5210,7 @@ Rigidbody2D:
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!58 &1113396837
@@ -5817,6 +5817,7 @@ GameObject:
   - component: {fileID: 1680564130}
   - component: {fileID: 1680564132}
   - component: {fileID: 1680564133}
+  - component: {fileID: 1680564134}
   m_Layer: 0
   m_Name: 1*1
   m_TagString: Untagged
@@ -5944,6 +5945,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Hp: 1
+  _isFollowing: 0
+--- !u!58 &1680564134
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680564128}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0000009536743, y: 0}
+  serializedVersion: 2
+  m_Radius: 2.7
 --- !u!1 &1926746397
 GameObject:
   m_ObjectHideFlags: 0
