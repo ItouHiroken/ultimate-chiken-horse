@@ -11,10 +11,28 @@ using UnityEngine;
 /// </summary>
 public class Goal : MonoBehaviour
 {
-    [Tooltip("ポイントマネージャーに渡すゴール順番リスト")][SerializeField] private List<GameObject> goalPlayers = new List<GameObject>();
+    [SerializeField][Tooltip("ポイントマネージャーに渡すゴール順番リスト")] private List<GameObject> goalPlayers = new List<GameObject>();
+    [SerializeField][Tooltip("ゲームマネージャー")]GameObject _gameManager;
+    [Tooltip("ターンチェンジの関数使いたいからとってくる")]GameManager gameManagerScript;
+    int playerCount;
+
+    void Start()
+    {
+        gameManagerScript = _gameManager.GetComponent<GameManager>();
+        playerCount = Menu._playerNumber;
+    }
+
+    //void Update()
+    //{
+    //    if (goalPlayers.Count == playerCount)
+    //    {
+    //        gameManagerScript.TurnChange();
+    //        goalPlayers.Clear();
+    //    }
+    //}
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.CompareTag("Player"))
         {
             if (collision.name == "Player1")
             {
@@ -41,7 +59,7 @@ public class Goal : MonoBehaviour
     }
             void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.CompareTag("Player"))
         {
             if (collision.name == "Player1")
             {

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Wall
   - Cursor
+  - Ground
+  - Coin
+  - isUsed
   layers:
   - Default
   - TransparentFX

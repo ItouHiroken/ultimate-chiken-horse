@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Player1State;
+using PlayerState;
+//using Player2State;
 public abstract class PlayerBase : MonoBehaviour
 {
     public DeBuff _deBuff = DeBuff.Default;

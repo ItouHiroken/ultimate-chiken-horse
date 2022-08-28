@@ -16,9 +16,11 @@ public abstract class ItemBase : MonoBehaviour
     GameObject _followingCursor;
     [SerializeField] bool _isFollowing;
     bool p1Follow;
+    [SerializeField] Color _color1;
+    [SerializeField] Color _color2;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X)&&p1Follow)
+        if (Input.GetKeyDown(KeyCode.X) && p1Follow)
         {
             Debug.Log("Xが押されたよ");
             _isFollowing = !_isFollowing;///←←←←←←←←←←←消せるようにしたい
@@ -45,7 +47,7 @@ public abstract class ItemBase : MonoBehaviour
                     FollowCursor(gameObject, _isFollowing);
                     //ColliderOnOff(false);
                 }
-                ChangeColor(true);
+                ChangeColor(true,_color1);
             }
             //if (playername == "Player2Cursor")
             //{
@@ -53,7 +55,7 @@ public abstract class ItemBase : MonoBehaviour
             //    Activate2();
             //    ChangeColor(true);
             //}
-            
+
         }
 
         //if (collision.gameObject.TryGetComponent(out BombBlast bomb))
@@ -68,21 +70,21 @@ public abstract class ItemBase : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag=="Cursor")
+        if (collision.CompareTag("Cursor"))
         {
-                ChangeColor(true);
+            ChangeColor(true, _color1);
         }
     }
     private void OnTriggerExit2D(Collider2D collider)
     {
-        if (collider.tag == "Cursor")
+        if (collider.CompareTag("Cursor"))
         {
-            ChangeColor(false);
+            ChangeColor(false, _color2);
         }
-        p1Follow=false;
+        p1Follow = false;
 
 
-       // p2Follow = false;
+        // p2Follow = false;
 
 
         //if (playername == "Player2")
@@ -95,11 +97,18 @@ public abstract class ItemBase : MonoBehaviour
     /// アイテム選択時、アイテムにカーソル合わさると色が変わる。
     /// </summary>
     /// <param name="cursorcheck"></param>
-    private void ChangeColor(bool cursorcheck)
+    private void ChangeColor(bool cursorcheck, Color color)
     {
         Debug.Log("色変わるマン");
-        Color color = cursorcheck ? new Color(100,100,100, 255) : new Color(255, 255, 255, 255);
-        gameObject.GetComponent<SpriteRenderer>().color = color;
+        if (cursorcheck)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = color;
+
+        }
+        else if (!cursorcheck)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = color;
+        }
     }
 
     /// <summary>

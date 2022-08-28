@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     public Turn NowTurn;
 
     [SerializeField] GameObject startingPoint;
-    
+    [SerializeField] GameObject summonItem;
 
 
 
@@ -43,28 +43,23 @@ public class GameManager : MonoBehaviour
         //    TurnChange();
         //}
     }   
-    void TurnChange()
+    public void TurnChange()
     {
         switch (NowTurn)  
         {
             case Turn.GamePlay:
                 NowTurn = GameManager.Turn.Result;
-                //NowTurn = NowTurn & ~GameManager.Turn.GamePlay;
                 break;
             case Turn.Result:
                 NowTurn = GameManager.Turn.SelectItem;
-                //NowTurn = NowTurn & ~GameManager.Turn.Result;
                 break;
             case Turn.SelectItem:
                 NowTurn = GameManager.Turn.SetItem;
-                //NowTurn = NowTurn & ~GameManager.Turn.SelectItem;
+                summonItem.GetComponent<SummonItem>()._isChoiceItem= true;
                 break;
             case Turn.SetItem:
                 NowTurn = GameManager.Turn.GamePlay;
-
-                //←←←←←←←←←←←←←←←←ここでStartingPointのスクリプトのbool型をtrueにする
                 startingPoint.GetComponent<StartingPoint>().PlaySceneStart =true ;
-                //NowTurn = NowTurn & ~GameManager.Turn.SetItem;
                 break;
 
             default:

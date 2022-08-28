@@ -16,10 +16,19 @@ public class SummonItem : MonoBehaviour
     private int choiceNum;
     [SerializeField] List<GameObject> SummonPositionList;
 
+    [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
+    public GameManager.Turn Turn;
     public bool _isChoiceItem;
-    private void Start()
+    private void Update()
     {
-        //myListの中からランダムで1つを選ぶ
+        if (_isChoiceItem)
+        {
+            ChoseItem();
+            SpawnRandomItem();
+        }
+    }
+    void ChoseItem() 
+    {         //myListの中からランダムで1つを選ぶ
         randomObj = myList[Random.Range(0, myList.Count)];
         ////選んだオブジェクトをuseListに追加
         useList.Add(randomObj);
@@ -28,13 +37,6 @@ public class SummonItem : MonoBehaviour
         choiceNum = myList.IndexOf(randomObj);
         ////同じリスト番号をmyListから削除
         myList.RemoveAt(choiceNum);
-    }
-    private void Update()
-    {
-        if (_isChoiceItem == true)
-        {
-            SpawnRandomItem();
-        }
     }
     /// <summary>
     /// アイテムをランダムに自分のところに召喚する。
@@ -45,5 +47,10 @@ public class SummonItem : MonoBehaviour
         Vector2 spawnPos = this.gameObject.transform.position;
         int N = Random.Range(0, itemPrefabs.Length);
         Instantiate(itemPrefabs[N], spawnPos, itemPrefabs[N].transform.rotation);
+        _isChoiceItem = false;
+    }
+    public void TurnChecker(GameObject a)
+    {
+        Turn = a.GetComponent<GameManager>().NowTurn;
     }
 }

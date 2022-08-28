@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerState;
 /// <summary>
 /// プレイヤーの移動に関するもの
 /// </summary>
@@ -11,7 +12,7 @@ public class Player1Move : PlayerBase
     [SerializeField] private float _horizonSpeedLimiter;
     [SerializeField] private float _jumpSpeedLimiter;
     [SerializeField][Tooltip("自分の動きonoffするため")] Player1Move controller;
-    private Player1State.GetScore Score;
+    private PlayerState.GetScore Score;
     public GameManager.Turn Turn;
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
 
@@ -23,7 +24,6 @@ public class Player1Move : PlayerBase
 
     protected new void Update()/////←←←←←←←←←←←これnewつけるとなにかを非表示にするらしい、なにがなんなのかわかんないから聞く
     {
-
         TurnChecker(_gameManager);
         if (Turn == GameManager.Turn.GamePlay)
         {
@@ -120,20 +120,20 @@ public class Player1Move : PlayerBase
             if (_hp <= 0)
             {
                 controller.enabled = false;
-                Score = Score | Player1State.GetScore.Death;
-                Score &= ~Player1State.GetScore.Default;
+                Score |= PlayerState.GetScore.Death;
+                Score &= ~PlayerState.GetScore.Default;
                 Debug.Log(Score);
             }
         }
-        if (collision.gameObject.tag == "Coin")
+        if (collision.gameObject.CompareTag("Coin"))
         {
             collision.gameObject.tag = "isUsed";
-            Score = Score | Player1State.GetScore.Coin;
+            Score |= PlayerState.GetScore.Coin;
             Debug.Log(Score);
         }
         if (collision.gameObject.name == "Goal")
         {
-            Score = Score | Player1State.GetScore.isGoal;
+            Score |= PlayerState.GetScore.isGoal;
             Debug.Log(Score);
         }
     }
