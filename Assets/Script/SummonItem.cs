@@ -28,15 +28,18 @@ public class SummonItem : MonoBehaviour
         }
     }
     void ChoseItem() 
-    {         //myListの中からランダムで1つを選ぶ
-        randomObj = myList[Random.Range(0, myList.Count)];
-        ////選んだオブジェクトをuseListに追加
-        useList.Add(randomObj);
-        //randomObj.layer = LayerMask.NameToLayer("Mejirushi");
-        ////選んだオブジェクトのリスト番号を取得
-        choiceNum = myList.IndexOf(randomObj);
-        ////同じリスト番号をmyListから削除
-        myList.RemoveAt(choiceNum);
+    {         
+        //myListの中からランダムで1つを選ぶ
+              //    randomObj = myList[Random.Range(0, myList.Count)];
+              //    ////選んだオブジェクトをuseListに追加
+              //    useList.Add(randomObj);
+              //    //randomObj.layer = LayerMask.NameToLayer("Mejirushi");
+              //    ////選んだオブジェクトのリスト番号を取得
+              //    choiceNum = myList.IndexOf(randomObj);
+              //    ////同じリスト番号をmyListから削除
+              //    myList.RemoveAt(choiceNum);
+        Debug.Log("選ぶよ！まだできてない");
+        _isChoiceItem = false;
     }
     /// <summary>
     /// アイテムをランダムに自分のところに召喚する。

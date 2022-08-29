@@ -80,10 +80,11 @@ public abstract class ItemBase : MonoBehaviour
         if (collider.CompareTag("Cursor"))
         {
             ChangeColor(false, _color2);
+            if (collider.name == "P1Cursor")
+            {
+                p1Follow = false;
+            }
         }
-        p1Follow = false;
-
-
         // p2Follow = false;
 
 

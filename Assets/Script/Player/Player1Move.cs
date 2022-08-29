@@ -16,6 +16,8 @@ public class Player1Move : PlayerBase
     public GameManager.Turn Turn;
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
 
+    [SerializeField]public int P1Score;
+
     protected override void SpeedController()
     {
         _horizonSpeedLimiter = WalkSpeedLimiter;
@@ -134,6 +136,7 @@ public class Player1Move : PlayerBase
         if (collision.gameObject.name == "Goal")
         {
             Score |= PlayerState.GetScore.isGoal;
+            collision.gameObject.SetActive(false);
             Debug.Log(Score);
         }
     }
@@ -142,4 +145,3 @@ public class Player1Move : PlayerBase
         Turn = a.GetComponent<GameManager>().NowTurn;
     }
 }
-

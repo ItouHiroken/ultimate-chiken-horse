@@ -27,11 +27,14 @@ public class GameManager : MonoBehaviour
     //[SerializeField] Player4Move p4;
     public Turn NowTurn;
 
+    [SerializeField] GameObject p1Cursol;
+
     [SerializeField] GameObject startingPoint;
     [SerializeField] GameObject summonItem;
 
+    [SerializeField] Player1Move player1;
 
-
+    int clearLine=10;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
@@ -47,19 +50,34 @@ public class GameManager : MonoBehaviour
     {
         switch (NowTurn)  
         {
+            case Turn.GameStart:
+                p1Cursol.SetActive(false);
+                NowTurn = GameManager.Turn.GamePlay;
+                break;
             case Turn.GamePlay:
+                p1Cursol.SetActive(false);
                 NowTurn = GameManager.Turn.Result;
                 break;
             case Turn.Result:
+                if (player1.GetComponent<Player1Move>().P1Score>=clearLine)
+                {
+                    NowTurn=GameManager.Turn.Result;
+                    Debug.Log("GameEnd");
+                    break;
+                }
                 NowTurn = GameManager.Turn.SelectItem;
                 break;
             case Turn.SelectItem:
+                p1Cursol.SetActive(true);
                 NowTurn = GameManager.Turn.SetItem;
                 summonItem.GetComponent<SummonItem>()._isChoiceItem= true;
                 break;
             case Turn.SetItem:
                 NowTurn = GameManager.Turn.GamePlay;
                 startingPoint.GetComponent<StartingPoint>().PlaySceneStart =true ;
+                break;
+            case Turn.GameEnd:
+
                 break;
 
             default:
@@ -68,9 +86,11 @@ public class GameManager : MonoBehaviour
     }
     public enum Turn
     {
+        GameStart,
         GamePlay,
         Result,
         SelectItem,
         SetItem,
+        GameEnd,
     }
 }
