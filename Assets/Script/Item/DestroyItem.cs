@@ -12,9 +12,10 @@ public class DestroyItem : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (Turn==GameManager.Turn.SetItem)
+        if (Turn==GameManager.Turn.SetItem&&Input.GetKeyDown(KeyCode.Space))
         {
             collision.gameObject.SetActive(false);
+            Debug.Log("選択ボタンを押したらにする（かっこの中に）");
         }
     }
 }
