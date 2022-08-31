@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class Menu : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField]public static int _playerNumber=0;
+    [SerializeField]public static int _playerNumber=4;
     static int _playerName;
     [SerializeField]int _selectNumber;
     private void Update()

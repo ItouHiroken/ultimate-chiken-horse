@@ -8,7 +8,6 @@ public class Start : MonoBehaviour,IPointerClickHandler
 {
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("‰Ÿ‚³‚ê‚½ŒN");
         SceneManager.LoadScene("SampleScene");
     }
 }
