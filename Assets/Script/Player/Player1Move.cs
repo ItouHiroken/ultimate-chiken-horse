@@ -136,7 +136,7 @@ public class Player1Move : PlayerBase
         if (collision.gameObject.name == "Goal")
         {
             Score |= PlayerState.GetScore.isGoal;
-            collision.gameObject.SetActive(false);
+            //collision.gameObject.SetActive(false);
             Debug.Log(Score);
         }
     }
