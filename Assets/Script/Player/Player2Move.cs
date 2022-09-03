@@ -5,18 +5,18 @@ using PlayerState;
 /// <summary>
 /// プレイヤーの移動に関するもの
 /// </summary>
-public class Player1Move : PlayerBase
+public class Player2Move : PlayerBase
 {
     [SerializeField][Tooltip("体力")] private int _hp = default;
     [Tooltip("走れるかどうかチェック")] bool _dashCheck;
     [SerializeField] private float _horizonSpeedLimiter;
     [SerializeField] private float _jumpSpeedLimiter;
-    [SerializeField][Tooltip("自分の動きonoffするため")] Player1Move controller;
+    [SerializeField][Tooltip("自分の動きonoffするため")] Player2Move controller;
     private PlayerState.GetScore Score;
     public GameManager.Turn Turn;
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
 
-    [SerializeField]public int P1Score;
+    [SerializeField]public int P2Score;
 
     protected override void SpeedController()
     {
@@ -34,7 +34,7 @@ public class Player1Move : PlayerBase
             {
                 _dashCheck = !_dashCheck;
             }
-            bool jump = Input.GetButtonDown("P1Jump");
+            bool jump = Input.GetButtonDown("P2Jump");
             if (jump == true)
             {
                 if (JumpChecker == 1 && GroundCheck)
@@ -60,7 +60,7 @@ public class Player1Move : PlayerBase
         TurnChecker(_gameManager);
         if (Turn == GameManager.Turn.GamePlay)
         {
-            float horizontalKey = Input.GetAxis("P1Horizontal");    
+            float horizontalKey = Input.GetAxis("P2Horizontal");    
 
             //右入力で左向きに動く
             if (horizontalKey > 0)

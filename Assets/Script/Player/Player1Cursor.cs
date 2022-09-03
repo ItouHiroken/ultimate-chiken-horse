@@ -29,8 +29,8 @@ public class Player1Cursor : MonoBehaviour
     {
         if (Turn == GameManager.Turn.SetItem || Turn == GameManager.Turn.SelectItem)
         {
-            float verticalInput = _speed * Input.GetAxisRaw("Vertical");
-            float horizontalInput = _speed * Input.GetAxisRaw("Horizontal");
+            float verticalInput = _speed * Input.GetAxisRaw("P1Vertical");
+            float horizontalInput = _speed * Input.GetAxisRaw("P1Horizontal");
             rb.velocity = new Vector2(horizontalInput, verticalInput);
         }
     }

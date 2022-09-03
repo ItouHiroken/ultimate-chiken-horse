@@ -28,14 +28,12 @@ public abstract class PlayerBase : MonoBehaviour
     public float JumpPower { get { return _jumpPower; } }
     /// <summary>水平方向の入力値</summary>
     float _horizontal = default;
-    /// <summary>入力に応じて左右を反転させるかどうかのフラグ</summary>
-    [SerializeField] bool _flipX = false;
     public object AddForce { get; private set; }
 
     public bool isreturn = false;
 
-    [SerializeField] public Rigidbody2D _rb = default;
-    [SerializeField] public Rigidbody2D Rb;
+    Rigidbody2D _rb = default;
+    public Rigidbody2D Rb { get => _rb; }
 
     [SerializeField] private int _jumpChecker = 0;
     public int JumpChecker { get { return _jumpChecker; } }
@@ -48,18 +46,19 @@ public abstract class PlayerBase : MonoBehaviour
     public bool RightWallCheck { get { return _leftWallCheck; } }
 
     //public bool isDead;
-   // public bool isGoal1 = false;
+    // public bool isGoal1 = false;
     [SerializeField][Tooltip("違うレイヤーで当たり判定とるよ！")] private LayerMask levelMask;
 
     GameManager gameManager;
+    public int _point;
 
-    
+
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        Rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
         _speed = _defaultSpeed;
         _slowSpeed = _defaultSpeed / 2;
         _splitSpeed = _defaultSpeed * 2;
@@ -76,13 +75,6 @@ public abstract class PlayerBase : MonoBehaviour
         RightWallCheker(Vector3.right); // 右に広げる
         LeftWallCheker(Vector3.left); // 左に広げる
         GroundCheker(Vector3.down); // 下に広げる
-
-        _horizontal = Input.GetAxisRaw("Horizontal");
-        // 設定に応じて左右を反転させる
-        if (_flipX)
-        {
-            FlipX(_horizontal);
-        }
         if (_deBuff == DeBuff.Default)
         {
             _speed = _defaultSpeed;
