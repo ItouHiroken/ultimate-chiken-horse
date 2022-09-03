@@ -7,7 +7,7 @@ public class Title : MonoBehaviour
     [SerializeField] Canvas EscapeCanvas;
     [SerializeField] Canvas TitleCanvas;
     [SerializeField] Canvas SelectCanvas;
-    async void Update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
