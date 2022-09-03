@@ -23,21 +23,25 @@ public class SummonItem : MonoBehaviour
     {
         if (_isChoiceItem)
         {
-            ChoseItem();
-            SpawnRandomItem();
+            foreach (var i in SummonPositionList)
+            {
+                ChoseItem();
+                SpawnRandomItem(i);
+            }
         }
+        //////使ったアイテム戻す！
     }
-    void ChoseItem() 
-    {         
+    void ChoseItem()
+    {
         //myListの中からランダムで1つを選ぶ
-              //    randomObj = myList[Random.Range(0, myList.Count)];
-              //    ////選んだオブジェクトをuseListに追加
-              //    useList.Add(randomObj);
-              //    //randomObj.layer = LayerMask.NameToLayer("Mejirushi");
-              //    ////選んだオブジェクトのリスト番号を取得
-              //    choiceNum = myList.IndexOf(randomObj);
-              //    ////同じリスト番号をmyListから削除
-              //    myList.RemoveAt(choiceNum);
+        randomObj = myList[Random.Range(0, myList.Count-1)];
+        ////選んだオブジェクトをuseListに追加
+        useList.Add(randomObj);
+        //randomObj.layer = LayerMask.NameToLayer("Mejirushi");
+        ////選んだオブジェクトのリスト番号を取得
+        choiceNum = myList.IndexOf(randomObj);
+        ////同じリスト番号をmyListから削除
+        myList.RemoveAt(choiceNum);
         Debug.Log("選ぶよ！まだできてない");
         _isChoiceItem = false;
     }
@@ -45,9 +49,9 @@ public class SummonItem : MonoBehaviour
     /// アイテムをランダムに自分のところに召喚する。
     /// </summary>
     /// <param name="spawnPos">自分の場所</param>
-    void SpawnRandomItem()
+    void SpawnRandomItem(GameObject SummonPoint)
     {
-        Vector2 spawnPos = this.gameObject.transform.position;
+        Vector2 spawnPos = SummonPoint.gameObject.transform.position;
         int N = Random.Range(0, itemPrefabs.Length);
         Instantiate(itemPrefabs[N], spawnPos, itemPrefabs[N].transform.rotation);
         _isChoiceItem = false;
