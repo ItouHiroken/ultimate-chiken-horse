@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 /// <summary>
 /// プレイヤー人数選択フェイズ
 /// 1、プレイヤー人数選択
@@ -33,8 +33,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject summonItem;
 
     [SerializeField] Player1Move player1;
-
-    int clearLine=10;
+    [SerializeField] Canvas Result;
+    [SerializeField]int clearLine=10;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
@@ -50,24 +50,22 @@ public class GameManager : MonoBehaviour
     {
         switch (NowTurn)  
         {
-            case Turn.GameStart:
-                p1Cursol.SetActive(false);
-                NowTurn = GameManager.Turn.GamePlay;
-                break;
             case Turn.GamePlay:
                 p1Cursol.SetActive(false);
                 NowTurn = GameManager.Turn.Result;
                 break;
             case Turn.Result:
+                Result.gameObject.SetActive(true);
                 if (player1.GetComponent<Player1Move>().P1Score>=clearLine)
                 {
-                    NowTurn=GameManager.Turn.Result;
+                    NowTurn=GameManager.Turn.GameEnd;
                     Debug.Log("GameEnd");
                     break;
                 }
                 NowTurn = GameManager.Turn.SelectItem;
                 break;
             case Turn.SelectItem:
+                Result.gameObject.SetActive(false);
                 p1Cursol.SetActive(true);
                 NowTurn = GameManager.Turn.SetItem;
                 summonItem.GetComponent<SummonItem>()._isChoiceItem= true;
@@ -86,7 +84,6 @@ public class GameManager : MonoBehaviour
     }
     public enum Turn
     {
-        GameStart,
         GamePlay,
         Result,
         SelectItem,
