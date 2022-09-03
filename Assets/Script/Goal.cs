@@ -11,7 +11,7 @@ using UnityEngine;
 /// </summary>
 public class Goal : MonoBehaviour
 {
-    [SerializeField][Tooltip("ポイントマネージャーに渡すゴール順番リスト")] private List<GameObject> goalPlayers = new List<GameObject>();
+    [SerializeField][Tooltip("ポイントマネージャーに渡すゴール順番リスト")] private List<GameObject> goalPlayers = new List<GameObject>(Menu._playerNumber);
     [SerializeField][Tooltip("ゲームマネージャー")]GameObject _gameManager;
     [Tooltip("ターンチェンジの関数使いたいからとってくる")]GameManager gameManagerScript;
     int playerCount;
@@ -38,12 +38,13 @@ public class Goal : MonoBehaviour
             {
                 Player1Move playerscript;
                 playerscript = collision.GetComponent<Player1Move>();
-                playerscript.enabled = false;
-                if (playerscript.enabled == false)
+                if (playerscript.enabled == true)
                 {
                     goalPlayers.Add(collision.gameObject);
                   //  playerscript.isGoal1 = true;
                 }
+                playerscript.enabled = false;
+
                 ///何かしらで渡す量を決める、これはポイントを管理するスクリプトを作ってから考えよう。
                 //if (playerscript.isDead == true)///プレイヤーが入った瞬間、死んでいた場合ポイントが減る
                 //{
@@ -51,7 +52,7 @@ public class Goal : MonoBehaviour
                 //}
                 //else///生きてたらより多くのポイントが手に入る
                 //{
-                    
+
                 //}
                 //if(playerscript.)
             }
