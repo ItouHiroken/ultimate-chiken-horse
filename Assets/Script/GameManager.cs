@@ -34,7 +34,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] Player1Move player1;
     [SerializeField] Canvas Result;
-    [SerializeField]int clearLine=10;
+    [SerializeField] int clearLine = 10;
+
+    [SerializeField]
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
@@ -45,34 +47,35 @@ public class GameManager : MonoBehaviour
         //{
         //    TurnChange();
         //}
-    }   
+    }
     public void TurnChange()
     {
-        switch (NowTurn)  
+        switch (NowTurn)
         {
             case Turn.GamePlay:
                 p1Cursol.SetActive(false);
+                Result.gameObject.SetActive(true);
                 NowTurn = GameManager.Turn.Result;
                 break;
             case Turn.Result:
-                Result.gameObject.SetActive(true);
-                if (player1.GetComponent<Player1Move>().P1Score>=clearLine)
+                NowTurn = GameManager.Turn.SelectItem;
+                p1Cursol.SetActive(true);
+                Result.gameObject.SetActive(false);
+                if (player1.GetComponent<Player1Move>().P1Score >= clearLine)
                 {
-                    NowTurn=GameManager.Turn.GameEnd;
+                    NowTurn = GameManager.Turn.GameEnd;
                     Debug.Log("GameEnd");
                     break;
                 }
-                NowTurn = GameManager.Turn.SelectItem;
+                summonItem.GetComponent<SummonItem>()._isChoiceItem = true;
                 break;
             case Turn.SelectItem:
-                Result.gameObject.SetActive(false);
-                p1Cursol.SetActive(true);
+
                 NowTurn = GameManager.Turn.SetItem;
-                summonItem.GetComponent<SummonItem>()._isChoiceItem= true;
                 break;
             case Turn.SetItem:
                 NowTurn = GameManager.Turn.GamePlay;
-                startingPoint.GetComponent<StartingPoint>().PlaySceneStart =true ;
+                startingPoint.GetComponent<StartingPoint>().PlaySceneStart = true;
                 break;
             case Turn.GameEnd:
 

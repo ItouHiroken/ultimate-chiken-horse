@@ -8,9 +8,12 @@ using UnityEngine;
 public class Player1Cursor : MonoBehaviour
 {
     [Tooltip("移動速度")] public float _speed = 10.0f;
-    [SerializeField][Tooltip("ゲームマネージャーから参照したい")]GameObject _gameManager;
-    public  GameManager.Turn Turn;
+    [SerializeField][Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
+    public GameManager.Turn Turn;
     private Rigidbody2D rb;
+    [SerializeField]bool isFollowing;
+
+    [SerializeField]GameObject unchi;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -19,8 +22,45 @@ public class Player1Cursor : MonoBehaviour
     {
         TurnChecker(_gameManager);
         CursorMove();
+        OreniTsuitekoi(unchi);
+    }
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        unchi = collision.gameObject;
     }
 
+    private void OreniTsuitekoi(GameObject GodOfGameObject)
+    {
+        if (GodOfGameObject == null) return;
+        if (!GodOfGameObject.TryGetComponent<ItemKaiten>(out ItemKaiten _Item)) return;
+        FollowCursor(GodOfGameObject.gameObject, isFollowing);
+        switch (Turn)
+        {
+            case GameManager.Turn.SelectItem:
+                if (Input.GetButtonDown("P1Fire")) { isFollowing = true; }
+                break;
+            case GameManager.Turn.SetItem:
+                if (Input.GetButtonDown("P1Fire")) { isFollowing = false; }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        unchi = null;
+    }
+    /// <summary>
+    /// アイテムにカーソルを合わせたあと、何かしらの操作をすると、ついてきてほしい。
+    /// </summary>
+    void FollowCursor(GameObject gameObject, bool isFollowing)
+    {
+        if (isFollowing)
+        {
+            gameObject.transform.position = this.gameObject.transform.position;
+        }
+    }
     void TurnChecker(GameObject a)
     {
         Turn = a.GetComponent<GameManager>().NowTurn;

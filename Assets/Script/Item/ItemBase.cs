@@ -18,56 +18,40 @@ public abstract class ItemBase : MonoBehaviour
     bool p1Follow;
     [SerializeField] Color _color1;
     [SerializeField] Color _color2;
+    [SerializeField] GameManager _gameManager;
+
+    [SerializeField] GameObject _selectImage;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X) && p1Follow)
+        if (_selectImage == null) return;
+        if (_gameManager.NowTurn == GameManager.Turn.SelectItem)
         {
-            Debug.Log("XÇ™âüÇ≥ÇÍÇΩÇÊ");
-            _isFollowing = !_isFollowing;///Å©Å©Å©Å©Å©Å©Å©Å©Å©Å©Å©è¡ÇπÇÈÇÊÇ§Ç…ÇµÇΩÇ¢
+            _selectImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            _selectImage.gameObject.SetActive(false);
         }
     }
     void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Cursor"))
         {
-            Debug.Log("CursorTriggerEnter");
-            _followingCursor = collision.gameObject;
-            playername = collision.gameObject.name;
-            if (playername == "Player1Cursor")
-            {
-                p1Follow = true;
-                //Activate1();
-                if (_isFollowing == true)
-                {
-                    FollowCursor(collision.gameObject, _isFollowing);
-                    ColliderOnOff(true);
-                }
-                else
-                {
-                    FollowCursor(gameObject, _isFollowing);
-                    //ColliderOnOff(false);
-                }
-                ChangeColor(true,_color1);
-            }
-            //if (playername == "Player2Cursor")
-            //{
-            //    FollowCursor();
-            //    Activate2();
-            //    ChangeColor(true);
-            //}
-
+            ColliderOnOff(true);
+            ChangeColor(true, _color1);
         }
-
-        //if (collision.gameObject.TryGetComponent(out BombBlast bomb))
-        //{
-        //    _Hp -= bomb._bombDamage;
-        //    if (_Hp <= 0)
-        //    {
-        //        LostItemIncrease();
-        //        Destroy(gameObject);
-        //    }
-        //}
     }
+
+
+    //if (collision.gameObject.TryGetComponent(out BombBlast bomb))
+    //{
+    //    _Hp -= bomb._bombDamage;
+    //    if (_Hp <= 0)
+    //    {
+    //        LostItemIncrease();
+    //        Destroy(gameObject);
+    //    }
+    //}
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Cursor"))
