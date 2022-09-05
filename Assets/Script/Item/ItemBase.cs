@@ -13,7 +13,6 @@ public abstract class ItemBase : MonoBehaviour
     //    public abstract void Activate1();
     //    public abstract void Activate2();
 
-    GameObject _followingCursor;
     [SerializeField] bool _isFollowing;
     bool p1Follow;
     [SerializeField] Color _color1;
@@ -41,17 +40,6 @@ public abstract class ItemBase : MonoBehaviour
             ChangeColor(true, _color1);
         }
     }
-
-
-    //if (collision.gameObject.TryGetComponent(out BombBlast bomb))
-    //{
-    //    _Hp -= bomb._bombDamage;
-    //    if (_Hp <= 0)
-    //    {
-    //        LostItemIncrease();
-    //        Destroy(gameObject);
-    //    }
-    //}
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Cursor"))
@@ -64,14 +52,7 @@ public abstract class ItemBase : MonoBehaviour
         if (collider.CompareTag("Cursor"))
         {
             ChangeColor(false, _color2);
-            if (collider.name == "P1Cursor")
-            {
-                p1Follow = false;
-            }
         }
-        // p2Follow = false;
-
-
         //if (playername == "Player2")
         //{
         //    ChangeColor(false);
@@ -93,18 +74,6 @@ public abstract class ItemBase : MonoBehaviour
         else if (!cursorcheck)
         {
             gameObject.GetComponent<SpriteRenderer>().color = color;
-        }
-    }
-
-    /// <summary>
-    /// アイテムにカーソルを合わせたあと、何かしらの操作をすると、ついてきてほしい。
-    /// </summary>
-    void FollowCursor(GameObject gameObject, bool isFollowing)
-    {
-        if (isFollowing)
-        {
-            _CursorPosition = _followingCursor.transform.position;
-            this.transform.position = _CursorPosition;
         }
     }
 
