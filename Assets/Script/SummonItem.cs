@@ -42,7 +42,6 @@ public class SummonItem : MonoBehaviour
         choiceNum = myList.IndexOf(randomObj);
         ////同じリスト番号をmyListから削除
         myList.RemoveAt(choiceNum);
-        Debug.Log("選ぶよ！まだできてない");
         _isChoiceItem = false;
     }
     /// <summary>

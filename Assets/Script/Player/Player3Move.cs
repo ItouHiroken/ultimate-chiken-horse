@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PlayerState;
-/// <summary>
-/// プレイヤーの移動に関するもの
-/// </summary>
-public class Player1Move : PlayerBase
+
+public class Player3Move : PlayerBase
 {
     [SerializeField][Tooltip("体力")] private int _hp = default;
     [Tooltip("走れるかどうかチェック")] bool _dashCheck;
@@ -169,6 +167,7 @@ public class Player1Move : PlayerBase
         if (collision.gameObject.name == "Goal")
         {
             Score |= PlayerState.GetScore.isGoal;
+            //collision.gameObject.SetActive(false);
             Debug.Log(Score);
         }
     }

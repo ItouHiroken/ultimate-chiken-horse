@@ -12,7 +12,7 @@ public class Player2Move : PlayerBase
     [SerializeField] private float _horizonSpeedLimiter;
     [SerializeField] private float _jumpSpeedLimiter;
     [SerializeField][Tooltip("自分の動きonoffするため")] Player2Move controller;
-    private PlayerState.GetScore Score;
+    public PlayerState.GetScore Score;
     public GameManager.Turn Turn;
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
 
