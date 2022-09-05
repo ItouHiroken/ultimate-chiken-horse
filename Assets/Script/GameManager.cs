@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public List<GameObject> _isChoiceCursol;
     [SerializeField] public List<GameObject> _isPutCursol;
+    [SerializeField] CinemachineGroup cinemachineGroup;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
@@ -84,6 +85,7 @@ public class GameManager : MonoBehaviour
             case Turn.SetItem:
                 NowTurn = GameManager.Turn.GamePlay;
                 startingPoint.GetComponent<StartingPoint>().PlaySceneStart = true;
+                cinemachineGroup.cameraReset= true;
                 break;
             case Turn.GameEnd:
 
