@@ -1599,6 +1599,8 @@ MonoBehaviour:
   player1: {fileID: 1982765607}
   Result: {fileID: 248390830}
   clearLine: 100
+  _isChoiceCursol: []
+  _isPutCursol: []
 --- !u!1 &441302706
 GameObject:
   m_ObjectHideFlags: 0
@@ -1611,7 +1613,7 @@ GameObject:
   - component: {fileID: 441302710}
   - component: {fileID: 441302709}
   - component: {fileID: 441302708}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 1*1spike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2243,7 +2245,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &831119922
 Transform:
   m_ObjectHideFlags: 0
@@ -6041,7 +6043,7 @@ GameObject:
   - component: {fileID: 1113396834}
   - component: {fileID: 1113396837}
   - component: {fileID: 1113396836}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player1Cursor
   m_TagString: Cursor
   m_Icon: {fileID: 0}
@@ -6063,6 +6065,8 @@ MonoBehaviour:
   _speed: 20
   _gameManager: {fileID: 336041240}
   Turn: 0
+  isFollowing: 0
+  OverlapItem: {fileID: 0}
 --- !u!212 &1113396834
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7446,11 +7450,15 @@ MonoBehaviour:
   P3: {fileID: 0}
   P4: {fileID: 0}
   P1Point: 0
+  P2Point: 0
+  P3Point: 0
+  P4Point: 0
   P1Slider: {fileID: 1621188639}
   P2Slider: {fileID: 618594819}
   P3Slider: {fileID: 766437653}
   P4Slider: {fileID: 240911448}
   _isCheck: 0
+  _changeValueInterval: 3
 --- !u!1 &1680564128
 GameObject:
   m_ObjectHideFlags: 0
@@ -7593,8 +7601,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Hp: 1
   _isFollowing: 0
-  _color1: {r: 0.9811321, g: 0.9811321, b: 0.9811321, a: 1}
-  _color2: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  _color1: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
+  _color2: {r: 1, g: 1, b: 1, a: 1}
+  _gameManager: {fileID: 0}
+  _selectImage: {fileID: 0}
 --- !u!58 &1680564134
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -11,9 +11,9 @@ public class Player1Cursor : MonoBehaviour
     [SerializeField][Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
     public GameManager.Turn Turn;
     private Rigidbody2D rb;
-    [SerializeField]bool isFollowing;
+    [SerializeField] bool isFollowing;
 
-    [SerializeField]GameObject unchi;
+    [SerializeField] GameObject OverlapItem;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -22,14 +22,14 @@ public class Player1Cursor : MonoBehaviour
     {
         TurnChecker(_gameManager);
         CursorMove();
-        OreniTsuitekoi(unchi);
+        FollowCursol(OverlapItem);
     }
     void OnTriggerStay2D(Collider2D collision)
     {
-        unchi = collision.gameObject;
+        OverlapItem = collision.gameObject;
     }
 
-    private void OreniTsuitekoi(GameObject GodOfGameObject)
+    private void FollowCursol(GameObject GodOfGameObject)
     {
         if (GodOfGameObject == null) return;
         if (!GodOfGameObject.TryGetComponent<ItemKaiten>(out ItemKaiten _Item)) return;
@@ -37,10 +37,18 @@ public class Player1Cursor : MonoBehaviour
         switch (Turn)
         {
             case GameManager.Turn.SelectItem:
-                if (Input.GetButtonDown("P1Fire")) { isFollowing = true; }
+                if (Input.GetButtonDown("P1Fire"))
+                { 
+                    isFollowing = true;
+                    _gameManager.GetComponent<GameManager>()._isChoiceCursol.Add(gameObject);
+                }
                 break;
             case GameManager.Turn.SetItem:
-                if (Input.GetButtonDown("P1Fire")) { isFollowing = false; }
+                if (Input.GetButtonDown("P1Fire")) 
+                {
+                    isFollowing = false;
+                    _gameManager.GetComponent<GameManager>()._isPutCursol.Add(gameObject);
+                }
                 break;
             default:
                 break;
@@ -49,7 +57,7 @@ public class Player1Cursor : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        unchi = null;
+        OverlapItem = null;
     }
     /// <summary>
     /// アイテムにカーソルを合わせたあと、何かしらの操作をすると、ついてきてほしい。

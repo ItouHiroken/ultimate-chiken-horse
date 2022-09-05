@@ -22,14 +22,14 @@ public class Goal : MonoBehaviour
         playerCount = Menu._playerNumber;
     }
 
-    //void Update()
-    //{
-    //    if (goalPlayers.Count == playerCount)
-    //    {
-    //        gameManagerScript.TurnChange();
-    //        goalPlayers.Clear();
-    //    }
-    //}
+    void Update()
+    {
+        if (goalPlayers.Count == playerCount)
+        {
+            gameManagerScript.TurnChange();
+            goalPlayers.Clear();
+        }
+    }
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

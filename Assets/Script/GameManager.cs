@@ -36,17 +36,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] Canvas Result;
     [SerializeField] int clearLine = 10;
 
-    [SerializeField]
+    [SerializeField] public List<GameObject> _isChoiceCursol;
+    [SerializeField] public List<GameObject> _isPutCursol;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
             TurnChange();
         }
-        //if (p1.enabled == false/*&& p2.enabled == false&&p3.enabled == false&&p4.enabled == false*/)
-        //{
-        //    TurnChange();
-        //}
+        if (_isChoiceCursol.Count == Menu._playerNumber)
+        {
+            TurnChange();
+            _isChoiceCursol.Clear();
+        }
+        if (_isPutCursol.Count == Menu._playerNumber)
+        {
+            TurnChange();
+            _isPutCursol.Clear();
+        }
+
     }
     public void TurnChange()
     {
