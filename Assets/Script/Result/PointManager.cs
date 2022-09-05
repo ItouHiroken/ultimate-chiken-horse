@@ -29,10 +29,14 @@ public class PointManager : MonoBehaviour
     {
         if (gameManager.NowTurn == GameManager.Turn.Result)
         {
-            ChangeValue(P1Slider,P1.GetComponent<Player1Move>().P1Score);
-            ChangeValue(P2Slider,P2.GetComponent<Player2Move>().P2Score);
-            //ChangeValue(P3Slider,P3.GetComponent<Player3Move>().P3Score);
-            //ChangeValue(P4Slider,P4.GetComponent<Player4Move>().P4Score);
+            if (_isCheck)
+            {
+                ChangeValue(P1Slider, P1.GetComponent<Player1Move>().P1Score);
+                ChangeValue(P2Slider, P2.GetComponent<Player2Move>().P2Score);
+                //ChangeValue(P3Slider,P3.GetComponent<Player3Move>().P3Score);
+                //ChangeValue(P4Slider,P4.GetComponent<Player4Move>().P4Score);
+                _isCheck = false;
+            }
         }
     }
     void ChangeValue(Slider _slider, float value)
