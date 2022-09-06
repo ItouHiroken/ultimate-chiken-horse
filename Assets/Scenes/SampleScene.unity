@@ -1597,6 +1597,9 @@ MonoBehaviour:
   startingPoint: {fileID: 2040222814}
   summonItem: {fileID: 515958655}
   player1: {fileID: 1982765607}
+  player2: {fileID: 1783321863}
+  player3: {fileID: 655970518}
+  player4: {fileID: 1027927713}
   Result: {fileID: 248390830}
   clearLine: 100
   _isChoiceCursol: []
@@ -1628,7 +1631,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 424380397}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -24.665, y: 19.929998, z: 0}
+  m_LocalPosition: {x: -24.904999, y: 21.114998, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1675,7 +1678,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33fd9ae7af76f08478f7477fe5691da1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  players: []
+  players:
+  - {fileID: 1982765605}
+  - {fileID: 1783321859}
+  - {fileID: 655970513}
+  - {fileID: 1027927708}
   _gameObject: {fileID: 336041240}
   P1: {fileID: 1982765601}
   P2: {fileID: 1783321858}
@@ -1860,12 +1867,17 @@ MonoBehaviour:
   - {fileID: 1680564128}
   - {fileID: 1075145466}
   - {fileID: 1380983217}
+  - {fileID: 1680564128}
+  - {fileID: 1075145466}
+  - {fileID: 1380983217}
   itemList: []
   useList: []
   itemPrefabs:
   - {fileID: 1680564128}
-  - {fileID: 441302706}
+  - {fileID: 1680564128}
   - {fileID: 1075145466}
+  - {fileID: 1075145466}
+  - {fileID: 1380983217}
   - {fileID: 1380983217}
   SummonPositionList:
   - {fileID: 64217605}
@@ -1931,7 +1943,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 13.293747
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1954,8 +1966,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_LocalRotation: {x: 0.00050001126, y: 3.3566542e-11, z: -1.6783648e-14, w: 0.9999999}
-  m_LocalPosition: {x: -24.665, y: 19.929998, z: -10}
+  m_LocalRotation: {x: 0.00050001126, y: 3.360621e-11, z: -1.6803484e-14, w: 0.9999999}
+  m_LocalPosition: {x: -24.904999, y: 21.114998, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2234,11 +2246,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 655970513}
-  - component: {fileID: 655970517}
+  - component: {fileID: 655970518}
   - component: {fileID: 655970516}
   - component: {fileID: 655970515}
   - component: {fileID: 655970514}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player3
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2349,7 +2361,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &655970517
+--- !u!114 &655970518
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2358,7 +2370,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 655970512}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b46ff05f0871a2845ae8f2d38931c427, type: 3}
+  m_Script: {fileID: 11500000, guid: 470fb0b7d31e39b418124ee131b00ede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _deBuff: 1
@@ -2373,16 +2385,16 @@ MonoBehaviour:
   _leftWallCheck: 0
   levelMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 0
   _point: 0
   _hp: 0
   _horizonSpeedLimiter: 0
   _jumpSpeedLimiter: 0
-  controller: {fileID: 655970517}
+  controller: {fileID: 1982765607}
   Score: 0
   Turn: 0
   _gameManager: {fileID: 336041240}
-  P2Score: 0
+  P3Score: 0
 --- !u!1 &766437651
 GameObject:
   m_ObjectHideFlags: 0
@@ -2629,8 +2641,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 858492816}
-  m_LocalRotation: {x: 0.00050001126, y: 3.3566542e-11, z: -1.6783648e-14, w: 0.9999999}
-  m_LocalPosition: {x: -24.665, y: 19.929998, z: -10}
+  m_LocalRotation: {x: 0.00050001126, y: 3.360621e-11, z: -1.6803484e-14, w: 0.9999999}
+  m_LocalPosition: {x: -24.904999, y: 21.114998, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6136,11 +6148,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1027927708}
-  - component: {fileID: 1027927712}
+  - component: {fileID: 1027927713}
   - component: {fileID: 1027927711}
   - component: {fileID: 1027927710}
   - component: {fileID: 1027927709}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player4
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -6251,7 +6263,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1027927712
+--- !u!114 &1027927713
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6260,7 +6272,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1027927707}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b46ff05f0871a2845ae8f2d38931c427, type: 3}
+  m_Script: {fileID: 11500000, guid: dd05cff5241762945bd9b99bd7b19e77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _deBuff: 1
@@ -6275,16 +6287,16 @@ MonoBehaviour:
   _leftWallCheck: 0
   levelMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 0
   _point: 0
   _hp: 0
   _horizonSpeedLimiter: 0
   _jumpSpeedLimiter: 0
-  controller: {fileID: 1027927712}
+  controller: {fileID: 1982765607}
   Score: 0
   Turn: 0
   _gameManager: {fileID: 336041240}
-  P2Score: 0
+  P4Score: 0
 --- !u!1 &1046863666
 GameObject:
   m_ObjectHideFlags: 0
@@ -6860,7 +6872,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1277226021}
   - component: {fileID: 1277226024}
-  - component: {fileID: 1277226023}
   - component: {fileID: 1277226022}
   m_Layer: 0
   m_Name: cm
@@ -6906,45 +6917,6 @@ MonoBehaviour:
   m_YawDamping: 0
   m_RollDamping: 0
   m_AngularDamping: 0
---- !u!114 &1277226023
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1277226020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f7633c93f0364a418841eeb8b058634, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
-  m_LookaheadTime: 0
-  m_LookaheadSmoothing: 0
-  m_LookaheadIgnoreY: 0
-  m_HorizontalDamping: 0.5
-  m_VerticalDamping: 0.5
-  m_ScreenX: 0.5
-  m_ScreenY: 0.5
-  m_DeadZoneWidth: 0
-  m_DeadZoneHeight: 0
-  m_SoftZoneWidth: 0.91
-  m_SoftZoneHeight: 0.8
-  m_BiasX: 0
-  m_BiasY: 0
-  m_CenterOnActivate: 1
-  m_GroupFramingSize: 0.15
-  m_FramingMode: 2
-  m_FrameDamping: 2
-  m_AdjustmentMode: 0
-  m_MaxDollyIn: 5000
-  m_MaxDollyOut: 5000
-  m_MinimumDistance: 1
-  m_MaximumDistance: 5000
-  m_MinimumFOV: 3
-  m_MaximumFOV: 60
-  m_MinimumOrthoSize: 1
-  m_MaximumOrthoSize: 5000
 --- !u!114 &1277226024
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -7209,7 +7181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalPlayers: []
   _gameManager: {fileID: 336041240}
-  _pointManager: {fileID: 0}
+  _pointManager: {fileID: 1658719276}
 --- !u!1 &1356687600
 GameObject:
   m_ObjectHideFlags: 0
@@ -8107,8 +8079,8 @@ MonoBehaviour:
   gameManager: {fileID: 336041242}
   P1: {fileID: 1982765601}
   P2: {fileID: 1783321858}
-  P3: {fileID: 0}
-  P4: {fileID: 0}
+  P3: {fileID: 655970512}
+  P4: {fileID: 1027927707}
   P1Point: 0
   P2Point: 0
   P3Point: 0
@@ -8477,7 +8449,7 @@ GameObject:
   - component: {fileID: 1783321862}
   - component: {fileID: 1783321861}
   - component: {fileID: 1783321860}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player2
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -8492,7 +8464,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1783321858}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.12, y: 19.73, z: 0}
+  m_LocalPosition: {x: -21.6, y: 22.1, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9055,7 +9027,7 @@ GameObject:
   - component: {fileID: 1982765603}
   - component: {fileID: 1982765602}
   - component: {fileID: 1982765604}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player1
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -9473,10 +9445,13 @@ MonoBehaviour:
   Player3Point: {fileID: 939081495}
   Player4Point: {fileID: 823999593}
   Player1: {fileID: 1982765601}
-  Player2: {fileID: 0}
-  Player3: {fileID: 0}
-  Player4: {fileID: 0}
+  Player2: {fileID: 1783321858}
+  Player3: {fileID: 655970512}
+  Player4: {fileID: 1027927707}
   p1: {fileID: 1982765607}
+  p2: {fileID: 1783321863}
+  p3: {fileID: 655970518}
+  p4: {fileID: 1027927713}
   _gameManager: {fileID: 336041240}
   Turn: 0
   PlaySceneStart: 0

@@ -14,7 +14,7 @@ public class Goal : MonoBehaviour
     [SerializeField][Tooltip("ポイントマネージャーに渡すゴール順番リスト")] private List<GameObject> goalPlayers = new List<GameObject>(Menu._playerNumber);
     [SerializeField][Tooltip("ゲームマネージャー")] GameObject _gameManager;
     [Tooltip("ターンチェンジの関数使いたいからとってくる")] GameManager gameManagerScript;
-    [SerializeField] GameManager _pointManager;
+    [SerializeField] PointManager _pointManager;
     int playerCount;
 
     void Start()
@@ -72,7 +72,7 @@ public class Goal : MonoBehaviour
             }
 
             gameManagerScript.TurnChange();
-            _pointManager.GetComponent<PointManager>()._isCheck = true;
+            _pointManager._isCheck = true;
             goalPlayers.Clear();
         }
     }

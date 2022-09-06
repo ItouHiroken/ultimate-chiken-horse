@@ -10,10 +10,7 @@ public class SummonItem : MonoBehaviour
     [SerializeField] List<GameObject> myList;
     [SerializeField] List<GameObject> itemList;
     public List<GameObject> useList = new List<GameObject>();
-    private GameObject randomObj;
-    public GameObject[] itemPrefabs;
-    private int _random;
-    private int choiceNum;
+    [SerializeField]List<GameObject> itemPrefabs;
     [SerializeField] List<GameObject> SummonPositionList;
 
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
@@ -25,21 +22,32 @@ public class SummonItem : MonoBehaviour
         {
             foreach (var i in SummonPositionList)
             {
+                ItemReset();
                 ChoseItem();
                 SpawnRandomItem(i);
             }
         }
         //////使ったアイテム戻す！
+        _isChoiceItem = false;
+    }
+
+    /// <summary>
+    /// アイテムリストをセットする。
+    /// </summary>
+    void ItemReset()
+    {
+        myList.Clear();
+        myList = new List<GameObject>(itemPrefabs);
+
     }
     void ChoseItem()
     {
         //myListの中からランダムで1つを選ぶ
-        randomObj = myList[Random.Range(0, myList.Count-1)];
+        GameObject randomObj = myList[Random.Range(0, myList.Count)];
         ////選んだオブジェクトをuseListに追加
         useList.Add(randomObj);
-        //randomObj.layer = LayerMask.NameToLayer("Mejirushi");
         ////選んだオブジェクトのリスト番号を取得
-        choiceNum = myList.IndexOf(randomObj);
+        int choiceNum = myList.IndexOf(randomObj);
         ////同じリスト番号をmyListから削除
         myList.RemoveAt(choiceNum);
         _isChoiceItem = false;
@@ -51,9 +59,8 @@ public class SummonItem : MonoBehaviour
     void SpawnRandomItem(GameObject SummonPoint)
     {
         Vector2 spawnPos = SummonPoint.gameObject.transform.position;
-        int N = Random.Range(0, itemPrefabs.Length);
+        int N = Random.Range(0, itemPrefabs.Count);
         Instantiate(itemPrefabs[N], spawnPos, itemPrefabs[N].transform.rotation);
-        _isChoiceItem = false;
     }
     public void TurnChecker(GameObject a)
     {

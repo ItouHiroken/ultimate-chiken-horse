@@ -9,12 +9,12 @@ public class Player3Move : PlayerBase
     [Tooltip("走れるかどうかチェック")] bool _dashCheck;
     [SerializeField] private float _horizonSpeedLimiter;
     [SerializeField] private float _jumpSpeedLimiter;
-    [SerializeField][Tooltip("自分の動きonoffするため")] Player1Move controller;
+    [SerializeField][Tooltip("自分の動きonoffするため")] Player3Move controller;
     public PlayerState.GetScore Score;
     public GameManager.Turn Turn;
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
 
-    [SerializeField] public int P1Score;
+    [SerializeField] public int P3Score;
 
     protected override void SpeedController()
     {
@@ -32,7 +32,7 @@ public class Player3Move : PlayerBase
             {
                 _dashCheck = !_dashCheck;
             }
-            bool jump = Input.GetButtonDown("P1Jump");
+            bool jump = Input.GetButtonDown("P3Jump");
             if (jump == true)
             {
                 if (JumpChecker == 1 && GroundCheck)
@@ -58,22 +58,22 @@ public class Player3Move : PlayerBase
             {
                 if (Score.HasFlag(GetScore.Death))
                 {
-                    P1Score += 10;
+                    P3Score += 10;
                     Score = 0;
                 }
                 else
                 {
                     if (Score.HasFlag(GetScore.First))
                     {
-                        P1Score += 10;
+                        P3Score += 10;
                     }
                     if (Score.HasFlag(GetScore.Solo))
                     {
-                        P1Score += 15;
+                        P3Score += 15;
                     }
                     if (Score.HasFlag(GetScore.Coin))
                     {
-                        P1Score += 10;
+                        P3Score += 10;
                     }
                     Score = 0;
                 }
@@ -91,7 +91,7 @@ public class Player3Move : PlayerBase
         TurnChecker(_gameManager);
         if (Turn == GameManager.Turn.GamePlay)
         {
-            float horizontalKey = Input.GetAxis("P1Horizontal");
+            float horizontalKey = Input.GetAxis("P3Horizontal");
 
             //右入力で左向きに動く
             if (horizontalKey > 0)

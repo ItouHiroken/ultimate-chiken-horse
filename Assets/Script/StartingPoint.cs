@@ -15,10 +15,10 @@ public class StartingPoint : MonoBehaviour
     [SerializeField] GameObject Player4;
 
     [SerializeField] Player1Move p1;
-    //[SerializeField] Player2Move p2;
-    //[SerializeField] Player3Move p3;
-    //[SerializeField] Player4Move p4;
-    
+    [SerializeField] Player2Move p2;
+    [SerializeField] Player3Move p3;
+    [SerializeField] Player4Move p4;
+
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
     public GameManager.Turn Turn;
     public bool PlaySceneStart;
@@ -35,13 +35,13 @@ public class StartingPoint : MonoBehaviour
         if (PlaySceneStart == true)
         {
             Player1.transform.position = Player1Point.transform.position;
-            //Player2.transform.position = Player2Point.transform.position;
-            //Player3.transform.position = Player3Point.transform.position;
-            //Player4.transform.position = Player4Point.transform.position;
+            Player2.transform.position = Player2Point.transform.position;
+            Player3.transform.position = Player3Point.transform.position;
+            Player4.transform.position = Player4Point.transform.position;
             p1.enabled = true;
-            //p2.enabled = true;
-            //p3.enabled = true;
-            //p4.enabled = true;
+            p2.enabled = true;
+            p3.enabled = true;
+            p4.enabled = true;
             PlaySceneStart = false;
         }
     }

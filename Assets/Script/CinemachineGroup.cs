@@ -27,7 +27,6 @@ public class CinemachineGroup : MonoBehaviour
         {
             if (cameraReset)
             {
-                Debug.Log("camera");
                 cinemachineTargetGroup.RemoveMember(players[0]);
                 cinemachineTargetGroup.RemoveMember(players[1]);
                 cinemachineTargetGroup.RemoveMember(players[2]);
@@ -41,6 +40,7 @@ public class CinemachineGroup : MonoBehaviour
 
             if (P1.GetComponent<Player1Move>().Score == PlayerState.GetScore.Death || P1.GetComponent<Player1Move>().Score == PlayerState.GetScore.isGoal)
             {
+                Debug.Log("AAA");
                 cinemachineTargetGroup.RemoveMember(players[0]);
             }
             if (P2.GetComponent<Player2Move>().Score == PlayerState.GetScore.Death || P2.GetComponent<Player2Move>().Score == PlayerState.GetScore.isGoal)

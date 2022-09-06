@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject summonItem;
 
     [SerializeField] Player1Move player1;
+    [SerializeField] Player2Move player2;
+    [SerializeField] Player3Move player3;
+    [SerializeField] Player4Move player4;
     [SerializeField] Canvas Result;
     [SerializeField] int clearLine = 10;
 
@@ -71,6 +74,24 @@ public class GameManager : MonoBehaviour
                 p1Cursol.SetActive(true);
                 Result.gameObject.SetActive(false);
                 if (player1.GetComponent<Player1Move>().P1Score >= clearLine)
+                {
+                    NowTurn = GameManager.Turn.GameEnd;
+                    Debug.Log("GameEnd");
+                    break;
+                }
+                if (player2.GetComponent<Player2Move>().P2Score >= clearLine)
+                {
+                    NowTurn = GameManager.Turn.GameEnd;
+                    Debug.Log("GameEnd");
+                    break;
+                }
+                if (player3.GetComponent<Player3Move>().P3Score >= clearLine)
+                {
+                    NowTurn = GameManager.Turn.GameEnd;
+                    Debug.Log("GameEnd");
+                    break;
+                }
+                if (player4.GetComponent<Player4Move>().P4Score >= clearLine)
                 {
                     NowTurn = GameManager.Turn.GameEnd;
                     Debug.Log("GameEnd");
