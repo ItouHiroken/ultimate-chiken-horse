@@ -52,39 +52,6 @@ public class Player3Move : PlayerBase
                 }
             }
         }
-        if (Turn == GameManager.Turn.Result)
-        {
-            if (Score.HasFlag(GetScore.isGoal))
-            {
-                if (Score.HasFlag(GetScore.Death))
-                {
-                    P3Score += 10;
-                    Score = 0;
-                }
-                else
-                {
-                    if (Score.HasFlag(GetScore.First))
-                    {
-                        P3Score += 10;
-                    }
-                    if (Score.HasFlag(GetScore.Solo))
-                    {
-                        P3Score += 15;
-                    }
-                    if (Score.HasFlag(GetScore.Coin))
-                    {
-                        P3Score += 10;
-                    }
-                    Score = 0;
-                }
-            }
-            else
-            {
-                Score = 0;
-            }
-        }
-
-
     }
     private void FixedUpdate()
     {

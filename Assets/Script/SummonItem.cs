@@ -38,7 +38,6 @@ public class SummonItem : MonoBehaviour
     {
         myList.Clear();
         myList = new List<GameObject>(itemPrefabs);
-
     }
     void ChoseItem()
     {

@@ -22,11 +22,13 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public Turn NowTurn;
-
+    
     [SerializeField] GameObject p1Cursol;
 
     [SerializeField] GameObject startingPoint;
     [SerializeField] GameObject summonItem;
+
+    [SerializeField] GameObject pointManager;
 
     [SerializeField] Player1Move player1;
     [SerializeField] Player2Move player2;
@@ -57,10 +59,10 @@ public class GameManager : MonoBehaviour
 
         if (NowTurn == Turn.GamePlay)
         {
-            if ((player1.Score == PlayerState.GetScore.isGoal || player1.Score == PlayerState.GetScore.Death)
-                && (player2.Score == PlayerState.GetScore.isGoal || player2.Score == PlayerState.GetScore.Death)
-                && (player3.Score == PlayerState.GetScore.isGoal || player3.Score == PlayerState.GetScore.Death)
-                && (player4.Score == PlayerState.GetScore.isGoal || player4.Score == PlayerState.GetScore.Death))
+            if ((player1.Score.HasFlag(PlayerState.GetScore.isGoal) || player1.Score.HasFlag(PlayerState.GetScore.Death))
+            && (player2.Score.HasFlag(PlayerState.GetScore.isGoal) || player2.Score.HasFlag(PlayerState.GetScore.Death))
+            && (player3.Score.HasFlag(PlayerState.GetScore.isGoal) || player3.Score.HasFlag(PlayerState.GetScore.Death))
+            && (player4.Score.HasFlag(PlayerState.GetScore.isGoal) || player4.Score.HasFlag(PlayerState.GetScore.Death)))
             {
                 TurnChange();
             }
@@ -73,6 +75,8 @@ public class GameManager : MonoBehaviour
             case Turn.GamePlay:
                 p1Cursol.SetActive(false);
                 Result.gameObject.SetActive(true);
+                pointManager.GetComponent<PointPlus>().pointPlusBool = true;
+                pointManager.GetComponent<PointManager>()._isCheck = true;
                 NowTurn = GameManager.Turn.Result;
                 break;
             case Turn.Result:
@@ -110,9 +114,9 @@ public class GameManager : MonoBehaviour
                 NowTurn = GameManager.Turn.SetItem;
                 break;
             case Turn.SetItem:
-                NowTurn = GameManager.Turn.GamePlay;
                 startingPoint.GetComponent<StartingPoint>().PlaySceneStart = true;
                 cinemachineGroup.cameraReset = true;
+                NowTurn = GameManager.Turn.GamePlay;
                 break;
             case Turn.GameEnd:
 

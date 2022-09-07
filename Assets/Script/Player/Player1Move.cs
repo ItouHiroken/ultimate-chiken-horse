@@ -24,7 +24,7 @@ public class Player1Move : PlayerBase
         _jumpSpeedLimiter = 50f;
     }
 
-    protected new void Update()/////Å©Å©Å©Å©Å©Å©Å©Å©Å©Å©Å©Ç±ÇÍnewÇ¬ÇØÇÈÇ∆Ç»Ç…Ç©ÇîÒï\é¶Ç…Ç∑ÇÈÇÁÇµÇ¢ÅAÇ»Ç…Ç™Ç»ÇÒÇ»ÇÃÇ©ÇÌÇ©ÇÒÇ»Ç¢Ç©ÇÁï∑Ç≠
+    protected new void Update()
     {
         TurnChecker(_gameManager);
         if (Turn == GameManager.Turn.GamePlay)
@@ -54,39 +54,6 @@ public class Player1Move : PlayerBase
                 }
             }
         }
-        if (Turn == GameManager.Turn.Result)
-        {
-            if (Score.HasFlag(GetScore.isGoal))
-            {
-                if (Score.HasFlag(GetScore.Death))
-                {
-                    P1Score += 10;
-                    Score = 0;
-                }
-                else
-                {
-                    if (Score.HasFlag(GetScore.First))
-                    {
-                        P1Score += 10;
-                    }
-                    if (Score.HasFlag(GetScore.Solo))
-                    {
-                        P1Score += 15;
-                    }
-                    if (Score.HasFlag(GetScore.Coin))
-                    {
-                        P1Score += 10;
-                    }
-                    Score = 0;
-                }
-            }
-            else
-            {
-                Score = 0;
-            }
-        }
-
-
     }
     private void FixedUpdate()
     {

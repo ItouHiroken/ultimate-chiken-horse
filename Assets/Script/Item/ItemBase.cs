@@ -53,10 +53,6 @@ public abstract class ItemBase : MonoBehaviour
         {
             ChangeColor(false, _color2);
         }
-        //if (playername == "Player2")
-        //{
-        //    ChangeColor(false);
-        //}
     }
 
     /// <summary>
