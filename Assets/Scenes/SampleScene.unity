@@ -1591,7 +1591,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d6696b8646cfc4faad1e7e4a0a9a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  p1: {fileID: 1982765607}
   NowTurn: 0
   p1Cursol: {fileID: 1113396832}
   startingPoint: {fileID: 2040222814}
@@ -2390,7 +2389,7 @@ MonoBehaviour:
   _hp: 0
   _horizonSpeedLimiter: 0
   _jumpSpeedLimiter: 0
-  controller: {fileID: 1982765607}
+  controller: {fileID: 655970518}
   Score: 0
   Turn: 0
   _gameManager: {fileID: 336041240}
@@ -6292,7 +6291,7 @@ MonoBehaviour:
   _hp: 0
   _horizonSpeedLimiter: 0
   _jumpSpeedLimiter: 0
-  controller: {fileID: 1982765607}
+  controller: {fileID: 1027927713}
   Score: 0
   Turn: 0
   _gameManager: {fileID: 336041240}
@@ -8233,7 +8232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Hp: 1
   _isFollowing: 0
-  _color1: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
+  _color1: {r: 1, g: 1, b: 1, a: 0.49411765}
   _color2: {r: 1, g: 1, b: 1, a: 1}
   _gameManager: {fileID: 0}
   _selectImage: {fileID: 0}

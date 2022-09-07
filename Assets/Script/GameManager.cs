@@ -21,10 +21,6 @@ using UnityEngine.UI;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] Player1Move p1;
-    //[SerializeField] Player2Move p2;
-    //[SerializeField] Player3Move p3;
-    //[SerializeField] Player4Move p4;
     public Turn NowTurn;
 
     [SerializeField] GameObject p1Cursol;
@@ -37,7 +33,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Player3Move player3;
     [SerializeField] Player4Move player4;
     [SerializeField] Canvas Result;
-    [SerializeField] int clearLine = 10;
+    [SerializeField] int clearLine = 100;
 
     [SerializeField] public List<GameObject> _isChoiceCursol;
     [SerializeField] public List<GameObject> _isPutCursol;
@@ -59,6 +55,16 @@ public class GameManager : MonoBehaviour
             _isPutCursol.Clear();
         }
 
+        if (NowTurn == Turn.GamePlay)
+        {
+            if ((player1.Score == PlayerState.GetScore.isGoal || player1.Score == PlayerState.GetScore.Death)
+                && (player2.Score == PlayerState.GetScore.isGoal || player2.Score == PlayerState.GetScore.Death)
+                && (player3.Score == PlayerState.GetScore.isGoal || player3.Score == PlayerState.GetScore.Death)
+                && (player4.Score == PlayerState.GetScore.isGoal || player4.Score == PlayerState.GetScore.Death))
+            {
+                TurnChange();
+            }
+        }
     }
     public void TurnChange()
     {
@@ -106,7 +112,7 @@ public class GameManager : MonoBehaviour
             case Turn.SetItem:
                 NowTurn = GameManager.Turn.GamePlay;
                 startingPoint.GetComponent<StartingPoint>().PlaySceneStart = true;
-                cinemachineGroup.cameraReset= true;
+                cinemachineGroup.cameraReset = true;
                 break;
             case Turn.GameEnd:
 

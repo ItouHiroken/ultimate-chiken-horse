@@ -70,8 +70,6 @@ public class Goal : MonoBehaviour
                 default:
                     break;
             }
-
-            gameManagerScript.TurnChange();
             _pointManager._isCheck = true;
             goalPlayers.Clear();
         }
