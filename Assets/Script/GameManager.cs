@@ -36,12 +36,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] Player4Move player4;
     [SerializeField] Canvas Result;
     [SerializeField] int clearLine = 100;
-
+    [SerializeField] float TurnChangeTime=5;
+    [SerializeField] float CountChangeTime;
     [SerializeField] public List<GameObject> _isChoiceCursol;
     [SerializeField] public List<GameObject> _isPutCursol;
     [SerializeField] CinemachineGroup cinemachineGroup;
     private void Update()
     {
+        CountChangeTime += Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Z))
         {
             TurnChange();
@@ -67,6 +69,10 @@ public class GameManager : MonoBehaviour
                 TurnChange();
             }
         }
+        if (NowTurn == Turn.Result)
+        {
+            if (CountChangeTime >= TurnChangeTime) TurnChange();
+        }
     }
     public void TurnChange()
     {
@@ -75,8 +81,8 @@ public class GameManager : MonoBehaviour
             case Turn.GamePlay:
                 p1Cursol.SetActive(false);
                 Result.gameObject.SetActive(true);
-                pointManager.GetComponent<PointPlus>().pointPlusBool = true;
                 pointManager.GetComponent<PointManager>()._isCheck = true;
+                CountChangeTime = 0;
                 NowTurn = GameManager.Turn.Result;
                 break;
             case Turn.Result:
