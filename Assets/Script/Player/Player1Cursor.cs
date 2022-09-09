@@ -29,25 +29,26 @@ public class Player1Cursor : MonoBehaviour
         OverlapItem = collision.gameObject;
     }
 
-    private void FollowCursol(GameObject GodOfGameObject)
+    private void FollowCursol(GameObject gameObject)
     {
-        if (GodOfGameObject == null) return;
-        if (!GodOfGameObject.TryGetComponent<ItemKaiten>(out ItemKaiten _Item)) return;
-        FollowCursor(GodOfGameObject.gameObject, isFollowing);
+        if (gameObject == null) return;
+        if (!gameObject.TryGetComponent<ItemKaiten>(out ItemKaiten _Item)) return;
+        FollowCursor(gameObject.gameObject, isFollowing);
         switch (Turn)
         {
             case GameManager.Turn.SelectItem:
                 if (Input.GetButtonDown("P1Fire"))
                 { 
                     isFollowing = true;
-                    _gameManager.GetComponent<GameManager>()._isChoiceCursol.Add(gameObject);
+                    _gameManager.GetComponent<GameManager>()._isChoiceCursol.Add(base.gameObject);
+                    gameObject.GetComponent<SelectCheck>().selected = true;
                 }
                 break;
             case GameManager.Turn.SetItem:
                 if (Input.GetButtonDown("P1Fire")) 
                 {
                     isFollowing = false;
-                    _gameManager.GetComponent<GameManager>()._isPutCursol.Add(gameObject);
+                    _gameManager.GetComponent<GameManager>()._isPutCursol.Add(base.gameObject);
                 }
                 break;
             default:
