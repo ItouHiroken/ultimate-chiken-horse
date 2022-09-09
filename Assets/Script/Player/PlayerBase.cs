@@ -26,8 +26,6 @@ public abstract class PlayerBase : MonoBehaviour
     /// <summary>ジャンプする力</summary>
     [Tooltip("ジャンプ力")][SerializeField] float _jumpPower = 40f;
     public float JumpPower { get { return _jumpPower; } }
-    /// <summary>水平方向の入力値</summary>
-    float _horizontal = default;
     public object AddForce { get; private set; }
 
     public bool isreturn = false;
@@ -114,30 +112,6 @@ public abstract class PlayerBase : MonoBehaviour
     {
         _jumpChecker = 0;
     }
-
-    /// <summary>
-    /// 自分の絵を左右反転させる
-    /// </summary>
-    /// <param name="horizontal"></param>
-    void FlipX(float horizontal)
-    {
-        /*
-         * 左を入力されたら[キャラクターを左に向ける。
-         * 左右を反転させるには、Transform:Scale:X に -1 を掛ける。
-         * Sprite Renderer の Flip:X を操作しても反転する。
-         * */
-        if (horizontal > 0)
-        {
-            this.transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x), this.transform.localScale.y, this.transform.localScale.z);
-            isreturn = false;
-        }
-        else if (horizontal < 0)
-        {
-            this.transform.localScale = new Vector3(-1 * Mathf.Abs(this.transform.localScale.x), this.transform.localScale.y, this.transform.localScale.z);
-            isreturn = true;
-        }
-    }
-
     /// <summary>
     /// 右にレイ飛ばしてウォールチェックをonoffする、できてない
     /// </summary>

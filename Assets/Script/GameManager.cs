@@ -41,8 +41,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] public List<GameObject> _isChoiceCursol;
     [SerializeField] public List<GameObject> _isPutCursol;
     [SerializeField] CinemachineGroup cinemachineGroup;
+
+    [SerializeField] Text text;
     private void Update()
-    {
+    { 
+        text.text =NowTurn.ToString();
         CountChangeTime += Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Z))
         {
