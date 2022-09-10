@@ -14,7 +14,6 @@ public class Guruguru : MonoBehaviour
     private void Start()
     {
         target = transform;
-        DoRotateAround();
     }
     public Tween DoRotateAround(float endValue, float duration)
     {

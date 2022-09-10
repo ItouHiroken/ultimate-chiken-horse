@@ -68,7 +68,12 @@ public class Player1Cursor : MonoBehaviour
         if (isFollowing)
         {
             gameObject.transform.position = this.gameObject.transform.position;
+            if (gameObject.TryGetComponent(out DestroyItem destroyItem))
+            {
+                destroyItem._isSelect=true;
+            }
         }
+        
     }
     void TurnChecker(GameObject a)
     {

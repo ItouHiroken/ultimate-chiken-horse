@@ -6,16 +6,16 @@ public class DestroyItem : MonoBehaviour
 {
     public GameManager.Turn Turn;
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
+    public bool _isSelect=false;
     private void Update()
     {
         Turn = _gameManager.GetComponent<GameManager>().NowTurn;
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (Turn==GameManager.Turn.SetItem&&Input.GetKeyDown(KeyCode.Space))
+        if (Turn==GameManager.Turn.SetItem&&!_isSelect)
         {
-            collision.gameObject.SetActive(false);
-            Debug.Log("選択ボタンを押したらにする（かっこの中に）");
+            Destroy(gameObject);
         }
     }
 }

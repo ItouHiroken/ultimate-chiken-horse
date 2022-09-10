@@ -17,7 +17,7 @@ public abstract class ItemBase : MonoBehaviour
     bool p1Follow;
     [SerializeField] Color _color1;
     [SerializeField] Color _color2;
-    [SerializeField] GameManager _gameManager;
+    [SerializeField] protected GameManager _gameManager;
 
     [SerializeField] GameObject _selectImage;
     private void Update()
