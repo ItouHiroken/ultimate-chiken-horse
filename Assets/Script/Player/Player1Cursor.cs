@@ -41,7 +41,6 @@ public class Player1Cursor : MonoBehaviour
                 { 
                     isFollowing = true;
                     _gameManager.GetComponent<GameManager>()._isChoiceCursol.Add(base.gameObject);
-                    gameObject.GetComponent<SelectCheck>().selected = true;
                 }
                 break;
             case GameManager.Turn.SetItem:
@@ -70,7 +69,11 @@ public class Player1Cursor : MonoBehaviour
             gameObject.transform.position = this.gameObject.transform.position;
             if (gameObject.TryGetComponent(out DestroyItem destroyItem))
             {
-                destroyItem._isSelect=true;
+                destroyItem._isSelect = true;
+            }
+            if (gameObject.TryGetComponent(out Bomb bomb))
+            {
+                bomb._use = true;
             }
         }
         

@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class Coin : ItemBase
 {
-    public GameManager.Turn nowTurn;
+    [SerializeField] GameManager.Turn nowTurn;
     GameObject _collisionPlayer;
     bool _isCollision = false;
     bool _flag;
@@ -50,7 +50,7 @@ public class Coin : ItemBase
     /// </summary>
     void FollowPlayerBack()
     {
-        DOTween.Sequence().Append(transform.DOMove(new Vector3(_collisionPlayer.transform.position.x, _collisionPlayer.transform.position.y, _collisionPlayer.transform.position.z), 2f)).Play();
+        DOTween.Sequence().Append(transform.DOMove(new Vector3(_collisionPlayer.transform.position.x, _collisionPlayer.transform.position.y, _collisionPlayer.transform.position.z), 2f)).Play().SetAutoKill() ;
     }
     void TurnChecker()
     {
