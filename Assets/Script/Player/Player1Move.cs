@@ -5,13 +5,13 @@ using PlayerState;
 /// <summary>
 /// プレイヤーの移動に関するもの
 /// </summary>
-public class Player1Move : PlayerBase
+public class Players1Move : PlayerBase
 {
     [SerializeField][Tooltip("体力")] private int _hp = default;
     [Tooltip("走れるかどうかチェック")] bool _dashCheck;
     [SerializeField] private float _horizonSpeedLimiter;
     [SerializeField] private float _jumpSpeedLimiter;
-    [SerializeField][Tooltip("自分の動きonoffするため")] Player1Move controller;
+    [SerializeField][Tooltip("自分の動きonoffするため")] PlayerMove controller;
     public PlayerState.GetScore Score;
     public GameManager.Turn Turn;
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;

@@ -32,19 +32,19 @@ public class Goal : MonoBehaviour
                 case 1:
                     if (goalPlayers[0].name == "Player1")
                     {
-                        goalPlayers[0].gameObject.GetComponent<Player1Move>().Score |= PlayerState.GetScore.Coin;
+                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Coin;
                     }
                     else if (goalPlayers[0].name == "Player2")
                     {
-                        goalPlayers[0].gameObject.GetComponent<Player2Move>().Score |= PlayerState.GetScore.Coin;
+                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Coin;
                     }
                     else if (goalPlayers[0].name == "Player3")
                     {
-                        goalPlayers[0].gameObject.GetComponent<Player3Move>().Score |= PlayerState.GetScore.Coin;
+                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Coin;
                     }
                     else if (goalPlayers[0].name == "Player4")
                     {
-                        goalPlayers[0].gameObject.GetComponent<Player4Move>().Score |= PlayerState.GetScore.Coin;
+                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Coin;
                     }
                     break;
                 case 2:
@@ -52,19 +52,19 @@ public class Goal : MonoBehaviour
                 case 4:
                     if (goalPlayers[0].name == "Player1")
                     {
-                        goalPlayers[0].gameObject.GetComponent<Player1Move>().Score |= PlayerState.GetScore.First;
+                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.First;
                     }
                     else if (goalPlayers[0].name == "Player2")
                     {
-                        goalPlayers[0].gameObject.GetComponent<Player2Move>().Score |= PlayerState.GetScore.First;
+                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.First;
                     }
                     else if (goalPlayers[0].name == "Player3")
                     {
-                        goalPlayers[0].gameObject.GetComponent<Player3Move>().Score |= PlayerState.GetScore.First;
+                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.First;
                     }
                     else if (goalPlayers[0].name == "Player4")
                     {
-                        goalPlayers[0].gameObject.GetComponent<Player4Move>().Score |= PlayerState.GetScore.First;
+                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.First;
                     }
                     break;
                 default:
@@ -80,8 +80,8 @@ public class Goal : MonoBehaviour
         {
             if (collision.name == "Player1")
             {
-                Player1Move playerscript;
-                playerscript = collision.GetComponent<Player1Move>();
+                PlayerMove playerscript;
+                playerscript = collision.GetComponent<PlayerMove>();
                 if (playerscript.enabled == true)
                 {
                     goalPlayers.Add(collision.gameObject);
@@ -90,8 +90,8 @@ public class Goal : MonoBehaviour
             }
             if (collision.name == "Player2")
             {
-                Player2Move playerscript;
-                playerscript = collision.GetComponent<Player2Move>();
+                PlayerMove playerscript;
+                playerscript = collision.GetComponent<PlayerMove>();
                 if (playerscript.enabled == true)
                 {
                     goalPlayers.Add(collision.gameObject);
@@ -100,8 +100,8 @@ public class Goal : MonoBehaviour
             }
             if (collision.name == "Player3")
             {
-                Player3Move playerscript;
-                playerscript = collision.GetComponent<Player3Move>();
+                PlayerMove playerscript;
+                playerscript = collision.GetComponent<PlayerMove>();
                 if (playerscript.enabled == true)
                 {
                     goalPlayers.Add(collision.gameObject);
@@ -110,8 +110,8 @@ public class Goal : MonoBehaviour
             }
             if (collision.name == "Player4")
             {
-                Player4Move playerscript;
-                playerscript = collision.GetComponent<Player4Move>();
+                PlayerMove playerscript;
+                playerscript = collision.GetComponent<PlayerMove>();
                 if (playerscript.enabled == true)
                 {
                     goalPlayers.Add(collision.gameObject);
@@ -126,26 +126,26 @@ public class Goal : MonoBehaviour
         {
             if (collision.name == "Player1")
             {
-                Player1Move playerscript;
-                playerscript = collision.GetComponent<Player1Move>();
+                PlayerMove playerscript;
+                playerscript = collision.GetComponent<PlayerMove>();
                 playerscript.enabled = false;
             }
             if (collision.name == "Player2")
             {
-                Player2Move playerscript;
-                playerscript = collision.GetComponent<Player2Move>();
+                PlayerMove playerscript;
+                playerscript = collision.GetComponent<PlayerMove>();
                 playerscript.enabled = false;
             }
             if (collision.name == "Player3")
             {
-                Player3Move playerscript;
-                playerscript = collision.GetComponent<Player3Move>();
+                PlayerMove playerscript;
+                playerscript = collision.GetComponent<PlayerMove>();
                 playerscript.enabled = false;
             }
             if (collision.name == "Player4")
             {
-                Player4Move playerscript;
-                playerscript = collision.GetComponent<Player4Move>();
+                PlayerMove playerscript;
+                playerscript = collision.GetComponent<PlayerMove>();
                 playerscript.enabled = false;
             }
         }

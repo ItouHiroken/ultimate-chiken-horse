@@ -18,7 +18,7 @@ public class PlayerMove : PlayerBase
     public GameManager.Turn Turn;
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
 
-    [SerializeField] public int P1Score;
+    [SerializeField] public int _scorePoint;
     [SerializeField] Animator animator;
     protected override void SpeedController()
     {

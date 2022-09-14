@@ -8,40 +8,40 @@ public abstract class PlayerBase : MonoBehaviour
     public DeBuff _deBuff = DeBuff.Default;
     /// <summary>左右移動する力</summary>
     [Tooltip("現在速度")][SerializeField] private float _speed;
-    public float Speed { get { return _speed; } }
+    protected float Speed { get { return _speed; } }
     [Tooltip("通常速度")] private float _defaultSpeed = 5f;
-    public float DefaultSpeed { get { return _defaultSpeed; } }
+    protected float DefaultSpeed { get { return _defaultSpeed; } }
 
     [Tooltip("スロウ速度")] private float _slowSpeed = default;
-    public float SlowSpeed { get { return _slowSpeed; } }
+    protected float SlowSpeed { get { return _slowSpeed; } }
 
     [Tooltip("滑った速度")] private float _splitSpeed = default;
-    public float SplitSpeed { get { return _splitSpeed; } }
+    protected float SplitSpeed { get { return _splitSpeed; } }
 
     [Tooltip("歩いた時の速度制限")][SerializeField] private float _walkSpeedLimiter = 30f;
-    public float WalkSpeedLimiter { get { return _walkSpeedLimiter; } }
+    protected float WalkSpeedLimiter { get { return _walkSpeedLimiter; } }
 
     [Tooltip("走るときの速度制限")][SerializeField] private float _runSpeedLimiter = default;
     public float RunSpeedLimiter { get { return _runSpeedLimiter; } }
     /// <summary>ジャンプする力</summary>
     [Tooltip("ジャンプ力")][SerializeField] float _jumpPower = 40f;
-    public float JumpPower { get { return _jumpPower; } }
+    protected float JumpPower { get { return _jumpPower; } }
     public object AddForce { get; private set; }
 
-    public bool isreturn = false;
+    protected bool isreturn = false;
 
     Rigidbody2D _rb = default;
-    public Rigidbody2D Rb { get => _rb; }
+    protected Rigidbody2D Rb { get => _rb; }
 
     [SerializeField] private int _jumpChecker = 0;
-    public int JumpChecker { get { return _jumpChecker; } }
+    protected int JumpChecker { get { return _jumpChecker; } }
 
     [SerializeField] bool _groundCheck;
-    public bool GroundCheck { get { return _groundCheck; } }
+    protected bool GroundCheck { get { return _groundCheck; } }
     [SerializeField] bool _rightWallCheck;
-    public bool LeftWallCheck { get { return _rightWallCheck; } }
+    protected bool LeftWallCheck { get { return _rightWallCheck; } }
     [SerializeField] bool _leftWallCheck;
-    public bool RightWallCheck { get { return _leftWallCheck; } }
+    protected bool RightWallCheck { get { return _leftWallCheck; } }
 
     //public bool isDead;
     // public bool isGoal1 = false;

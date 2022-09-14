@@ -14,10 +14,10 @@ public class StartingPoint : MonoBehaviour
     [SerializeField] GameObject Player3;
     [SerializeField] GameObject Player4;
 
-    [SerializeField] Player1Move p1;
-    [SerializeField] Player2Move p2;
-    [SerializeField] Player3Move p3;
-    [SerializeField] Player4Move p4;
+    [SerializeField] PlayerMove p1;
+    [SerializeField] PlayerMove p2;
+    [SerializeField] PlayerMove p3;
+    [SerializeField] PlayerMove p4;
 
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
     public GameManager.Turn Turn;
@@ -38,10 +38,10 @@ public class StartingPoint : MonoBehaviour
             Player2.transform.position = Player2Point.transform.position;
             Player3.transform.position = Player3Point.transform.position;
             Player4.transform.position = Player4Point.transform.position;
-            p1.enabled = true;
-            p2.enabled = true;
-            p3.enabled = true;
-            p4.enabled = true;
+            Player1.GetComponent<PlayerMove>().enabled = true;
+            Player2.GetComponent<PlayerMove>().enabled = true;
+            Player3.GetComponent<PlayerMove>().enabled = true;
+            Player4.GetComponent<PlayerMove>().enabled = true;
             PlaySceneStart = false;
         }
     }

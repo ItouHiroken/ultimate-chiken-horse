@@ -6,19 +6,15 @@ public class CinemachineGroup : MonoBehaviour
 {
     CinemachineTargetGroup cinemachineTargetGroup;
 
-    [SerializeField] List<Transform> players = new List<Transform>();
-    [SerializeField] GameObject _gameObject;
-    GameManager gameManager;
-
+    [SerializeField] List<Transform> players = new();
+    [SerializeField] GameManager gameManager;
+    [SerializeField] List<bool> inCinemachine = new();
     public bool cameraReset;
 
-    [SerializeField] List<bool> inCinemachine;
     void Start()
     {
-        gameManager = _gameObject.GetComponent<GameManager>();
         cinemachineTargetGroup = GetComponent<CinemachineTargetGroup>();
 
-        inCinemachine = new(players.Count);//new List<bool>()‚Ì—ª
         for (int i = 0; i < players.Count; i++)
         {
             AddCinemachineArray(i);
@@ -35,6 +31,7 @@ public class CinemachineGroup : MonoBehaviour
         {
             cinemachineTargetGroup.RemoveMember(players[playerNum]);
             inCinemachine[playerNum] = false;
+            cameraReset = false;
         }
     }
     void Update()
@@ -49,8 +46,6 @@ public class CinemachineGroup : MonoBehaviour
             CheckCameraForcas(i);
         }
     }
-
-
     void CheckCameraForcas(int number)
     {
         if (players[number].GetComponent<PlayerMove>().Score == PlayerState.GetScore.Death ||

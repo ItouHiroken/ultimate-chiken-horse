@@ -22,30 +22,35 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public Turn NowTurn;
-    
+
     [SerializeField] GameObject p1Cursol;
 
     [SerializeField] GameObject startingPoint;
     [SerializeField] GameObject summonItem;
 
     [SerializeField] GameObject pointManager;
-
-    [SerializeField] Player1Move player1;
-    [SerializeField] Player2Move player2;
-    [SerializeField] Player3Move player3;
-    [SerializeField] Player4Move player4;
+    [SerializeField]List<GameObject> playerList;
+    [SerializeField] GameObject player1;
+    [SerializeField] GameObject player2;
+    [SerializeField] GameObject player3;
+    [SerializeField] GameObject player4;
     [SerializeField] Canvas Result;
     [SerializeField] int clearLine = 100;
-    [SerializeField] float TurnChangeTime=5;
+    [SerializeField] float TurnChangeTime = 5;
     [SerializeField] float CountChangeTime;
     [SerializeField] public List<GameObject> _isChoiceCursol;
     [SerializeField] public List<GameObject> _isPutCursol;
     [SerializeField] CinemachineGroup cinemachineGroup;
 
     [SerializeField] Text text;
+
+    private void Start()
+    {
+        playerList=new List<GameObject>();
+    }
     private void Update()
-    { 
-        text.text =NowTurn.ToString();
+    {
+        text.text = NowTurn.ToString();
         CountChangeTime += Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Z))
         {
@@ -64,10 +69,10 @@ public class GameManager : MonoBehaviour
 
         if (NowTurn == Turn.GamePlay)
         {
-            if ((player1.Score.HasFlag(PlayerState.GetScore.isGoal) || player1.Score.HasFlag(PlayerState.GetScore.Death))
-            && (player2.Score.HasFlag(PlayerState.GetScore.isGoal) || player2.Score.HasFlag(PlayerState.GetScore.Death))
-            && (player3.Score.HasFlag(PlayerState.GetScore.isGoal) || player3.Score.HasFlag(PlayerState.GetScore.Death))
-            && (player4.Score.HasFlag(PlayerState.GetScore.isGoal) || player4.Score.HasFlag(PlayerState.GetScore.Death)))
+            if ((player1.GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || player1.GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
+            && (player2.GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || player2.GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
+            && (player3.GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || player3.GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
+            && (player4.GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || player4.GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death)))
             {
                 TurnChange();
             }
@@ -92,25 +97,25 @@ public class GameManager : MonoBehaviour
                 NowTurn = GameManager.Turn.SelectItem;
                 p1Cursol.SetActive(true);
                 Result.gameObject.SetActive(false);
-                if (player1.GetComponent<Player1Move>().P1Score >= clearLine)
+                if (player1.GetComponent<PlayerMove>()._scorePoint >= clearLine)
                 {
                     NowTurn = GameManager.Turn.GameEnd;
                     Debug.Log("GameEnd");
                     break;
                 }
-                if (player2.GetComponent<Player2Move>().P2Score >= clearLine)
+                if (player2.GetComponent<PlayerMove>()._scorePoint >= clearLine)
                 {
                     NowTurn = GameManager.Turn.GameEnd;
                     Debug.Log("GameEnd");
                     break;
                 }
-                if (player3.GetComponent<Player3Move>().P3Score >= clearLine)
+                if (player3.GetComponent<PlayerMove>()._scorePoint >= clearLine)
                 {
                     NowTurn = GameManager.Turn.GameEnd;
                     Debug.Log("GameEnd");
                     break;
                 }
-                if (player4.GetComponent<Player4Move>().P4Score >= clearLine)
+                if (player4.GetComponent<PlayerMove>()._scorePoint >= clearLine)
                 {
                     NowTurn = GameManager.Turn.GameEnd;
                     Debug.Log("GameEnd");
