@@ -7,16 +7,23 @@ using UnityEngine;
 /// </summary>
 public class Player1Cursor : MonoBehaviour
 {
-    [SerializeField] string _selectButton;
-    [SerializeField] string _horizontal;
-    [SerializeField] string _vertical;
+
+    [Header("ジョイスティックの入力 InputManager内の名前")]
+    [SerializeField, Tooltip("横")] string _horizontal;
+    [SerializeField, Tooltip("縦")] string _vertical;
+    [SerializeField, Tooltip("選択ができるボタンのInputManager内の名前")] string _selectButton;
+
+    [Header("変数")]
     [Tooltip("移動速度")] public float _speed = 10.0f;
-    [SerializeField][Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
-    public GameManager.Turn Turn;
-    private Rigidbody2D rb;
     [SerializeField] bool isFollowing;
 
+    [Header("インスタンスしたい物")]
+    [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
+    [SerializeField] public GameManager.Turn Turn;
     [SerializeField] GameObject OverlapItem;
+
+
+    private Rigidbody2D rb;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();

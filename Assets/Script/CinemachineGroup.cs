@@ -4,12 +4,15 @@ using UnityEngine;
 using Cinemachine;
 public class CinemachineGroup : MonoBehaviour
 {
-    CinemachineTargetGroup cinemachineTargetGroup;
-
-    [SerializeField] List<Transform> players = new();
-    [SerializeField] GameManager gameManager;
-    [SerializeField] List<bool> inCinemachine = new();
+    [Header("見たいだけ変数くん")]
+    [Tooltip("アクションターンが始まるときに一回シネマシーンのターゲットグループの中身を変える")]
     public bool cameraReset;
+
+    [Header("アサインしたいものたち")]
+    [SerializeField,Tooltip("プレイヤーの位置")] List<Transform> players = new();
+    [SerializeField,Tooltip("プレイヤーがシネマシーングループに入っているか"] List<bool> inCinemachine = new();
+
+    CinemachineTargetGroup cinemachineTargetGroup;
 
     void Start()
     {
