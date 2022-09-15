@@ -28,6 +28,19 @@ public class PlayerMove : PlayerBase
 
     protected new void Update()
     {
+        if (Input.anyKeyDown)
+        {
+            foreach (KeyCode code in System.Enum.GetValues(typeof(KeyCode)))
+            {
+                if (Input.GetKeyDown(code))
+                {
+                    //èàóùÇèëÇ≠
+                    Debug.Log(code);
+                    break;
+                }
+            }
+        }
+        ////
         TurnChecker(_gameManager);
         if (Turn == GameManager.Turn.GamePlay)
         {
@@ -37,8 +50,9 @@ public class PlayerMove : PlayerBase
                 _dashCheck = !_dashCheck;
             }
             bool jump = Input.GetButtonDown(_jump);
-            if (jump == true)
+            if (jump)
             {
+            Debug.Log(_horizontal);
                 if (JumpChecker == 1 && GroundCheck)
                 {
                     Rb.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);

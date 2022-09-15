@@ -9,15 +9,8 @@ public class PointManager : MonoBehaviour
 {
     [SerializeField] GameManager gameManager;
 
-    [SerializeField] GameObject P1;
-    [SerializeField] GameObject P2;
-    [SerializeField] GameObject P3;
-    [SerializeField] GameObject P4;
-
-    [SerializeField] Slider P1Slider;
-    [SerializeField] Slider P2Slider;
-    [SerializeField] Slider P3Slider;
-    [SerializeField] Slider P4Slider;
+    [SerializeField] List<GameObject> _players = new();
+    [SerializeField] List<Slider> _sliders = new();
 
     public bool _isCheck;
     [SerializeField] float _changeValueInterval;
@@ -28,10 +21,10 @@ public class PointManager : MonoBehaviour
             if (_isCheck)
             {
                 ChangePlayerScore();
-                ChangeSliderValue(P1Slider, P1.GetComponent<PlayerMove>()._scorePoint);
-                ChangeSliderValue(P2Slider, P2.GetComponent<PlayerMove>()._scorePoint);
-                ChangeSliderValue(P3Slider, P3.GetComponent<PlayerMove>()._scorePoint);
-                ChangeSliderValue(P4Slider, P4.GetComponent<PlayerMove>()._scorePoint);
+                for (int i = 0; i < _players.Count; i++)
+                {
+                    ChangeSliderValue(_sliders[i], _players[i].GetComponent<PlayerMove>()._scorePoint);
+                }
                 _isCheck = false;
             }
         }
@@ -40,34 +33,37 @@ public class PointManager : MonoBehaviour
     {
         if (gameManager.NowTurn == GameManager.Turn.Result)
         {
-            Debug.Log("‚Ú‚­‚¢‚Ü‚©‚ç‚Æ‚­‚Ä‚ñ‚¯‚¢‚³‚ñ‚µ‚Ü‚·");
-            if (P1.GetComponent<PlayerMove>().Score.HasFlag(GetScore.isGoal))
+            for (int i = 0; i < _players.Count; i++)
             {
-                if (P1.GetComponent<PlayerMove>().Score.HasFlag(GetScore.Death))
+                Debug.Log("‚Ú‚­‚¢‚Ü‚©‚ç‚Æ‚­‚Ä‚ñ‚¯‚¢‚³‚ñ‚µ‚Ü‚·");
+                if (_players[i].GetComponent<PlayerMove>().Score.HasFlag(GetScore.isGoal))
                 {
-                    P1.GetComponent<PlayerMove>()._scorePoint += 10;
-                    P1.GetComponent<PlayerMove>().Score = 0;
+                    if (_players[i].GetComponent<PlayerMove>().Score.HasFlag(GetScore.Death))
+                    {
+                        _players[i].GetComponent<PlayerMove>()._scorePoint += 10;
+                        _players[i].GetComponent<PlayerMove>().Score = 0;
+                    }
+                    else
+                    {
+                        if (_players[i].GetComponent<PlayerMove>().Score.HasFlag(GetScore.First))
+                        {
+                            _players[i].GetComponent<PlayerMove>()._scorePoint += 10;
+                        }
+                        if (_players[i].GetComponent<PlayerMove>().Score.HasFlag(GetScore.Solo))
+                        {
+                            _players[i].GetComponent<PlayerMove>()._scorePoint += 15;
+                        }
+                        if (_players[i].GetComponent<PlayerMove>().Score.HasFlag(GetScore.Coin))
+                        {
+                            _players[i].GetComponent<PlayerMove>()._scorePoint += 10;
+                        }
+                        _players[i].GetComponent<PlayerMove>().Score = 0;
+                    }
                 }
                 else
                 {
-                    if (P1.GetComponent<PlayerMove>().Score.HasFlag(GetScore.First))
-                    {
-                        P1.GetComponent<PlayerMove>()._scorePoint += 10;
-                    }
-                    if (P1.GetComponent<PlayerMove>().Score.HasFlag(GetScore.Solo))
-                    {
-                        P1.GetComponent<PlayerMove>()._scorePoint += 15;
-                    }
-                    if (P1.GetComponent<PlayerMove>().Score.HasFlag(GetScore.Coin))
-                    {
-                        P1.GetComponent<PlayerMove>()._scorePoint += 10;
-                    }
-                    P1.GetComponent<PlayerMove>().Score = 0;
+                    _players[i].GetComponent<PlayerMove>().Score = 0;
                 }
-            }
-            else
-            {
-                P1.GetComponent<PlayerMove>().Score = 0;
             }
         }
     }

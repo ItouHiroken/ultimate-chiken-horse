@@ -1663,7 +1663,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 424380397}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -25.072813, y: 19.6887, z: 0}
+  m_LocalPosition: {x: -27.54, y: 18.98, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1685,19 +1685,7 @@ MonoBehaviour:
   m_PositionMode: 0
   m_RotationMode: 0
   m_UpdateMethod: 2
-  m_Targets:
-  - target: {fileID: 1982765605}
-    weight: 1
-    radius: 0
-  - target: {fileID: 1783321859}
-    weight: 1
-    radius: 0
-  - target: {fileID: 655970513}
-    weight: 1
-    radius: 0
-  - target: {fileID: 1027927708}
-    weight: 1
-    radius: 0
+  m_Targets: []
 --- !u!114 &424380400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1715,7 +1703,7 @@ MonoBehaviour:
   - {fileID: 1783321859}
   - {fileID: 655970513}
   - {fileID: 1027927708}
-  _gameManager: {fileID: 0}
+  gameManager: {fileID: 0}
   inCinemachine: 00000000
   cameraReset: 0
 --- !u!1 &515958655
@@ -1874,7 +1862,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0.00050001126, y: 3.360621e-11, z: -1.6803484e-14, w: 0.9999999}
-  m_LocalPosition: {x: -25.072813, y: 19.6887, z: -10}
+  m_LocalPosition: {x: -27.54, y: 18.98, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2626,7 +2614,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 858492816}
   m_LocalRotation: {x: 0.00050001126, y: 3.360621e-11, z: -1.6803484e-14, w: 0.9999999}
-  m_LocalPosition: {x: -25.072813, y: 19.6887, z: -10}
+  m_LocalPosition: {x: -27.54, y: 18.98, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8083,14 +8071,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 336041242}
-  P1: {fileID: 1982765601}
-  P2: {fileID: 1783321858}
-  P3: {fileID: 655970512}
-  P4: {fileID: 1027927707}
-  P1Slider: {fileID: 1621188639}
-  P2Slider: {fileID: 618594819}
-  P3Slider: {fileID: 766437653}
-  P4Slider: {fileID: 240911448}
+  _players:
+  - {fileID: 1982765601}
+  - {fileID: 1783321858}
+  - {fileID: 655970512}
+  - {fileID: 1027927707}
+  _sliders:
+  - {fileID: 1621188639}
+  - {fileID: 618594819}
+  - {fileID: 766437653}
+  - {fileID: 240911448}
   _isCheck: 0
   _changeValueInterval: 3
 --- !u!1 &1680564128 stripped

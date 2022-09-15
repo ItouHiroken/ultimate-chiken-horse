@@ -20,6 +20,21 @@ public class CinemachineGroup : MonoBehaviour
             AddCinemachineArray(i);
         }
     }
+
+    void Update()
+    {
+        for (int i = 0; i < players.Count; i++)
+        {
+            CheckCameraForcas(i);
+            if (cameraReset)
+            {
+                Debug.Log(players[i].name);
+                RemoveCinemachineArray(i);
+                AddCinemachineArray(i);
+            }
+        }
+        cameraReset = false;
+    }
     void AddCinemachineArray(int playerNum)
     {
         cinemachineTargetGroup.AddMember(players[playerNum].transform, 1, 0);
@@ -31,19 +46,6 @@ public class CinemachineGroup : MonoBehaviour
         {
             cinemachineTargetGroup.RemoveMember(players[playerNum]);
             inCinemachine[playerNum] = false;
-            cameraReset = false;
-        }
-    }
-    void Update()
-    {
-        for (int i = 0; i < players.Count; i++)
-        {
-            if (cameraReset)
-            {
-                RemoveCinemachineArray(i);
-                AddCinemachineArray(i);
-            }
-            CheckCameraForcas(i);
         }
     }
     void CheckCameraForcas(int number)
@@ -52,6 +54,7 @@ public class CinemachineGroup : MonoBehaviour
             players[number].GetComponent<PlayerMove>().Score == PlayerState.GetScore.isGoal)
         {
             cinemachineTargetGroup.RemoveMember(players[number]);
+            inCinemachine[number]=false;
         }
     }
 }
