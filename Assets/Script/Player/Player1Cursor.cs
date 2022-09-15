@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class Player1Cursor : MonoBehaviour
 {
+    [SerializeField] string _selectButton;
+    [SerializeField] string _horizontal;
+    [SerializeField] string _vertical;
     [Tooltip("移動速度")] public float _speed = 10.0f;
     [SerializeField][Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
     public GameManager.Turn Turn;
@@ -37,14 +40,14 @@ public class Player1Cursor : MonoBehaviour
         switch (Turn)
         {
             case GameManager.Turn.SelectItem:
-                if (Input.GetButtonDown("P1Fire"))
-                { 
+                if (Input.GetButtonDown(_selectButton))
+                {
                     isFollowing = true;
                     _gameManager.GetComponent<GameManager>()._isChoiceCursol.Add(base.gameObject);
                 }
                 break;
             case GameManager.Turn.SetItem:
-                if (Input.GetButtonDown("P1Fire")) 
+                if (Input.GetButtonDown(_selectButton))
                 {
                     isFollowing = false;
                     _gameManager.GetComponent<GameManager>()._isPutCursol.Add(base.gameObject);
@@ -71,12 +74,15 @@ public class Player1Cursor : MonoBehaviour
             {
                 destroyItem._isSelect = true;
             }
+        }
+        else
+        {
             if (gameObject.TryGetComponent(out Bomb bomb))
             {
                 bomb._use = true;
             }
         }
-        
+
     }
     void TurnChecker(GameObject a)
     {
@@ -86,8 +92,8 @@ public class Player1Cursor : MonoBehaviour
     {
         if (Turn == GameManager.Turn.SetItem || Turn == GameManager.Turn.SelectItem)
         {
-            float verticalInput = _speed * Input.GetAxisRaw("P1Vertical");
-            float horizontalInput = _speed * Input.GetAxisRaw("P1Horizontal");
+            float verticalInput = _speed * Input.GetAxisRaw(_vertical);
+            float horizontalInput = _speed * Input.GetAxisRaw(_horizontal);
             rb.velocity = new Vector2(horizontalInput, verticalInput);
         }
     }
