@@ -24,7 +24,6 @@ public class Bomb : MonoBehaviour
     {
         if (_use && _turn == GameManager.Turn.SetItem)
         {
-
             _circleCollider.isTrigger = false;
             _use = false;
         }

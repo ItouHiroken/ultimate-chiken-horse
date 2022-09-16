@@ -10,7 +10,7 @@ public class CinemachineGroup : MonoBehaviour
 
     [Header("アサインしたいものたち")]
     [SerializeField,Tooltip("プレイヤーの位置")] List<Transform> players = new();
-    [SerializeField,Tooltip("プレイヤーがシネマシーングループに入っているか"] List<bool> inCinemachine = new();
+    [SerializeField,Tooltip("プレイヤーがシネマシーングループに入っているか")] List<bool> inCinemachine = new();
 
     CinemachineTargetGroup cinemachineTargetGroup;
 

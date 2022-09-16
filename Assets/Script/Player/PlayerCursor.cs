@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// プレイヤーがアイテム選択画面に来た時使うカーソル 
 /// </summary>
-public class Player1Cursor : MonoBehaviour
+public class PlayerCursor : MonoBehaviour
 {
 
     [Header("ジョイスティックの入力 InputManager内の名前")]
@@ -57,7 +57,10 @@ public class Player1Cursor : MonoBehaviour
                 if (Input.GetButtonDown(_selectButton))
                 {
                     isFollowing = false;
-                    _gameManager.GetComponent<GameManager>()._isPutCursol.Add(base.gameObject);
+                    if (!_gameManager.GetComponent<GameManager>()._isPutCursol.Contains(gameObject))
+                    {
+                        _gameManager.GetComponent<GameManager>()._isPutCursol.Add(base.gameObject);
+                    }
                 }
                 break;
             default:

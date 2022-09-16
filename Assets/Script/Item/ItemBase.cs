@@ -79,7 +79,13 @@ public abstract class ItemBase : MonoBehaviour
     /// <param name="colliderSwitch"></param>
     void ColliderOnOff(bool colliderSwitch)
     {
-        GetComponent<BoxCollider2D>().enabled = colliderSwitch;
-        //      GetComponent<CircleCollider2D>().enabled = colliderSwitch;
+        if (TryGetComponent(out BoxCollider2D BC2D))
+        {
+            BC2D.enabled = colliderSwitch;
+        }
+        if (TryGetComponent(out CircleCollider2D CC2D))
+        {
+            CC2D.enabled = colliderSwitch;
+        }
     }
 }
