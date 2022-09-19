@@ -11,6 +11,8 @@ public class PlayerCursor : MonoBehaviour
     [Header("ジョイスティックの入力 InputManager内の名前")]
     [SerializeField, Tooltip("横")] string _horizontal;
     [SerializeField, Tooltip("縦")] string _vertical;
+    [SerializeField,Tooltip("左に回転")] string _kaitenLeftName;
+    [SerializeField,Tooltip("右に回転")] string _kaitenRightName;
     [SerializeField, Tooltip("選択ができるボタンのInputManager内の名前")] string _selectButton;
 
     [Header("変数")]
@@ -24,6 +26,7 @@ public class PlayerCursor : MonoBehaviour
 
 
     private Rigidbody2D rb;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -47,20 +50,41 @@ public class PlayerCursor : MonoBehaviour
         switch (Turn)
         {
             case GameManager.Turn.SelectItem:
-                if (Input.GetButtonDown(_selectButton))
+                if (Input.GetButtonDown(_selectButton) &&
+                    !_gameManager.GetComponent<GameManager>()._isChoiceCursol.Contains(this.gameObject))
                 {
+
                     isFollowing = true;
                     _gameManager.GetComponent<GameManager>()._isChoiceCursol.Add(base.gameObject);
+                    Debug.Log(_gameManager.GetComponent<GameManager>()._isChoiceCursol);
+
                 }
                 break;
             case GameManager.Turn.SetItem:
-                if (Input.GetButtonDown(_selectButton))
+                if (Input.GetButtonDown(_selectButton) &&
+                    !_gameManager.GetComponent<GameManager>()._isPutCursol.Contains(this.gameObject))
                 {
                     isFollowing = false;
-                    if (!_gameManager.GetComponent<GameManager>()._isPutCursol.Contains(gameObject))
-                    {
-                        _gameManager.GetComponent<GameManager>()._isPutCursol.Add(base.gameObject);
-                    }
+                    _gameManager.GetComponent<GameManager>()._isPutCursol.Add(base.gameObject);
+                    Debug.Log(_gameManager.GetComponent<GameManager>()._isPutCursol);
+                }
+                if (Input.GetButtonDown(_kaitenLeftName))
+                {
+                    Debug.Log("左呼ばれたよ");
+                    Quaternion rot = Quaternion.AngleAxis(gameObject.GetComponent<ItemKaiten>()._kaitenIndex, Vector3.forward);
+                    // 現在の自信の回転の情報を取得する。
+                    Quaternion q = gameObject.transform.rotation;
+                    // 合成して、自身に設定
+                    gameObject.transform.rotation = q * rot;
+                }
+                if (Input.GetButtonDown(_kaitenRightName))
+                {
+                    Debug.Log("右呼ばれたよ");
+                    Quaternion rot = Quaternion.AngleAxis(gameObject.GetComponent<ItemKaiten>()._kaitenIndex, Vector3.back);
+                    // 現在の自信の回転の情報を取得する。
+                    Quaternion q = gameObject.transform.rotation;
+                    // 合成して、自身に設定
+                    gameObject.transform.rotation = q * rot;
                 }
                 break;
             default:

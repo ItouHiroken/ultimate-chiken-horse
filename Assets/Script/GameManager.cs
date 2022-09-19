@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject summonItem;
 
     [SerializeField] GameObject pointManager;
-    [SerializeField]List<GameObject> playerList;
+    [SerializeField] List<GameObject> playerList;
     [SerializeField] GameObject player1;
     [SerializeField] GameObject player2;
     [SerializeField] GameObject player3;
@@ -86,14 +86,14 @@ public class GameManager : MonoBehaviour
     {
         switch (NowTurn)
         {
-            case Turn.GamePlay:
+            case Turn.GamePlay://GamePlay終わりの時
                 p1Cursol.SetActive(false);
                 Result.gameObject.SetActive(true);
                 pointManager.GetComponent<PointManager>()._isCheck = true;
                 CountChangeTime = 0;
                 NowTurn = GameManager.Turn.Result;
                 break;
-            case Turn.Result:
+            case Turn.Result://Result終わりの時
                 NowTurn = GameManager.Turn.SelectItem;
                 p1Cursol.SetActive(true);
                 Result.gameObject.SetActive(false);
@@ -123,13 +123,14 @@ public class GameManager : MonoBehaviour
                 }
                 summonItem.GetComponent<SummonItem>()._isChoiceItem = true;
                 break;
-            case Turn.SelectItem:
-
+            case Turn.SelectItem://Select終わりの時
+                _isChoiceCursol.Clear();//上にも同じこと書いてあるけど、デバッグ用
                 NowTurn = GameManager.Turn.SetItem;
                 break;
-            case Turn.SetItem:
+            case Turn.SetItem://Set終わりの時
                 startingPoint.GetComponent<StartingPoint>().PlaySceneStart = true;
                 cinemachineGroup.cameraReset = true;
+                _isPutCursol.Clear();//デバッグ用
                 NowTurn = GameManager.Turn.GamePlay;
                 break;
             case Turn.GameEnd:

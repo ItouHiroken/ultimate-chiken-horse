@@ -148,7 +148,7 @@ MonoBehaviour:
   _Hp: 1
   _isFollowing: 0
   _color1: {r: 1, g: 1, b: 1, a: 0.50980395}
-  _color2: {r: 1, g: 1, b: 1, a: 0}
+  _color2: {r: 1, g: 1, b: 1, a: 1}
   _gameManager: {fileID: 336041242}
   _selectImage: {fileID: 0}
 --- !u!1 &60820892
@@ -2520,6 +2520,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _horizontal: P4Horizontal
   _vertical: P4Vertical
+  _kaitenLeftName: 
+  _kaitenRightName: 
   _selectButton: P4Fire
   _speed: 20
   isFollowing: 0
@@ -2648,7 +2650,7 @@ GameObject:
   - component: {fileID: 831119922}
   - component: {fileID: 831119923}
   m_Layer: 0
-  m_Name: ======ITEMLIST=====
+  m_Name: ======ITEMFACTORY=====
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6576,7 +6578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28bb113dc8e12b4ab08cdb3287640a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kaitenIndex: 90
+  _kaitenIndex: 0
 --- !u!1 &1113396832
 GameObject:
   m_ObjectHideFlags: 0
@@ -6611,6 +6613,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _horizontal: P1Horizontal
   _vertical: P1Vertical
+  _kaitenLeftName: P1Q
+  _kaitenRightName: P1E
   _selectButton: P1Fire
   _speed: 20
   isFollowing: 0
@@ -7461,7 +7465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28bb113dc8e12b4ab08cdb3287640a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kaitenIndex: 90
+  _kaitenIndex: 0
 --- !u!61 &1380983223
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7927,6 +7931,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _horizontal: P2Horizontal
   _vertical: P2Vertical
+  _kaitenLeftName: 
+  _kaitenRightName: 
   _selectButton: P2Fire
   _speed: 20
   isFollowing: 0
@@ -8214,6 +8220,10 @@ PrefabInstance:
     - target: {fileID: 8320102934500330113, guid: 64ef83cf94aef4b4eb8e379ffa6e1c9a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320102934500330117, guid: 64ef83cf94aef4b4eb8e379ffa6e1c9a, type: 3}
+      propertyPath: _color2.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8320102934500330117, guid: 64ef83cf94aef4b4eb8e379ffa6e1c9a, type: 3}
       propertyPath: _gameManager
@@ -9180,6 +9190,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _horizontal: P3Horizontal
   _vertical: P3Vertical
+  _kaitenLeftName: 
+  _kaitenRightName: 
   _selectButton: P3Fire
   _speed: 20
   isFollowing: 0
@@ -11331,6 +11343,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 336041240}
     - target: {fileID: 4727196617119860065, guid: d10fc1cc8c672ba45b103ea67310c16c, type: 3}
+      propertyPath: _color2.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4727196617119860065, guid: d10fc1cc8c672ba45b103ea67310c16c, type: 3}
       propertyPath: _gameManager
       value: 
       objectReference: {fileID: 336041242}
@@ -11395,6 +11411,10 @@ PrefabInstance:
       propertyPath: _gameManager
       value: 
       objectReference: {fileID: 336041240}
+    - target: {fileID: 6812321418500387515, guid: 5b674f68cd56cd640b16d75cad31e9bb, type: 3}
+      propertyPath: _color2.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6812321418500387515, guid: 5b674f68cd56cd640b16d75cad31e9bb, type: 3}
       propertyPath: _gameManager
       value: 
@@ -11503,6 +11523,10 @@ PrefabInstance:
     - target: {fileID: 8320102934500330113, guid: 64ef83cf94aef4b4eb8e379ffa6e1c9a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320102934500330117, guid: 64ef83cf94aef4b4eb8e379ffa6e1c9a, type: 3}
+      propertyPath: _color2.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8320102934500330117, guid: 64ef83cf94aef4b4eb8e379ffa6e1c9a, type: 3}
       propertyPath: _gameManager
