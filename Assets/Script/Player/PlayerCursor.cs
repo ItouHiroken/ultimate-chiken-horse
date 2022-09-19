@@ -11,18 +11,20 @@ public class PlayerCursor : MonoBehaviour
     [Header("ジョイスティックの入力 InputManager内の名前")]
     [SerializeField, Tooltip("横")] string _horizontal;
     [SerializeField, Tooltip("縦")] string _vertical;
-    [SerializeField,Tooltip("左に回転")] string _kaitenLeftName;
-    [SerializeField,Tooltip("右に回転")] string _kaitenRightName;
+    [SerializeField, Tooltip("左に回転")] string _kaitenLeftName;
+    [SerializeField, Tooltip("右に回転")] string _kaitenRightName;
     [SerializeField, Tooltip("選択ができるボタンのInputManager内の名前")] string _selectButton;
 
     [Header("変数")]
     [Tooltip("移動速度")] public float _speed = 10.0f;
-    [SerializeField] bool isFollowing;
+
+    [Header("見たいだけ")]
+    [SerializeField] bool _isFollowing;
+    [SerializeField] GameObject _overlapItem;
 
     [Header("インスタンスしたい物")]
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
     [SerializeField] public GameManager.Turn Turn;
-    [SerializeField] GameObject OverlapItem;
 
 
     private Rigidbody2D rb;
@@ -35,26 +37,28 @@ public class PlayerCursor : MonoBehaviour
     {
         TurnChecker(_gameManager);
         CursorMove();
-        FollowCursol(OverlapItem);
+        CursolAndItem(_overlapItem);
     }
     void OnTriggerStay2D(Collider2D collision)
     {
-        OverlapItem = collision.gameObject;
+        if (!_overlapItem)
+        {
+            _overlapItem = collision.gameObject;
+        }
     }
 
-    private void FollowCursol(GameObject gameObject)
+    private void CursolAndItem(GameObject gameObject)
     {
         if (gameObject == null) return;
         if (!gameObject.TryGetComponent<ItemKaiten>(out ItemKaiten _Item)) return;
-        FollowCursor(gameObject.gameObject, isFollowing);
+        ItemFollowCursor(gameObject.gameObject, _isFollowing);
         switch (Turn)
         {
             case GameManager.Turn.SelectItem:
                 if (Input.GetButtonDown(_selectButton) &&
                     !_gameManager.GetComponent<GameManager>()._isChoiceCursol.Contains(this.gameObject))
                 {
-
-                    isFollowing = true;
+                    _isFollowing = true;
                     _gameManager.GetComponent<GameManager>()._isChoiceCursol.Add(base.gameObject);
                     Debug.Log(_gameManager.GetComponent<GameManager>()._isChoiceCursol);
 
@@ -64,7 +68,7 @@ public class PlayerCursor : MonoBehaviour
                 if (Input.GetButtonDown(_selectButton) &&
                     !_gameManager.GetComponent<GameManager>()._isPutCursol.Contains(this.gameObject))
                 {
-                    isFollowing = false;
+                    _isFollowing = false;
                     _gameManager.GetComponent<GameManager>()._isPutCursol.Add(base.gameObject);
                     Debug.Log(_gameManager.GetComponent<GameManager>()._isPutCursol);
                 }
@@ -94,12 +98,12 @@ public class PlayerCursor : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        OverlapItem = null;
+        _overlapItem = null;
     }
     /// <summary>
     /// アイテムにカーソルを合わせたあと、何かしらの操作をすると、ついてきてほしい。
     /// </summary>
-    void FollowCursor(GameObject gameObject, bool isFollowing)
+    void ItemFollowCursor(GameObject gameObject, bool isFollowing)
     {
         if (isFollowing)
         {

@@ -6,13 +6,17 @@ public class CinemachineGroup : MonoBehaviour
 {
     [Header("見たいだけ変数くん")]
     [Tooltip("アクションターンが始まるときに一回シネマシーンのターゲットグループの中身を変える")]
-    public bool cameraReset;
+    public bool _playerCameraReset;
+    [Tooltip("アイテム選択ターンが始まるときに一回シネマシーンのターゲットグループの中身を変える")]
+    public bool _cursorCameraReset;
 
     [Header("アサインしたいものたち")]
     [SerializeField,Tooltip("プレイヤーの位置")] List<Transform> players = new();
     [SerializeField,Tooltip("プレイヤーがシネマシーングループに入っているか")] List<bool> inCinemachine = new();
 
     CinemachineTargetGroup cinemachineTargetGroup;
+
+    [SerializeField,Tooltip("中点")] GameObject _pointO;
 
     void Start()
     {
@@ -29,14 +33,21 @@ public class CinemachineGroup : MonoBehaviour
         for (int i = 0; i < players.Count; i++)
         {
             CheckCameraForcas(i);
-            if (cameraReset)
+            if (_playerCameraReset)
             {
                 Debug.Log(players[i].name);
                 RemoveCinemachineArray(i);
                 AddCinemachineArray(i);
             }
+            if (_cursorCameraReset)
+            {
+                RemoveCinemachineArray(i);
+                cinemachineTargetGroup.AddMember(_pointO.transform,0,0);
+                inCinemachine[0] = true;
+                _cursorCameraReset = false;
+            }
         }
-        cameraReset = false;
+        _playerCameraReset = false;
     }
     void AddCinemachineArray(int playerNum)
     {

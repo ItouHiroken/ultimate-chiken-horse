@@ -21,37 +21,33 @@ using UnityEngine.UI;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    [Header("この世の総てを支配する最強Enumくん")]
     public Turn NowTurn;
 
-    [SerializeField] GameObject p1Cursol;
+    [Header("インスタンスしたいものたち")]
+    [SerializeField] List<GameObject> _cursolList = new();
+    [SerializeField] List<GameObject> _playerList = new();
+    [SerializeField] GameObject _startingPoint;
+    [SerializeField] GameObject _summonItem;
+    [SerializeField] GameObject _pointManager;
+    [SerializeField] CinemachineGroup _cinemachineGroup;
+    [SerializeField] Canvas _result;
+    [SerializeField] Text _text;
 
-    [SerializeField] GameObject startingPoint;
-    [SerializeField] GameObject summonItem;
+    [Header("変数たち")]
+    [SerializeField] int _clearLine = 100;
+    [SerializeField] float _TurnChangeTime = 5;
+    [SerializeField] float _CountChangeTime;
 
-    [SerializeField] GameObject pointManager;
-    [SerializeField] List<GameObject> playerList;
-    [SerializeField] GameObject player1;
-    [SerializeField] GameObject player2;
-    [SerializeField] GameObject player3;
-    [SerializeField] GameObject player4;
-    [SerializeField] Canvas Result;
-    [SerializeField] int clearLine = 100;
-    [SerializeField] float TurnChangeTime = 5;
-    [SerializeField] float CountChangeTime;
-    [SerializeField] public List<GameObject> _isChoiceCursol;
-    [SerializeField] public List<GameObject> _isPutCursol;
-    [SerializeField] CinemachineGroup cinemachineGroup;
+    [Header("ほかのところに渡したい")]
+    public List<GameObject> _isChoiceCursol;
+    public List<GameObject> _isPutCursol;
 
-    [SerializeField] Text text;
 
-    private void Start()
-    {
-        playerList=new List<GameObject>();
-    }
     private void Update()
     {
-        text.text = NowTurn.ToString();
-        CountChangeTime += Time.deltaTime;
+        _text.text = NowTurn.ToString();
+        _CountChangeTime += Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Z))
         {
             TurnChange();
@@ -69,17 +65,17 @@ public class GameManager : MonoBehaviour
 
         if (NowTurn == Turn.GamePlay)
         {
-            if ((player1.GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || player1.GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
-            && (player2.GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || player2.GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
-            && (player3.GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || player3.GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
-            && (player4.GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || player4.GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death)))
+            if ((_playerList[0].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || _playerList[0].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
+            && (_playerList[1].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || _playerList[1].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
+            && (_playerList[2].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || _playerList[2].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
+            && (_playerList[3].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || _playerList[3].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death)))
             {
                 TurnChange();
             }
         }
         if (NowTurn == Turn.Result)
         {
-            if (CountChangeTime >= TurnChangeTime) TurnChange();
+            if (_CountChangeTime >= _TurnChangeTime) TurnChange();
         }
     }
     public void TurnChange()
@@ -87,49 +83,42 @@ public class GameManager : MonoBehaviour
         switch (NowTurn)
         {
             case Turn.GamePlay://GamePlay終わりの時
-                p1Cursol.SetActive(false);
-                Result.gameObject.SetActive(true);
-                pointManager.GetComponent<PointManager>()._isCheck = true;
-                CountChangeTime = 0;
+               
+                _result.gameObject.SetActive(true);
+                _pointManager.GetComponent<PointManager>()._isCheck = true;
+                _CountChangeTime = 0;
                 NowTurn = GameManager.Turn.Result;
                 break;
             case Turn.Result://Result終わりの時
                 NowTurn = GameManager.Turn.SelectItem;
-                p1Cursol.SetActive(true);
-                Result.gameObject.SetActive(false);
-                if (player1.GetComponent<PlayerMove>()._scorePoint >= clearLine)
+                for (int i = 0; i < _cursolList.Count; i++)
                 {
-                    NowTurn = GameManager.Turn.GameEnd;
-                    Debug.Log("GameEnd");
-                    break;
+                    _cursolList[i].SetActive(true);
                 }
-                if (player2.GetComponent<PlayerMove>()._scorePoint >= clearLine)
+                _result.gameObject.SetActive(false);
+                for (int i = 0; i < _playerList.Count; i++)
                 {
-                    NowTurn = GameManager.Turn.GameEnd;
-                    Debug.Log("GameEnd");
-                    break;
+                    if (_playerList[0].GetComponent<PlayerMove>()._scorePoint >= _clearLine)
+                    {
+                        NowTurn = GameManager.Turn.GameEnd;
+                        Debug.Log("GameEnd");
+                        break;
+                    }
                 }
-                if (player3.GetComponent<PlayerMove>()._scorePoint >= clearLine)
-                {
-                    NowTurn = GameManager.Turn.GameEnd;
-                    Debug.Log("GameEnd");
-                    break;
-                }
-                if (player4.GetComponent<PlayerMove>()._scorePoint >= clearLine)
-                {
-                    NowTurn = GameManager.Turn.GameEnd;
-                    Debug.Log("GameEnd");
-                    break;
-                }
-                summonItem.GetComponent<SummonItem>()._isChoiceItem = true;
+                _cinemachineGroup._cursorCameraReset = true;
+                _summonItem.GetComponent<SummonItem>()._isChoiceItem = true;
                 break;
             case Turn.SelectItem://Select終わりの時
                 _isChoiceCursol.Clear();//上にも同じこと書いてあるけど、デバッグ用
                 NowTurn = GameManager.Turn.SetItem;
                 break;
             case Turn.SetItem://Set終わりの時
-                startingPoint.GetComponent<StartingPoint>().PlaySceneStart = true;
-                cinemachineGroup.cameraReset = true;
+                for (int i = 0; i < _cursolList.Count; i++)
+                {
+                    _cursolList[i].SetActive(false);
+                }
+                _startingPoint.GetComponent<StartingPoint>().PlaySceneStart = true;
+                _cinemachineGroup._playerCameraReset = true;
                 _isPutCursol.Clear();//デバッグ用
                 NowTurn = GameManager.Turn.GamePlay;
                 break;

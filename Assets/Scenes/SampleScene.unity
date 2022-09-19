@@ -1620,23 +1620,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NowTurn: 0
-  p1Cursol: {fileID: 1113396832}
-  startingPoint: {fileID: 2040222814}
-  summonItem: {fileID: 515958655}
-  pointManager: {fileID: 1658719274}
-  playerList: []
-  player1: {fileID: 1982765601}
-  player2: {fileID: 1783321858}
-  player3: {fileID: 655970512}
-  player4: {fileID: 1027927707}
-  Result: {fileID: 248390830}
-  clearLine: 100
-  TurnChangeTime: 5
-  CountChangeTime: 0
+  _cursolList:
+  - {fileID: 1113396832}
+  - {fileID: 1550497215}
+  - {fileID: 1896357095}
+  - {fileID: 804740863}
+  _playerList:
+  - {fileID: 1982765601}
+  - {fileID: 1783321858}
+  - {fileID: 655970512}
+  - {fileID: 1027927707}
+  _startingPoint: {fileID: 2040222814}
+  _summonItem: {fileID: 515958655}
+  _pointManager: {fileID: 1658719274}
+  _cinemachineGroup: {fileID: 424380400}
+  _result: {fileID: 248390830}
+  _text: {fileID: 822019888}
+  _clearLine: 100
+  _TurnChangeTime: 5
+  _CountChangeTime: 0
   _isChoiceCursol: []
   _isPutCursol: []
-  cinemachineGroup: {fileID: 424380400}
-  text: {fileID: 822019888}
 --- !u!1 &424380397
 GameObject:
   m_ObjectHideFlags: 0
@@ -2520,14 +2524,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _horizontal: P4Horizontal
   _vertical: P4Vertical
-  _kaitenLeftName: 
-  _kaitenRightName: 
+  _kaitenLeftName: P4Q
+  _kaitenRightName: P4E
   _selectButton: P4Fire
   _speed: 20
-  isFollowing: 0
+  _isFollowing: 0
+  _overlapItem: {fileID: 0}
   _gameManager: {fileID: 336041240}
   Turn: 0
-  OverlapItem: {fileID: 0}
 --- !u!1 &822019887
 GameObject:
   m_ObjectHideFlags: 0
@@ -6528,6 +6532,7 @@ Transform:
   - {fileID: 1316280472}
   - {fileID: 903897995}
   - {fileID: 1283325816}
+  - {fileID: 1857122619}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6578,7 +6583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28bb113dc8e12b4ab08cdb3287640a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _kaitenIndex: 0
+  _kaitenIndex: 90
 --- !u!1 &1113396832
 GameObject:
   m_ObjectHideFlags: 0
@@ -6617,10 +6622,10 @@ MonoBehaviour:
   _kaitenRightName: P1E
   _selectButton: P1Fire
   _speed: 20
-  isFollowing: 0
+  _isFollowing: 0
+  _overlapItem: {fileID: 0}
   _gameManager: {fileID: 336041240}
   Turn: 0
-  OverlapItem: {fileID: 0}
 --- !u!212 &1113396834
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7061,7 +7066,7 @@ Transform:
   m_GameObject: {fileID: 1283325815}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -4.3, z: 0}
-  m_LocalScale: {x: 159.37, y: 1, z: 1}
+  m_LocalScale: {x: 211.91, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1075127125}
@@ -7465,7 +7470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28bb113dc8e12b4ab08cdb3287640a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _kaitenIndex: 0
+  _kaitenIndex: 90
 --- !u!61 &1380983223
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7931,14 +7936,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _horizontal: P2Horizontal
   _vertical: P2Vertical
-  _kaitenLeftName: 
-  _kaitenRightName: 
+  _kaitenLeftName: P2Q
+  _kaitenRightName: P2E
   _selectButton: P2Fire
   _speed: 20
-  isFollowing: 0
+  _isFollowing: 0
+  _overlapItem: {fileID: 0}
   _gameManager: {fileID: 336041240}
   Turn: 0
-  OverlapItem: {fileID: 0}
 --- !u!1 &1577844343
 GameObject:
   m_ObjectHideFlags: 0
@@ -8220,6 +8225,10 @@ PrefabInstance:
     - target: {fileID: 8320102934500330113, guid: 64ef83cf94aef4b4eb8e379ffa6e1c9a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320102934500330116, guid: 64ef83cf94aef4b4eb8e379ffa6e1c9a, type: 3}
+      propertyPath: _kaitenIndex
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 8320102934500330117, guid: 64ef83cf94aef4b4eb8e379ffa6e1c9a, type: 3}
       propertyPath: _color2.a
@@ -8917,6 +8926,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1817601625}
   m_CullTransparentMesh: 1
+--- !u!1 &1857122618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1857122619}
+  m_Layer: 0
+  m_Name: O
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1857122619
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857122618}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 20, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1075127125}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1860679057
 GameObject:
   m_ObjectHideFlags: 0
@@ -9190,14 +9230,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _horizontal: P3Horizontal
   _vertical: P3Vertical
-  _kaitenLeftName: 
-  _kaitenRightName: 
+  _kaitenLeftName: P3Q
+  _kaitenRightName: P3E
   _selectButton: P3Fire
   _speed: 20
-  isFollowing: 0
+  _isFollowing: 0
+  _overlapItem: {fileID: 0}
   _gameManager: {fileID: 336041240}
   Turn: 0
-  OverlapItem: {fileID: 0}
 --- !u!1 &1922381393
 GameObject:
   m_ObjectHideFlags: 0
@@ -11523,6 +11563,10 @@ PrefabInstance:
     - target: {fileID: 8320102934500330113, guid: 64ef83cf94aef4b4eb8e379ffa6e1c9a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320102934500330116, guid: 64ef83cf94aef4b4eb8e379ffa6e1c9a, type: 3}
+      propertyPath: _kaitenIndex
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 8320102934500330117, guid: 64ef83cf94aef4b4eb8e379ffa6e1c9a, type: 3}
       propertyPath: _color2.a
