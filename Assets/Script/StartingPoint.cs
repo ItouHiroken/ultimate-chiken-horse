@@ -14,11 +14,6 @@ public class StartingPoint : MonoBehaviour
     [SerializeField] GameObject Player3;
     [SerializeField] GameObject Player4;
 
-    [SerializeField] PlayerMove p1;
-    [SerializeField] PlayerMove p2;
-    [SerializeField] PlayerMove p3;
-    [SerializeField] PlayerMove p4;
-
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
     public GameManager.Turn Turn;
     public bool PlaySceneStart;

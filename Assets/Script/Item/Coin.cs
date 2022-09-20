@@ -7,12 +7,13 @@ public class Coin : ItemBase
 {
     [SerializeField] GameManager.Turn nowTurn;
     GameObject _collisionPlayer;
-    bool _isCollision = false;
-    bool _flag;
+    [SerializeField] bool _isCollision = false;
+    [SerializeField] bool _flag;
     float time;
     private void Update()
     {
         TurnChecker();
+
         if (nowTurn == GameManager.Turn.GamePlay && _isCollision)
         {
             UpDown();
@@ -26,9 +27,8 @@ public class Coin : ItemBase
         if (time > 0.3f)
         {
             _flag = true;
-            time =0;
+            time = 0;
         }
-        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -50,7 +50,7 @@ public class Coin : ItemBase
     /// </summary>
     void FollowPlayerBack()
     {
-        DOTween.Sequence().Append(transform.DOMove(new Vector3(_collisionPlayer.transform.position.x, _collisionPlayer.transform.position.y, _collisionPlayer.transform.position.z), 2f)).Play().SetAutoKill() ;
+        DOTween.Sequence().Append(transform.DOMove(new Vector3(_collisionPlayer.transform.position.x, _collisionPlayer.transform.position.y+3, _collisionPlayer.transform.position.z), 2f)).Play().SetAutoKill();
     }
     void TurnChecker()
     {

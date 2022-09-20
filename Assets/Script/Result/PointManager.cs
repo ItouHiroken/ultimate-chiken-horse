@@ -7,7 +7,8 @@ using DG.Tweening;
 
 public class PointManager : MonoBehaviour
 {
-    [SerializeField] GameManager gameManager;
+    [SerializeField] GameManager _gameManager;
+    [SerializeField] Goal _goal;
 
     [SerializeField] List<GameObject> _players = new();
     [SerializeField] List<Slider> _sliders = new();
@@ -16,7 +17,7 @@ public class PointManager : MonoBehaviour
     [SerializeField] float _changeValueInterval;
     void Update()
     {
-        if (gameManager.NowTurn == GameManager.Turn.Result)
+        if (_gameManager.NowTurn == GameManager.Turn.Result)
         {
             if (_isCheck)
             {
@@ -31,11 +32,10 @@ public class PointManager : MonoBehaviour
     }
     void ChangePlayerScore()
     {
-        if (gameManager.NowTurn == GameManager.Turn.Result)
+        if (_gameManager.NowTurn == GameManager.Turn.Result && _goal.goalPlayers.Count != Menu._playerNumber)
         {
             for (int i = 0; i < _players.Count; i++)
             {
-                Debug.Log("‚Ú‚­‚¢‚Ü‚©‚ç‚Æ‚­‚Ä‚ñ‚¯‚¢‚³‚ñ‚µ‚Ü‚·");
                 if (_players[i].GetComponent<PlayerMove>().Score.HasFlag(GetScore.isGoal))
                 {
                     if (_players[i].GetComponent<PlayerMove>().Score.HasFlag(GetScore.Death))
@@ -64,6 +64,7 @@ public class PointManager : MonoBehaviour
                 {
                     _players[i].GetComponent<PlayerMove>().Score = 0;
                 }
+                Debug.Log(_players[i].name+"‚Ìƒ|ƒCƒ“ƒg‚Í"+_players[i].GetComponent<PlayerMove>()._scorePoint);
             }
         }
     }

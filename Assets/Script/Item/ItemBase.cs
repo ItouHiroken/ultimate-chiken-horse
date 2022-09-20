@@ -9,7 +9,6 @@ public abstract class ItemBase : MonoBehaviour
 {
     Vector2 _CursorPosition;
     private string playername;
-    [SerializeField] int _Hp = 1;
     //    public abstract void Activate1();
     //    public abstract void Activate2();
 
@@ -20,6 +19,10 @@ public abstract class ItemBase : MonoBehaviour
     [SerializeField] protected GameManager _gameManager;
 
     [SerializeField] GameObject _selectImage;
+    private void Start()
+    {
+        _gameManager=GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
     private void Update()
     {
         if (_selectImage == null) return;
@@ -61,7 +64,6 @@ public abstract class ItemBase : MonoBehaviour
     /// <param name="cursorcheck"></param>
     private void ChangeColor(bool cursorcheck, Color color)
     {
-        Debug.Log("êFïœÇÌÇÈÉ}Éì");
         if (cursorcheck)
         {
             gameObject.GetComponent<SpriteRenderer>().color = color;

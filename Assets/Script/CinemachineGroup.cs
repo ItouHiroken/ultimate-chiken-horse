@@ -15,9 +15,6 @@ public class CinemachineGroup : MonoBehaviour
     [SerializeField,Tooltip("プレイヤーがシネマシーングループに入っているか")] List<bool> inCinemachine = new();
 
     CinemachineTargetGroup cinemachineTargetGroup;
-
-    [SerializeField,Tooltip("中点")] GameObject _pointO;
-
     void Start()
     {
         cinemachineTargetGroup = GetComponent<CinemachineTargetGroup>();
@@ -38,13 +35,6 @@ public class CinemachineGroup : MonoBehaviour
                 Debug.Log(players[i].name);
                 RemoveCinemachineArray(i);
                 AddCinemachineArray(i);
-            }
-            if (_cursorCameraReset)
-            {
-                RemoveCinemachineArray(i);
-                cinemachineTargetGroup.AddMember(_pointO.transform,0,0);
-                inCinemachine[0] = true;
-                _cursorCameraReset = false;
             }
         }
         _playerCameraReset = false;
