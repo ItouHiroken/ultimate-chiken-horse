@@ -28,11 +28,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<GameObject> _cursolList = new();
     [SerializeField] List<GameObject> _playerList = new();
     [SerializeField] GameObject _startingPoint;
+    [SerializeField] GameObject _resetCursorPoint;
     [SerializeField] GameObject _summonItem;
-    [SerializeField] GameObject _pointManager;
+    [SerializeField] GameObject _goal;
     [SerializeField] CinemachineGroup _cinemachineGroup;
     [SerializeField] Canvas _result;
     [SerializeField] Text _text;
+    [SerializeField] GameObject _itemTurnCamera;
 
     [Header("変数たち")]
     [SerializeField] int _clearLine = 100;
@@ -85,8 +87,8 @@ public class GameManager : MonoBehaviour
             case Turn.GamePlay://GamePlay終わりの時
                
                 _result.gameObject.SetActive(true);
-                _pointManager.GetComponent<PointManager>()._isCheck = true;
                 _CountChangeTime = 0;
+           
                 NowTurn = GameManager.Turn.Result;
                 break;
             case Turn.Result://Result終わりの時
@@ -105,11 +107,16 @@ public class GameManager : MonoBehaviour
                         break;
                     }
                 }
-                _cinemachineGroup._cursorCameraReset = true;
+                _itemTurnCamera.SetActive(true);
+                _resetCursorPoint.GetComponent<CursorStart>().SelectSceneStart = true;
                 _summonItem.GetComponent<SummonItem>()._isChoiceItem = true;
                 break;
             case Turn.SelectItem://Select終わりの時
                 _isChoiceCursol.Clear();//上にも同じこと書いてあるけど、デバッグ用
+                for (int i = 0; i < _cursolList.Count; i++)
+                {
+                    _cursolList[i].SetActive(true);
+                }
                 NowTurn = GameManager.Turn.SetItem;
                 break;
             case Turn.SetItem://Set終わりの時
@@ -120,6 +127,7 @@ public class GameManager : MonoBehaviour
                 _startingPoint.GetComponent<StartingPoint>().PlaySceneStart = true;
                 _cinemachineGroup._playerCameraReset = true;
                 _isPutCursol.Clear();//デバッグ用
+                _itemTurnCamera.SetActive(false);
                 NowTurn = GameManager.Turn.GamePlay;
                 break;
             case Turn.GameEnd:
