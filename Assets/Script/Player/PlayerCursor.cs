@@ -24,7 +24,7 @@ public class PlayerCursor : MonoBehaviour
 
     [Header("インスタンスしたい物")]
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
-    [SerializeField] public GameManager.Turn Turn;
+    [SerializeField] GameManager.Turn Turn;
 
 
     private Rigidbody2D rb;
@@ -41,8 +41,9 @@ public class PlayerCursor : MonoBehaviour
     }
     void OnTriggerStay2D(Collider2D collision)
     {
-        if (!_overlapItem)
+        if (_overlapItem == null && !CompareTag("isChoice"))
         {
+            Debug.Log("拾うまん");
             _overlapItem = collision.gameObject;
         }
     }
@@ -55,13 +56,16 @@ public class PlayerCursor : MonoBehaviour
         switch (Turn)
         {
             case GameManager.Turn.SelectItem:
+
+                //選択ボタン押したら
                 if (Input.GetButtonDown(_selectButton) &&
                     !_gameManager.GetComponent<GameManager>()._isChoiceCursol.Contains(this.gameObject))
                 {
                     _isFollowing = true;
+                    gameObject.tag = "isChoice";
                     _gameManager.GetComponent<GameManager>()._isChoiceCursol.Add(base.gameObject);
                     Debug.Log(_gameManager.GetComponent<GameManager>()._isChoiceCursol);
-
+                    this.gameObject.SetActive(false);
                 }
                 break;
             case GameManager.Turn.SetItem:
@@ -71,6 +75,7 @@ public class PlayerCursor : MonoBehaviour
                     _isFollowing = false;
                     _gameManager.GetComponent<GameManager>()._isPutCursol.Add(base.gameObject);
                     Debug.Log(_gameManager.GetComponent<GameManager>()._isPutCursol);
+                    this.gameObject.SetActive(false);
                 }
                 if (Input.GetButtonDown(_kaitenLeftName))
                 {
@@ -98,6 +103,7 @@ public class PlayerCursor : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+
         _overlapItem = null;
     }
     /// <summary>
