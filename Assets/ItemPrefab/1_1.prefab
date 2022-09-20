@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28bb113dc8e12b4ab08cdb3287640a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kaitenIndex: 90
+  _kaitenIndex: 0
 --- !u!114 &8320102934500330117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,12 +140,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 938ea4f797d1fcc499022d0c5d9a846a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Hp: 1
   _isFollowing: 0
   _color1: {r: 1, g: 1, b: 1, a: 0.49411765}
   _color2: {r: 1, g: 1, b: 1, a: 1}
   _gameManager: {fileID: 0}
-  _selectImage: {fileID: 8320102934500330112}
+  _selectImage: {fileID: 0}
 --- !u!58 &8320102934500330118
 CircleCollider2D:
   m_ObjectHideFlags: 0
