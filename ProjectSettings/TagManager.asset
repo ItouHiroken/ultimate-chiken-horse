@@ -9,6 +9,7 @@ TagManager:
   - Ground
   - Coin
   - isUsed
+  - isChoice
   layers:
   - Default
   - TransparentFX
