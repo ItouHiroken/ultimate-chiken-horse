@@ -11,11 +11,12 @@ using UnityEngine;
 /// </summary>
 public class Goal : MonoBehaviour
 {
-    [SerializeField][Tooltip("ポイントマネージャーに渡すゴール順番リスト")] private List<GameObject> goalPlayers = new List<GameObject>(Menu._playerNumber);
+    [SerializeField][Tooltip("ポイントマネージャーに渡すゴール順番リスト")] public List<GameObject> goalPlayers = new List<GameObject>(Menu._playerNumber);
     [SerializeField][Tooltip("ゲームマネージャー")] GameObject _gameManager;
     [Tooltip("ターンチェンジの関数使いたいからとってくる")] GameManager gameManagerScript;
     [SerializeField] PointManager _pointManager;
     int playerCount;
+    bool _soloCheck;
 
     void Start()
     {
@@ -32,19 +33,19 @@ public class Goal : MonoBehaviour
                 case 1:
                     if (goalPlayers[0].name == "Player1")
                     {
-                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Coin;
+                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Solo;
                     }
                     else if (goalPlayers[0].name == "Player2")
                     {
-                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Coin;
+                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Solo;
                     }
                     else if (goalPlayers[0].name == "Player3")
                     {
-                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Coin;
+                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Solo;
                     }
                     else if (goalPlayers[0].name == "Player4")
                     {
-                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Coin;
+                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Solo;
                     }
                     break;
                 case 2:
