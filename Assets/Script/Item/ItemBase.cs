@@ -21,7 +21,7 @@ public abstract class ItemBase : MonoBehaviour
     [SerializeField] GameObject _selectImage;
     private void Start()
     {
-        _gameManager=GameObject.Find("GameManager").GetComponent<GameManager>();
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
     private void Update()
     {
@@ -62,7 +62,7 @@ public abstract class ItemBase : MonoBehaviour
     /// アイテム選択時、アイテムにカーソル合わさると色が変わる。
     /// </summary>
     /// <param name="cursorcheck"></param>
-    private void ChangeColor(bool cursorcheck, Color color)
+    protected virtual void ChangeColor(bool cursorcheck, Color color)
     {
         if (cursorcheck)
         {

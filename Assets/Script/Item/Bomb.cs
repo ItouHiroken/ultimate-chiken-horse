@@ -1,14 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Bomb : MonoBehaviour
+using UnityEngine.Events;
+public class Bomb : ItemBase
 {
     [Header("Œ©‚½‚¢‚¾‚¯•Ï”‚­‚ñ")]
     public bool _use;
+
     [Header("ƒAƒTƒCƒ“‚µ‚½‚¢•¨‚ð“ü‚ê‚é")]
     [SerializeField] GameObject _manager;
-   
+    [SerializeField] GameObject _childObject;  
+    [SerializeField] Animator _anim;
     
     GameManager.Turn _turn;
     CircleCollider2D _circleCollider;
@@ -19,13 +22,44 @@ public class Bomb : MonoBehaviour
     void Update()
     {
         TurnChecker(_manager);
+        UseBomb();
     }
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("isChoice"))
+        {
+            collision.gameObject.transform.position = new Vector3(900, 1000, 1000);
+
+        }
+    }
+    IEnumerator SetBomb(float seconds, UnityAction callback)
+    {
+        yield return new WaitForSeconds(seconds);
+        callback?.Invoke();
+    }
+
+    void UseBomb()
     {
         if (_use && _turn == GameManager.Turn.SetItem)
         {
+            Debug.Log("‚Â‚©‚í‚ê‚½‚æ");
             _circleCollider.isTrigger = false;
+            _anim.SetBool("Use", true);
+
+            StartCoroutine(SetBomb(2.3f, () => { gameObject.transform.position = new Vector3(1000, 1000, 1000); }));
             _use = false;
+        }
+    }
+    protected override void ChangeColor(bool cursorcheck, Color color)
+    {
+        if (cursorcheck)
+        {
+            _childObject.gameObject.GetComponent<SpriteRenderer>().color = color;
+
+        }
+        else if (!cursorcheck)
+        {
+            _childObject.gameObject.GetComponent<SpriteRenderer>().color = color;
         }
     }
     void TurnChecker(GameObject a)
