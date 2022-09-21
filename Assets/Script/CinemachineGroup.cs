@@ -54,8 +54,8 @@ public class CinemachineGroup : MonoBehaviour
     }
     void CheckCameraForcas(int number)
     {
-        if (players[number].GetComponent<PlayerMove>().Score == PlayerState.GetScore.Death ||
-            players[number].GetComponent<PlayerMove>().Score == PlayerState.GetScore.isGoal)
+        if(players[number].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal)||
+            players[number].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
         {
             cinemachineTargetGroup.RemoveMember(players[number]);
             inCinemachine[number]=false;
