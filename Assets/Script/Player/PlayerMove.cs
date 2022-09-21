@@ -80,6 +80,7 @@ public class PlayerMove : PlayerBase
             bool TF = horizontalKey != 0 ? true : false;
             animator.SetBool("Horizontal", TF);
             base.FlipX(horizontalKey);
+                  Debug.Log(gameObject.name);
             //‰E“ü—Í‚Å¶Œü‚«‚É“®‚­
             if (horizontalKey > 0)
             {
