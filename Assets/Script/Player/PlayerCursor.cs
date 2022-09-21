@@ -80,6 +80,10 @@ public class PlayerCursor : MonoBehaviour
                     !_gameManager.GetComponent<GameManager>()._isPutCursol.Contains(this.gameObject))
                 {
                     _isFollowing = false;
+                    if (gameObject.TryGetComponent(out Bomb bomb))
+                    {
+                        bomb._use = true;
+                    }
                     _gameManager.GetComponent<GameManager>()._isPutCursol.Add(base.gameObject);
                     Debug.Log(_gameManager.GetComponent<GameManager>()._isPutCursol);
                     this.gameObject.SetActive(false);
@@ -128,10 +132,7 @@ public class PlayerCursor : MonoBehaviour
         }
         else
         {
-            if (gameObject.TryGetComponent(out Bomb bomb))
-            {
-                bomb._use = true;
-            }
+            
         }
 
     }
@@ -143,7 +144,7 @@ public class PlayerCursor : MonoBehaviour
     {
         if (Turn == GameManager.Turn.SetItem || Turn == GameManager.Turn.SelectItem)
         {
-            float verticalInput = _speed * Input.GetAxisRaw(_vertical);
+            float verticalInput = -_speed * Input.GetAxisRaw(_vertical);
             float horizontalInput = _speed * Input.GetAxisRaw(_horizontal);
             rb.velocity = new Vector2(horizontalInput, verticalInput);
         }
