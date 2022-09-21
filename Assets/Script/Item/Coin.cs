@@ -14,6 +14,11 @@ public class Coin : ItemBase
     {
         TurnChecker();
 
+        if (nowTurn == GameManager.Turn.GamePlay)
+        {
+            gameObject.tag = "Coin";
+        }
+        
         if (nowTurn == GameManager.Turn.GamePlay && _isCollision)
         {
             UpDown();
