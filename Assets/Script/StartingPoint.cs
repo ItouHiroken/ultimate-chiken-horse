@@ -29,6 +29,10 @@ public class StartingPoint : MonoBehaviour
         TurnChecker(_gameManager);
         if (PlaySceneStart == true)
         {
+            Player1.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            Player2.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            Player3.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            Player4.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             Player1.transform.position = Player1Point.transform.position;
             Player2.transform.position = Player2Point.transform.position;
             Player3.transform.position = Player3Point.transform.position;
