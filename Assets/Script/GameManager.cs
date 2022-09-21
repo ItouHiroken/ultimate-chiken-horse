@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     [Header("ÇŸÇ©ÇÃÇ∆Ç±ÇÎÇ…ìnÇµÇΩÇ¢")]
     public List<GameObject> _isChoiceCursol;
     public List<GameObject> _isPutCursol;
+    public List<GameObject> _choiceList = new();
 
 
     private void Update()
@@ -85,10 +86,10 @@ public class GameManager : MonoBehaviour
         switch (NowTurn)
         {
             case Turn.GamePlay://GamePlayèIÇÌÇËÇÃéû
-               
+
                 _result.gameObject.SetActive(true);
                 _CountChangeTime = 0;
-           
+
                 NowTurn = GameManager.Turn.Result;
                 break;
             case Turn.Result://ResultèIÇÌÇËÇÃéû
@@ -107,6 +108,11 @@ public class GameManager : MonoBehaviour
                         break;
                     }
                 }
+                for (int i = 0; i < _cursolList.Count; i++)
+                {
+                    _cursolList[i].GetComponent<PlayerCursor>()._isFollowing = false; 
+                }
+
                 _itemTurnCamera.SetActive(true);
                 _resetCursorPoint.GetComponent<CursorStart>().SelectSceneStart = true;
                 _summonItem.GetComponent<SummonItem>()._isChoiceItem = true;
@@ -116,6 +122,10 @@ public class GameManager : MonoBehaviour
                 for (int i = 0; i < _cursolList.Count; i++)
                 {
                     _cursolList[i].SetActive(true);
+                }
+                for (int i = 0; i < _choiceList.Count; i++)
+                {
+                    _choiceList[i].SetActive(true);
                 }
                 NowTurn = GameManager.Turn.SetItem;
                 break;

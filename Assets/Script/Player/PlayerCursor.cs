@@ -16,10 +16,10 @@ public class PlayerCursor : MonoBehaviour
     [SerializeField, Tooltip("選択ができるボタンのInputManager内の名前")] string _selectButton;
 
     [Header("変数")]
-    [Tooltip("移動速度")] public float _speed = 10.0f;
+    [Tooltip("移動速度")] float _speed = 10.0f;
 
     [Header("見たいだけ")]
-    [SerializeField] bool _isFollowing;
+    [SerializeField] public bool _isFollowing;
     [SerializeField] GameObject _overlapItem;
 
     [Header("インスタンスしたい物")]
@@ -41,7 +41,11 @@ public class PlayerCursor : MonoBehaviour
     }
     void OnTriggerStay2D(Collider2D collision)
     {
-        if (_overlapItem == null && !CompareTag("isChoice"))
+        if (_overlapItem == null && Turn == GameManager.Turn.SetItem)
+        {
+            _overlapItem = collision.gameObject;
+        }
+        if (_overlapItem == null && !collision.CompareTag("isChoice") && Turn == GameManager.Turn.SelectItem)
         {
             Debug.Log("拾うまん");
             _overlapItem = collision.gameObject;
@@ -63,8 +67,11 @@ public class PlayerCursor : MonoBehaviour
                 {
                     _isFollowing = true;
                     gameObject.tag = "isChoice";
+                    _gameManager.GetComponent<GameManager>()._choiceList.Add(gameObject);
+                    gameObject.SetActive(false);
                     _gameManager.GetComponent<GameManager>()._isChoiceCursol.Add(base.gameObject);
                     Debug.Log(_gameManager.GetComponent<GameManager>()._isChoiceCursol);
+
                     this.gameObject.SetActive(false);
                 }
                 break;
