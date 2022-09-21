@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 7620854653119642238}
   - component: {fileID: 5748048787222413502}
   - component: {fileID: 5748048787222413473}
-  - component: {fileID: 5748048787222413472}
   - component: {fileID: 5748048787222413503}
+  - component: {fileID: 5748048787222413472}
   - component: {fileID: 3322274803281366667}
+  - component: {fileID: 1202780909783343932}
   m_Layer: 0
   m_Name: Spike_01
   m_TagString: Untagged
@@ -118,6 +119,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4634a29787c6d544c906409a41a4f90b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5748048787222413503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5748048787222413475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae518b6f231e8c43b15f1e28848d43b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Turn: 0
+  _gameManager: {fileID: 0}
+  _isSelect: 0
 --- !u!61 &5748048787222413472
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -125,7 +141,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5748048787222413475}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -144,21 +160,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.7257605, y: 7.1800623}
   m_EdgeRadius: 0
---- !u!114 &5748048787222413503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5748048787222413475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ae518b6f231e8c43b15f1e28848d43b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Turn: 0
-  _gameManager: {fileID: 0}
-  _isSelect: 0
 --- !u!61 &3322274803281366667
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -185,3 +186,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.91, y: 5.22}
   m_EdgeRadius: 0
+--- !u!114 &1202780909783343932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5748048787222413475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b28bb113dc8e12b4ab08cdb3287640a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _kaitenIndex: 0
