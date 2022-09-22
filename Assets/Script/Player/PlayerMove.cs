@@ -17,9 +17,12 @@ public class PlayerMove : PlayerBase
     public PlayerState.GetScore Score;
     public GameManager.Turn Turn;
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
-
+    [SerializeField, Tooltip("ゴールに自分を渡したい")] GameObject _goal;
     [SerializeField] public int _scorePoint;
     [SerializeField] Animator animator;
+    [SerializeField] AudioSource _audioSource;
+    [SerializeField] AudioClip _audioClipJump;
+    [SerializeField] AudioClip _audioClipDamage;
     protected override void SpeedController()
     {
         _horizonSpeedLimiter = WalkSpeedLimiter;
@@ -52,21 +55,23 @@ public class PlayerMove : PlayerBase
             bool jump = Input.GetButtonDown(_jump);
             if (jump)
             {
-            Debug.Log(_horizontal);
+                Debug.Log(_horizontal);
                 if (JumpChecker == 1 && GroundCheck)
                 {
                     Rb.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
+                    _audioSource.PlayOneShot(_audioClipJump);
                 }
                 if (JumpChecker == 1 && !GroundCheck && RightWallCheck)
                 {
                     Rb.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
                     Rb.AddForce(Vector2.right * 40, ForceMode2D.Impulse);
-
+                    _audioSource.PlayOneShot(_audioClipJump);
                 }
                 if (JumpChecker == 1 && !GroundCheck && LeftWallCheck)
                 {
                     Rb.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
                     Rb.AddForce(Vector2.left * 40, ForceMode2D.Impulse);
+                    _audioSource.PlayOneShot(_audioClipJump);
                 }
             }
         }
@@ -80,7 +85,7 @@ public class PlayerMove : PlayerBase
             bool TF = horizontalKey != 0 ? true : false;
             animator.SetBool("Horizontal", TF);
             base.FlipX(horizontalKey);
-                  Debug.Log(gameObject.name);
+            Debug.Log(gameObject.name);
             //右入力で左向きに動く
             if (horizontalKey > 0)
             {
@@ -142,6 +147,7 @@ public class PlayerMove : PlayerBase
             _hp -= damage.Damage;
             if (_hp <= 0)
             {
+                _audioSource.PlayOneShot(_audioClipDamage);
                 controller.enabled = false;
                 Score |= PlayerState.GetScore.Death;
                 Score &= ~PlayerState.GetScore.Default;
