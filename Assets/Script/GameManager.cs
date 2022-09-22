@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     [Header("インスタンスしたいものたち")]
     [SerializeField] List<GameObject> _cursolList = new();
     [SerializeField] List<GameObject> _playerList = new();
+    [SerializeField] List<Image> _playerImages = new();
     [SerializeField] GameObject _startingPoint;
     [SerializeField] GameObject _resetCursorPoint;
     [SerializeField] GameObject _summonItem;
@@ -65,17 +66,6 @@ public class GameManager : MonoBehaviour
             TurnChange();
             _isPutCursol.Clear();
         }
-
-        if (NowTurn == Turn.GamePlay)
-        {
-            if ((_playerList[0].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || _playerList[0].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
-            && (_playerList[1].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || _playerList[1].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
-            && (_playerList[2].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || _playerList[2].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
-            && (_playerList[3].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || _playerList[3].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death)))
-            {
-                TurnChange();
-            }
-        }
         if (NowTurn == Turn.Result)
         {
             if (_CountChangeTime >= _TurnChangeTime) TurnChange();
@@ -104,6 +94,7 @@ public class GameManager : MonoBehaviour
                     if (_playerList[0].GetComponent<PlayerMove>()._scorePoint >= _clearLine)
                     {
                         NowTurn = GameManager.Turn.GameEnd;
+                        _playerImages[i].gameObject.SetActive(true);
                         Debug.Log("GameEnd");
                         break;
                     }

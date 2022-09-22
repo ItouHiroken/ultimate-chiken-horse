@@ -32,7 +32,7 @@ public class PointManager : MonoBehaviour
     }
     void ChangePlayerScore()
     {
-        if (_gameManager.NowTurn == GameManager.Turn.Result && _goal.goalPlayers.Count != Menu._playerNumber)
+        if (_goal.goalPlayers.Count != Menu._playerNumber)
         {
             for (int i = 0; i < _players.Count; i++)
             {
@@ -41,6 +41,7 @@ public class PointManager : MonoBehaviour
                     if (_players[i].GetComponent<PlayerMove>().Score.HasFlag(GetScore.Death))
                     {
                         _players[i].GetComponent<PlayerMove>()._scorePoint += 10;
+                        Debug.Log(_players[i].name + "のScore状態は" + _players[i].GetComponent<PlayerMove>().Score);
                         _players[i].GetComponent<PlayerMove>().Score = 0;
                     }
                     else
@@ -51,20 +52,23 @@ public class PointManager : MonoBehaviour
                         }
                         if (_players[i].GetComponent<PlayerMove>().Score.HasFlag(GetScore.Solo))
                         {
-                            _players[i].GetComponent<PlayerMove>()._scorePoint += 15;
+                            _players[i].GetComponent<PlayerMove>()._scorePoint += 20;
                         }
                         if (_players[i].GetComponent<PlayerMove>().Score.HasFlag(GetScore.Coin))
                         {
-                            _players[i].GetComponent<PlayerMove>()._scorePoint += 10;
+                            _players[i].GetComponent<PlayerMove>()._scorePoint += 15;
                         }
+                        Debug.Log(_players[i].name + "のScore状態は" + _players[i].GetComponent<PlayerMove>().Score);
+                        _players[i].GetComponent<PlayerMove>()._scorePoint += 20;
                         _players[i].GetComponent<PlayerMove>().Score = 0;
                     }
                 }
                 else
                 {
+                    Debug.Log(_players[i].name + "のScore状態は" + _players[i].GetComponent<PlayerMove>().Score);
                     _players[i].GetComponent<PlayerMove>().Score = 0;
                 }
-                Debug.Log(_players[i].name+"のポイントは"+_players[i].GetComponent<PlayerMove>()._scorePoint);
+                Debug.Log(_players[i].name + "のポイントは" + _players[i].GetComponent<PlayerMove>()._scorePoint);
             }
         }
     }
