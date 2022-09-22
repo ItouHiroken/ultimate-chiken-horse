@@ -46,12 +46,7 @@ public abstract class PlayerBase : MonoBehaviour
         _slowSpeed = _defaultSpeed / 2;
         _splitSpeed = _defaultSpeed * 2;
         //        _runSpeedLimiter = _walkSpeedLimiter * 2;
-        SpeedController();
     }
-    protected virtual void SpeedController()
-    {
-    }
-
     // Update is called once per frame
     protected void Update()
     {

@@ -10,12 +10,12 @@ public class PlayerMove : PlayerBase
     [Header("入力ボタンの名前")]
     [SerializeField] string _jump;
     [SerializeField] string _horizontal;
-    
+
     [Header("見たいだけ")]
     [SerializeField][Tooltip("体力")] private int _hp = default;
     [SerializeField][Tooltip("左右の速度")] private float _horizonSpeedLimiter;
     [SerializeField][Tooltip("上下の速度")] private float _jumpSpeedLimiter;
-    
+
     [Header("自分を入れる")]
     [SerializeField][Tooltip("自分の動きonoffするため")] PlayerMove controller;
 
@@ -34,12 +34,22 @@ public class PlayerMove : PlayerBase
     [SerializeField] AudioClip _audioClipJump;
     [SerializeField] AudioClip _audioClipDamage;
     //[Tooltip("走れるかどうかチェック")] bool _dashCheck;
-    protected override void SpeedController()
+    void SpeedController()
     {
-        _horizonSpeedLimiter = WalkSpeedLimiter;
+        switch (_deBuff)
+        {
+            case DeBuff.Default:
+                _horizonSpeedLimiter = WalkSpeedLimiter;
+                break;
+            case DeBuff.Split:
+                _horizonSpeedLimiter = WalkSpeedLimiter * 2;
+                break;
+            case DeBuff.Slow:
+                _horizonSpeedLimiter = WalkSpeedLimiter / 2;
+                break;
+        }
         _jumpSpeedLimiter = 50f;
     }
-
     protected new void Update()
     {
         if (Input.anyKeyDown)
@@ -55,6 +65,7 @@ public class PlayerMove : PlayerBase
             }
         }
         ////
+        SpeedController();
         TurnChecker(_gameManager);
         if (Turn == GameManager.Turn.GamePlay)
         {
@@ -175,6 +186,7 @@ public class PlayerMove : PlayerBase
             Debug.Log(Score);
         }
     }
+
     void TurnChecker(GameObject a)
     {
         Turn = a.GetComponent<GameManager>().NowTurn;

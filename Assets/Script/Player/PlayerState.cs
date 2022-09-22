@@ -5,9 +5,9 @@ namespace PlayerState
     [Flags]
     public enum DeBuff
     {
-        Default = 1,
-        Slow = 1,
-        Split = 1,
+        Default,
+        Slow,
+        Split,
     }
     [Flags]
     public enum GetScore
