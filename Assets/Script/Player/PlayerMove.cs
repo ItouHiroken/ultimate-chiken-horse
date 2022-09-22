@@ -7,22 +7,33 @@ using PlayerState;
 /// </summary>
 public class PlayerMove : PlayerBase
 {
+    [Header("入力ボタンの名前")]
     [SerializeField] string _jump;
     [SerializeField] string _horizontal;
+    
+    [Header("見たいだけ")]
     [SerializeField][Tooltip("体力")] private int _hp = default;
-    [Tooltip("走れるかどうかチェック")] bool _dashCheck;
-    [SerializeField] private float _horizonSpeedLimiter;
-    [SerializeField] private float _jumpSpeedLimiter;
+    [SerializeField][Tooltip("左右の速度")] private float _horizonSpeedLimiter;
+    [SerializeField][Tooltip("上下の速度")] private float _jumpSpeedLimiter;
+    
+    [Header("自分を入れる")]
     [SerializeField][Tooltip("自分の動きonoffするため")] PlayerMove controller;
-    public PlayerState.GetScore Score;
+
+    [Header("ターンは把握用")]
     public GameManager.Turn Turn;
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
+
+    [Header("ポイント関係")]
+    public PlayerState.GetScore Score;
     [SerializeField, Tooltip("ゴールに自分を渡したい")] GameObject _goal;
     [SerializeField] public int _scorePoint;
+
+    [Header("音とアニメーション")]
     [SerializeField] Animator animator;
     [SerializeField] AudioSource _audioSource;
     [SerializeField] AudioClip _audioClipJump;
     [SerializeField] AudioClip _audioClipDamage;
+    //[Tooltip("走れるかどうかチェック")] bool _dashCheck;
     protected override void SpeedController()
     {
         _horizonSpeedLimiter = WalkSpeedLimiter;
@@ -48,10 +59,10 @@ public class PlayerMove : PlayerBase
         if (Turn == GameManager.Turn.GamePlay)
         {
             base.Update();
-            if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                _dashCheck = !_dashCheck;
-            }
+            //if (Input.GetKeyDown(KeyCode.LeftShift))
+            //{
+            //    _dashCheck = !_dashCheck;
+            //}
             bool jump = Input.GetButtonDown(_jump);
             if (jump)
             {
@@ -90,24 +101,24 @@ public class PlayerMove : PlayerBase
             if (horizontalKey > 0)
             {
                 Rb.AddForce(Vector2.right * Speed, ForceMode2D.Impulse);
-                if (_dashCheck == true)
-                {
-                    _horizonSpeedLimiter = RunSpeedLimiter;
-                }
+                //if (_dashCheck == true)
+                //{
+                //    _horizonSpeedLimiter = RunSpeedLimiter;
+                //}
             }
             //左入力で左向きに動く
             else if (horizontalKey < 0)
             {
                 Rb.AddForce(Vector2.left * Speed, ForceMode2D.Impulse);
-                if (_dashCheck == true)
-                {
-                    _horizonSpeedLimiter = RunSpeedLimiter;
-                }
+                //if (_dashCheck == true)
+                //{
+                //    _horizonSpeedLimiter = RunSpeedLimiter;
+                //}
             }
-            if (_dashCheck == false)
-            {
-                _horizonSpeedLimiter = WalkSpeedLimiter;
-            }
+            //if (_dashCheck == false)
+            //{
+            //    _horizonSpeedLimiter = WalkSpeedLimiter;
+            //}
             if (Rb.velocity.y < -_jumpSpeedLimiter)
             {
                 Rb.velocity = new Vector2(Rb.velocity.x, -_jumpSpeedLimiter);
@@ -134,8 +145,6 @@ public class PlayerMove : PlayerBase
             }
         }
     }
-
-
     /// <summary>
     /// ダメージ受ける用
     /// </summary>

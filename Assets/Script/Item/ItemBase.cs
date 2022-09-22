@@ -17,14 +17,14 @@ public abstract class ItemBase : MonoBehaviour
     [SerializeField] Color _color1;
     [SerializeField] Color _color2;
     [SerializeField] protected GameManager _gameManager;
-
     [SerializeField] GameObject _selectImage;
     private void Start()
     {
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
-    private void Update()
+    protected void Update()
     {
+        
         if (_selectImage == null) return;
         if (_gameManager.NowTurn == GameManager.Turn.SelectItem)
         {

@@ -12,7 +12,7 @@ public class Coin : ItemBase
     [SerializeField] bool _isUsed;
     [SerializeField] CircleCollider2D _circleCollider;
     float time;
-    private void Update()
+    protected new void Update()
     {
         if (!_isUsed)
         {

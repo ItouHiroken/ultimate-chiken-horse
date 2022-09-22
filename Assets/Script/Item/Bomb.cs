@@ -19,7 +19,7 @@ public class Bomb : ItemBase
     {
         _circleCollider = GetComponent<CircleCollider2D>();
     }
-    void Update()
+    protected new void Update()
     {
         TurnChecker(_manager);
         UseBomb();
