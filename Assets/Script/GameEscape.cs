@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Title : MonoBehaviour
+public class GameEscape : MonoBehaviour
 {
     [SerializeField] Canvas EscapeCanvas;
-    [SerializeField] Canvas TitleCanvas;
-    [SerializeField] Canvas SelectCanvas;
     [SerializeField] AudioSource _audioSource;
     [SerializeField] AudioClip _openClip;
     [SerializeField] AudioClip _closeClip;
@@ -24,15 +22,6 @@ public class Title : MonoBehaviour
             }
             EscapeCanvas.enabled = !EscapeCanvas.enabled;
             EscapeCanvas.gameObject.SetActive(true);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {if(TitleCanvas.gameObject.activeSelf)
-            {
-            _audioSource.PlayOneShot(_openClip);
-            }
-            TitleCanvas.gameObject.SetActive(false);
-            SelectCanvas.gameObject.SetActive(true);
         }
     }
 

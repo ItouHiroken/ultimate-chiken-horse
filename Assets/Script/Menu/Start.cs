@@ -6,8 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class Start : MonoBehaviour,IPointerClickHandler
 {
+    [SerializeField] AudioSource _audioSource;
+    [SerializeField] AudioClip _clip;
+    [SerializeField] string SceneName;
     public void OnPointerClick(PointerEventData eventData)
     {
-        SceneManager.LoadScene("SampleScene");
+        _audioSource.PlayOneShot(_clip);
+        SceneManager.LoadScene(SceneName);
     }
 }

@@ -7,6 +7,8 @@ public class Menu : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField]public static int _playerNumber=4;
     static int _playerName;
+    [SerializeField]AudioSource _audioSource;
+    [SerializeField]AudioClip _clip;
     [SerializeField]int _selectNumber;
     private void Update()
     {
@@ -21,6 +23,7 @@ public class Menu : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         _playerNumber =_selectNumber;
+       _audioSource.PlayOneShot(_clip);
         Debug.Log(_playerNumber);
     }
 }

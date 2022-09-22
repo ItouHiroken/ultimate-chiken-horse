@@ -25,6 +25,8 @@ public class PlayerCursor : MonoBehaviour
     [Header("インスタンスしたい物")]
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
     [SerializeField] GameManager.Turn Turn;
+    [SerializeField] AudioSource _audioSource;
+    [SerializeField] AudioClip _choiceSound;
 
 
     private Rigidbody2D rb;
@@ -65,6 +67,7 @@ public class PlayerCursor : MonoBehaviour
                 if (Input.GetButtonDown(_selectButton) &&
                     !_gameManager.GetComponent<GameManager>()._isChoiceCursol.Contains(this.gameObject))
                 {
+                    _audioSource.PlayOneShot(_choiceSound);
                     _isFollowing = true;
                     gameObject.tag = "isChoice";
                     _gameManager.GetComponent<GameManager>()._choiceList.Add(gameObject);
@@ -79,6 +82,7 @@ public class PlayerCursor : MonoBehaviour
                 if (Input.GetButtonDown(_selectButton) &&
                     !_gameManager.GetComponent<GameManager>()._isPutCursol.Contains(this.gameObject))
                 {
+                    _audioSource.PlayOneShot(_choiceSound);
                     _isFollowing = false;
                     if (gameObject.TryGetComponent(out Bomb bomb))
                     {
