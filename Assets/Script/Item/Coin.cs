@@ -9,30 +9,39 @@ public class Coin : ItemBase
     GameObject _collisionPlayer;
     [SerializeField] bool _isCollision = false;
     [SerializeField] bool _flag;
+    [SerializeField] bool _isUsed;
+    [SerializeField] CircleCollider2D _circleCollider;
     float time;
     private void Update()
     {
-        TurnChecker();
+        if (!_isUsed)
+        {
+            TurnChecker();
 
-        if (nowTurn == GameManager.Turn.GamePlay)
-        {
-            gameObject.tag = "Coin";
-        }
-        
-        if (nowTurn == GameManager.Turn.GamePlay && _isCollision)
-        {
-            UpDown();
-        }
-        if (nowTurn == GameManager.Turn.GamePlay && _isCollision && _flag)
-        {
-            FollowPlayerBack();
-            _flag = false;
-        }
-        time += Time.deltaTime;
-        if (time > 0.3f)
-        {
-            _flag = true;
-            time = 0;
+            if (nowTurn == GameManager.Turn.GamePlay)
+            {
+                _circleCollider.isTrigger = true;
+                gameObject.tag = "Coin";
+            }
+            else { _circleCollider.isTrigger = false; }
+            if (nowTurn == GameManager.Turn.GamePlay && _isCollision)
+            {
+                UpDown();
+            }
+            if (nowTurn == GameManager.Turn.GamePlay && _isCollision && _flag)
+            {
+                if (_collisionPlayer != null)
+                {
+                    FollowPlayerBack();
+                }
+                _flag = false;
+            }
+            time += Time.deltaTime;
+            if (time > 0.3f)
+            {
+                _flag = true;
+                time = 0;
+            }
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -41,6 +50,12 @@ public class Coin : ItemBase
         {
             _collisionPlayer = collision.gameObject;
             _isCollision = true;
+        }
+
+        if (nowTurn == GameManager.Turn.GamePlay && collision.gameObject.name == "Goal")
+        {
+            _isUsed = true;
+            this.gameObject.transform.position = new Vector3(1000,1000,1000);
         }
     }
     /// <summary>
@@ -55,7 +70,7 @@ public class Coin : ItemBase
     /// </summary>
     void FollowPlayerBack()
     {
-        DOTween.Sequence().Append(transform.DOMove(new Vector3(_collisionPlayer.transform.position.x, _collisionPlayer.transform.position.y+3, _collisionPlayer.transform.position.z), 2f)).Play().SetAutoKill();
+        DOTween.Sequence().Append(transform.DOMove(new Vector3(_collisionPlayer.transform.position.x, _collisionPlayer.transform.position.y + 3, _collisionPlayer.transform.position.z), 2f)).Play().SetAutoKill();
     }
     void TurnChecker()
     {
