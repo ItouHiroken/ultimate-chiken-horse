@@ -1,43 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
+
 /// <summary>
 /// 回ります
 /// </summary>
-public class Guruguru : MonoBehaviour
+public class Guruguru : ItemBase
 {
-    Transform target;   // 移動対象オブジェクト
-    [SerializeField]Transform origin;   // 公転原点
-    float prevVal;      // 前回の角度
-
+    GameObject _manager;
+    GameManager.Turn _turn;
+    [SerializeField]float _kaitenSpeed;
     private void Start()
     {
-        target = transform;
+        _manager = GameObject.Find("GameManager").gameObject;
     }
-    public Tween DoRotateAround(float endValue, float duration)
+    protected new void Update()
     {
-        prevVal = 0.0f;
-
-        // durationの時間で値を0～endValueまで変更させて公転処理を呼ぶ
-        Tween ret = DOTween.To(x => RotateAroundPrc(x), 0.0f, endValue, duration);
-
-        return ret;
+        TurnChecker(_manager);
+        if(_turn==GameManager.Turn.GamePlay)
+        {
+            Mawaru();
+        }
+        
     }
-
-    /// <summary>
-    /// 公転処理
-    /// </summary>
-    /// <param name="value"></param>
-    private void RotateAroundPrc(float value)
+    void Mawaru()
     {
-        // 前回との差分を計算
-        float delta = value - prevVal;
-
-        // Y軸周りに公転運動
-        target.RotateAround(origin.position, Vector3.up, delta);
-
-        // 前回の角度を更新
-        prevVal = value;
+        Quaternion rot = Quaternion.AngleAxis(_kaitenSpeed, Vector3.back);
+        // 現在の自信の回転の情報を取得する。
+        Quaternion q = gameObject.transform.rotation;
+        // 合成して、自身に設定
+        gameObject.transform.rotation = q * rot;
+    }
+    void TurnChecker(GameObject a)
+    {
+        _turn = a.GetComponent<GameManager>().NowTurn;
     }
 }

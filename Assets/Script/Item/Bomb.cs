@@ -10,13 +10,14 @@ public class Bomb : ItemBase
 
     [Header("ƒAƒTƒCƒ“‚µ‚½‚¢•¨‚ð“ü‚ê‚é")]
     [SerializeField] GameObject _manager;
-    [SerializeField] GameObject _childObject;  
+    [SerializeField] GameObject _childObject;
     [SerializeField] Animator _anim;
-    
+
     GameManager.Turn _turn;
     CircleCollider2D _circleCollider;
     private void Start()
     {
+        _manager = GameObject.Find("GameManager").gameObject;
         _circleCollider = GetComponent<CircleCollider2D>();
     }
     protected new void Update()

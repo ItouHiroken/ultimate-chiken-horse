@@ -95,20 +95,34 @@ public class PlayerCursor : MonoBehaviour
                 if (Input.GetButtonDown(_kaitenLeftName))
                 {
                     Debug.Log("左呼ばれたよ");
-                    Quaternion rot = Quaternion.AngleAxis(gameObject.GetComponent<ItemKaiten>()._kaitenIndex, Vector3.forward);
-                    // 現在の自信の回転の情報を取得する。
-                    Quaternion q = gameObject.transform.rotation;
-                    // 合成して、自身に設定
-                    gameObject.transform.rotation = q * rot;
+                    if (gameObject.gameObject.TryGetComponent(out ItemKaiten kaiten))
+                    {
+                        Quaternion rot = Quaternion.AngleAxis(kaiten._kaitenIndex, Vector3.forward);
+                        // 現在の自信の回転の情報を取得する。
+                        Quaternion q = gameObject.transform.rotation;
+                        // 合成して、自身に設定
+                        gameObject.transform.rotation = q * rot;
+                    }
+                    if (gameObject.gameObject.TryGetComponent(out FlipX flipX))
+                    {
+                        flipX._flipX = true;
+                    }
                 }
                 if (Input.GetButtonDown(_kaitenRightName))
                 {
                     Debug.Log("右呼ばれたよ");
-                    Quaternion rot = Quaternion.AngleAxis(gameObject.GetComponent<ItemKaiten>()._kaitenIndex, Vector3.back);
-                    // 現在の自信の回転の情報を取得する。
-                    Quaternion q = gameObject.transform.rotation;
-                    // 合成して、自身に設定
-                    gameObject.transform.rotation = q * rot;
+                    if (gameObject.gameObject.TryGetComponent(out ItemKaiten kaiten))
+                    {
+                        Quaternion rot = Quaternion.AngleAxis(kaiten._kaitenIndex, Vector3.back);
+                        // 現在の自信の回転の情報を取得する。
+                        Quaternion q = gameObject.transform.rotation;
+                        // 合成して、自身に設定
+                        gameObject.transform.rotation = q * rot;
+                    }
+                    if (gameObject.gameObject.TryGetComponent(out FlipX flipX))
+                    {
+                        flipX._flipX = true;
+                    }
                 }
                 break;
             default:
@@ -136,7 +150,7 @@ public class PlayerCursor : MonoBehaviour
         }
         else
         {
-            
+
         }
 
     }

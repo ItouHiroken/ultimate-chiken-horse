@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class FlipX : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public bool _flipX;
+    private void Start()
     {
-        
-    }
 
-    // Update is called once per frame
+    }
     void Update()
     {
-        
+        if (_flipX)
+        {
+            gameObject.transform.Rotate(0, gameObject.transform.rotation.y + 180, 0);
+            _flipX = false;
+        }
+
     }
 }

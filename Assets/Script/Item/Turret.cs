@@ -9,17 +9,34 @@ public class Turret : ItemBase
     [SerializeField] GameObject _direction;
     [SerializeField] GameObject _bullet;
     [SerializeField] float _shotPower;
+    [SerializeField] string _bulletName;
+    [SerializeField] AudioSource _audioSource;
+    [SerializeField] AudioClip _audioClip;
+    [SerializeField] GameObject _gm;
+    [SerializeField] GameManager.Turn _turn;
+    private void Start()
+    {
+        _gm = GameObject.Find("GameManager").gameObject;
+        _audioSource = GetComponent<AudioSource>(); 
+        _bullet = GameObject.Find(_bulletName).gameObject;
+    }
     protected new void Update()
     {
-        if (_gameManager.NowTurn == GameManager.Turn.GamePlay)
+        TurnChecker(_gm);
+        if (_turn == GameManager.Turn.GamePlay)
         {
             _currentTime += Time.deltaTime;
         }
+        
         if (_targetTime < _currentTime)
         {
             Shot(_direction.transform);
             _currentTime = 0;
         }
+    }
+    void TurnChecker(GameObject a)
+    {
+        _turn = a.GetComponent<GameManager>().NowTurn;
     }
     void Shot(Transform dir)
     {
@@ -27,9 +44,11 @@ public class Turret : ItemBase
         Vector3 forceDirection = dir.position - gameObject.transform.position;
         Vector3 force = _shotPower * forceDirection;
 
+        a.transform.localScale = gameObject.transform.localScale;
         // óÕÇâ¡Ç¶ÇÈÉÅÉ\ÉbÉh
         Rigidbody2D rb = a.gameObject.GetComponent<Rigidbody2D>();
         rb.AddForce(force, ForceMode2D.Impulse);
+        _audioSource.PlayOneShot(_audioClip);
     }
 
 }
