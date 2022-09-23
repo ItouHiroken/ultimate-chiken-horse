@@ -12,7 +12,8 @@ public class Bomb : ItemBase
     [SerializeField] GameObject _manager;
     [SerializeField] GameObject _childObject;
     [SerializeField] Animator _anim;
-
+    [SerializeField] AudioSource _audioSource;
+    [SerializeField] AudioClip _audioClip;
     GameManager.Turn _turn;
     CircleCollider2D _circleCollider;
     private void Start()
@@ -47,7 +48,9 @@ public class Bomb : ItemBase
             _circleCollider.isTrigger = false;
             _anim.SetBool("Use", true);
 
-            StartCoroutine(SetBomb(2.3f, () => { gameObject.transform.position = new Vector3(1000, 1000, 1000); }));
+            StartCoroutine(SetBomb(2.3f, () => 
+            { gameObject.transform.position = new Vector3(1000, 1000, 1000);
+                _audioSource.PlayOneShot(_audioClip);}));
             _use = false;
         }
     }

@@ -11,7 +11,8 @@ public class Coin : ItemBase
     [SerializeField] bool _flag;
     [SerializeField] bool _isUsed;
     [SerializeField] CircleCollider2D _circleCollider;
-    float time;
+    float time; 
+
     protected new void Update()
     {
         if (!_isUsed)

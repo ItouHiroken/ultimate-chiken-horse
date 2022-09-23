@@ -33,6 +33,7 @@ public class PlayerMove : PlayerBase
     [SerializeField] AudioSource _audioSource;
     [SerializeField] AudioClip _audioClipJump;
     [SerializeField] AudioClip _audioClipDamage;
+    [SerializeField] AudioClip _audioClipCoin;
     //[Tooltip("走れるかどうかチェック")] bool _dashCheck;
     void SpeedController()
     {
@@ -176,6 +177,7 @@ public class PlayerMove : PlayerBase
         }
         if (collision.gameObject.CompareTag("Coin"))
         {
+            _audioSource.PlayOneShot(_audioClipCoin);
             collision.gameObject.tag = "isUsed";
             Score |= PlayerState.GetScore.Coin;
             Debug.Log(Score);
