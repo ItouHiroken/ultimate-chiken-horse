@@ -34,6 +34,10 @@ public abstract class ItemBase : MonoBehaviour
         {
             _selectImage.gameObject.SetActive(false);
         }
+        if (gameObject.CompareTag("IsChoice"))
+        {
+            ChangeColor(true, _color2);
+        }
     }
     void OnTriggerStay2D(Collider2D collision)
     {
@@ -64,15 +68,17 @@ public abstract class ItemBase : MonoBehaviour
     /// <param name="cursorcheck"></param>
     protected virtual void ChangeColor(bool cursorcheck, Color color)
     {
-        if (cursorcheck)
-        {
-            gameObject.GetComponent<SpriteRenderer>().color = color;
 
-        }
-        else if (!cursorcheck)
-        {
-            gameObject.GetComponent<SpriteRenderer>().color = color;
-        }
+            if (cursorcheck)
+            {
+                gameObject.GetComponent<SpriteRenderer>().color = color;
+
+            }
+            else if (!cursorcheck)
+            {
+                gameObject.GetComponent<SpriteRenderer>().color = color;
+            }
+        
     }
 
     /// <summary>
