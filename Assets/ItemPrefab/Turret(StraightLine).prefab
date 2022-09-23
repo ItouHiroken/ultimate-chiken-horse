@@ -31,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3879593363835348608}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.57, y: 0, z: 0}
+  m_LocalPosition: {x: -1000, y: 0, z: 0}
   m_LocalScale: {x: 1.9999999, y: 1.9999999, z: 1.9999999}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -65,6 +65,8 @@ MonoBehaviour:
   _bulletName: tama(StraightLine)
   _audioSource: {fileID: 0}
   _audioClip: {fileID: 8300000, guid: 34a731b106e86b6499474d9fc4d91c1e, type: 3}
+  _gm: {fileID: 0}
+  _turn: 0
 --- !u!114 &3879593363835348637
 MonoBehaviour:
   m_ObjectHideFlags: 0
