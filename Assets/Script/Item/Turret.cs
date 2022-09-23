@@ -23,7 +23,7 @@ public class Turret : ItemBase
     protected new void Update()
     {
         TurnChecker(_gm);
-        if (_turn == GameManager.Turn.GamePlay)
+        if (_turn == GameManager.Turn.GamePlay&&gameObject.CompareTag("isChoice"))
         {
             _currentTime += Time.deltaTime;
         }
