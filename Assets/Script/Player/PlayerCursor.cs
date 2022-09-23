@@ -149,11 +149,6 @@ public class PlayerCursor : MonoBehaviour
                 destroyItem._isSelect = true;
             }
         }
-        else
-        {
-
-        }
-
     }
     void TurnChecker(GameObject a)
     {
