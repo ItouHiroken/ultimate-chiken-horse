@@ -6,6 +6,7 @@ public class LeftRight : ItemBase
 {
     [SerializeField] float _speed;
     [SerializeField] float _distans;
+    [SerializeField] GameObject _manager;
     [SerializeField] GameManager.Turn _turn;
     [SerializeField] Vector3 _moveDirection = Vector3.up + Vector3.right;
     [SerializeField] float _moveSeconds;
@@ -15,11 +16,12 @@ public class LeftRight : ItemBase
 
     void Start()
     {
+        _manager = GameObject.Find("GameManager").gameObject;
         nowPosi = this.transform.position.x;
     }
 
     // Update is called once per frame
-    void Update()
+    protected new void Update()
     {
         TurnChecker();
         if (_turn == GameManager.Turn.GamePlay)
@@ -33,6 +35,6 @@ public class LeftRight : ItemBase
     }
     void TurnChecker()
     {
-        _turn = base._gameManager.NowTurn;
+        _turn =_manager.GetComponent<GameManager>().NowTurn;
     }
 }

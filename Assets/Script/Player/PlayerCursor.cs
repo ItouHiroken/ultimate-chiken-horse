@@ -40,6 +40,7 @@ public class PlayerCursor : MonoBehaviour
         TurnChecker(_gameManager);
         CursorMove();
         CursolAndItem(_overlapItem);
+        ItemFollowCursor(_overlapItem, _isFollowing);
     }
     void OnTriggerStay2D(Collider2D collision)
     {
@@ -56,9 +57,8 @@ public class PlayerCursor : MonoBehaviour
 
     private void CursolAndItem(GameObject gameObject)
     {
-        if (gameObject == null) return;
-        if (!gameObject.TryGetComponent<ItemKaiten>(out ItemKaiten _Item)) return;
-        ItemFollowCursor(gameObject.gameObject, _isFollowing);
+        if (gameObject == null)return;
+        if (!(!gameObject.TryGetComponent<ItemKaiten>(out ItemKaiten _Item) || !gameObject.TryGetComponent<FlipX>(out FlipX flipXCheck)))return;
         switch (Turn)
         {
             case GameManager.Turn.SelectItem:
@@ -67,16 +67,17 @@ public class PlayerCursor : MonoBehaviour
                 if (Input.GetButtonDown(_selectButton) &&
                     !_gameManager.GetComponent<GameManager>()._isChoiceCursol.Contains(this.gameObject))
                 {
+                    Debug.Log(_gameManager.GetComponent<GameManager>()._isChoiceCursol);
                     _audioSource.PlayOneShot(_choiceSound);
                     _isFollowing = true;
                     gameObject.tag = "isChoice";
                     _gameManager.GetComponent<GameManager>()._choiceList.Add(gameObject);
                     gameObject.SetActive(false);
                     _gameManager.GetComponent<GameManager>()._isChoiceCursol.Add(base.gameObject);
-                    Debug.Log(_gameManager.GetComponent<GameManager>()._isChoiceCursol);
 
                     this.gameObject.SetActive(false);
                 }
+               
                 break;
             case GameManager.Turn.SetItem:
                 if (Input.GetButtonDown(_selectButton) &&

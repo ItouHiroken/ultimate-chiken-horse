@@ -13,8 +13,6 @@ public class SummonItem : MonoBehaviour
     [SerializeField]List<GameObject> itemPrefabs;
     [SerializeField] List<GameObject> SummonPositionList;
 
-    [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
-    public GameManager.Turn Turn;
     public bool _isChoiceItem;
     private void Update()
     {
@@ -60,9 +58,5 @@ public class SummonItem : MonoBehaviour
         Vector2 spawnPos = SummonPoint.gameObject.transform.position;
         int N = Random.Range(0, itemPrefabs.Count);
         Instantiate(itemPrefabs[N], spawnPos, itemPrefabs[N].transform.rotation);
-    }
-    public void TurnChecker(GameObject a)
-    {
-        Turn = a.GetComponent<GameManager>().NowTurn;
     }
 }

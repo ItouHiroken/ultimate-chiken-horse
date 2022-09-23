@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3292709670912835140}
   - component: {fileID: 3292709670912835138}
   - component: {fileID: 3292709670912835141}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LeftRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,6 +133,7 @@ MonoBehaviour:
   _selectImage: {fileID: 0}
   _speed: 0.2
   _distans: 10
+  _manager: {fileID: 0}
   _turn: 0
   _moveDirection: {x: 10, y: 0, z: 0}
   _moveSeconds: 5

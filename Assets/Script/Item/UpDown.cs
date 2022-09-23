@@ -6,6 +6,7 @@ public class UpDown: ItemBase
 {
     [SerializeField] float _speed;
     [SerializeField] float _distans;
+    [SerializeField] GameObject _manager;
     [SerializeField] GameManager.Turn _turn;
     [SerializeField] Vector3 _moveDirection = Vector3.up + Vector3.right;
     [SerializeField] float _moveSeconds;
@@ -15,6 +16,7 @@ public class UpDown: ItemBase
 
     void Start()
     {
+        _manager = GameObject.Find("GameManager").gameObject;
         nowPosi = this.transform.position.y;
     }
 
@@ -33,6 +35,6 @@ public class UpDown: ItemBase
     }
     void TurnChecker()
     {
-        _turn = base._gameManager.NowTurn;
+        _turn = _manager.GetComponent<GameManager>().NowTurn;
     }
 }

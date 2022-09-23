@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 /// <summary>
 /// プレイヤーがゴールに入ったあと起こる事のさまざま
 /// メモ
@@ -18,7 +17,6 @@ public class Goal : MonoBehaviour
     [SerializeField] PointManager _pointManager;
     int playerCount;
     bool _soloCheck;
-
     void Start()
     {
         gameManagerScript = _gameManager.GetComponent<GameManager>();
@@ -81,6 +79,7 @@ public class Goal : MonoBehaviour
                             goalPlayers[i].GetComponent<PlayerMove>().Score = 0;
                         }
                         Debug.Log("全員ゴールしたからポイントは増えないよ");
+
                         break;
                     default:
                         break;        

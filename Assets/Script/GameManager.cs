@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 /// <summary>
 /// プレイヤー人数選択フェイズ
 /// 1、プレイヤー人数選択
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
     [Header("インスタンスしたいものたち")]
     [SerializeField] List<GameObject> _cursolList = new();
     [SerializeField] List<GameObject> _playerList = new();
-    [SerializeField] List<Image> _playerImages = new();
+    [SerializeField] List<Canvas> _playerCanvas = new();
     [SerializeField] GameObject _startingPoint;
     [SerializeField] GameObject _resetCursorPoint;
     [SerializeField] GameObject _summonItem;
@@ -36,6 +37,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Canvas _result;
     [SerializeField] Text _text;
     [SerializeField] GameObject _itemTurnCamera;
+
+    
 
     [Header("変数たち")]
     [SerializeField] int _clearLine = 100;
@@ -46,6 +49,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> _isChoiceCursol;
     public List<GameObject> _isPutCursol;
     public List<GameObject> _choiceList = new();
+
+
 
 
     private void Update()
@@ -84,29 +89,29 @@ public class GameManager : MonoBehaviour
                 break;
             case Turn.Result://Result終わりの時
                 NowTurn = GameManager.Turn.SelectItem;
+                
                 for (int i = 0; i < _cursolList.Count; i++)
                 {
                     _cursolList[i].SetActive(true);
                 }
                 _result.gameObject.SetActive(false);
+                for (int i = 0; i < _cursolList.Count; i++)
+                {
+                    _cursolList[i].GetComponent<PlayerCursor>()._isFollowing = false; 
+                }
+                _itemTurnCamera.SetActive(true);
+                _resetCursorPoint.GetComponent<CursorStart>().SelectSceneStart = true;
+                _summonItem.GetComponent<SummonItem>()._isChoiceItem = true;
                 for (int i = 0; i < _playerList.Count; i++)
                 {
                     if (_playerList[0].GetComponent<PlayerMove>()._scorePoint >= _clearLine)
                     {
                         NowTurn = GameManager.Turn.GameEnd;
-                        _playerImages[i].gameObject.SetActive(true);
                         Debug.Log("GameEnd");
+                        _playerCanvas[i].gameObject.SetActive(true);
                         break;
                     }
                 }
-                for (int i = 0; i < _cursolList.Count; i++)
-                {
-                    _cursolList[i].GetComponent<PlayerCursor>()._isFollowing = false; 
-                }
-
-                _itemTurnCamera.SetActive(true);
-                _resetCursorPoint.GetComponent<CursorStart>().SelectSceneStart = true;
-                _summonItem.GetComponent<SummonItem>()._isChoiceItem = true;
                 break;
             case Turn.SelectItem://Select終わりの時
                 _isChoiceCursol.Clear();//上にも同じこと書いてあるけど、デバッグ用
@@ -132,6 +137,7 @@ public class GameManager : MonoBehaviour
                 NowTurn = GameManager.Turn.GamePlay;
                 break;
             case Turn.GameEnd:
+
 
                 break;
 
