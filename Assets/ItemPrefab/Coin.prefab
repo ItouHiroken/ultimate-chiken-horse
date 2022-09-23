@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isFollowing: 0
   _color1: {r: 1, g: 1, b: 1, a: 0.5764706}
-  _color2: {r: 1, g: 1, b: 1, a: 0}
+  _color2: {r: 1, g: 1, b: 1, a: 1}
   _gameManager: {fileID: 0}
   _selectImage: {fileID: 0}
   nowTurn: 0
