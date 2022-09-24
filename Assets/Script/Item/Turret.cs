@@ -9,7 +9,6 @@ public class Turret : ItemBase
     [SerializeField] GameObject _direction;
     [SerializeField] GameObject _bullet;
     [SerializeField] float _shotPower;
-    [SerializeField] string _bulletName;
     [SerializeField] AudioSource _audioSource;
     [SerializeField] AudioClip _audioClip;
     [SerializeField] GameObject _gm;
@@ -18,7 +17,6 @@ public class Turret : ItemBase
     {
         _gm = GameObject.Find("GameManager").gameObject;
         _audioSource = GetComponent<AudioSource>(); 
-        _bullet = GameObject.Find(_bulletName).gameObject;
     }
     protected new void Update()
     {

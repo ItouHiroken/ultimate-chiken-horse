@@ -20,8 +20,7 @@ public class Guruguru : ItemBase
         if(_turn==GameManager.Turn.GamePlay)
         {
             Mawaru();
-        }
-        
+        } 
     }
     void Mawaru()
     {

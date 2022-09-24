@@ -21,7 +21,7 @@ public class UpDown: ItemBase
     }
 
     // Update is called once per frame
-    void Update()
+    protected new void Update()
     {
         TurnChecker();
         if (_turn == GameManager.Turn.GamePlay)

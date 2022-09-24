@@ -39,6 +39,7 @@ public abstract class ItemBase : MonoBehaviour
             ChangeColor(true, _color2);
         }
     }
+    
     void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Cursor"))
@@ -94,6 +95,10 @@ public abstract class ItemBase : MonoBehaviour
         if (TryGetComponent(out CircleCollider2D CC2D))
         {
             CC2D.enabled = colliderSwitch;
+        }
+        if (TryGetComponent(out PolygonCollider2D PC2D))
+        {
+            PC2D.enabled = colliderSwitch;
         }
     }
 }
