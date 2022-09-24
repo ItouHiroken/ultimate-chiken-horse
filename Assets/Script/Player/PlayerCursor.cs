@@ -17,6 +17,10 @@ public class PlayerCursor : MonoBehaviour
 
     [Header("変数")]
     [Tooltip("移動速度")] float _speed = 10.0f;
+    [SerializeField, Tooltip("カメラの上のライン")] float _under;
+    [SerializeField, Tooltip("カメラの上のライン")] float _top;
+    [SerializeField, Tooltip("カメラの上のライン")] float _left;
+    [SerializeField, Tooltip("カメラの上のライン")] float _right;
 
     [Header("見たいだけ")]
     [SerializeField] public bool _isFollowing;
@@ -57,8 +61,8 @@ public class PlayerCursor : MonoBehaviour
 
     private void CursolAndItem(GameObject gameObject)
     {
-        if (gameObject == null)return;
-        if (!(!gameObject.TryGetComponent<ItemKaiten>(out ItemKaiten _Item) || !gameObject.TryGetComponent<FlipX>(out FlipX flipXCheck)))return;
+        if (gameObject == null) return;
+        if (!(!gameObject.TryGetComponent<ItemKaiten>(out ItemKaiten _Item) || !gameObject.TryGetComponent<FlipX>(out FlipX flipXCheck))) return;
         switch (Turn)
         {
             case GameManager.Turn.SelectItem:
@@ -77,7 +81,7 @@ public class PlayerCursor : MonoBehaviour
 
                     this.gameObject.SetActive(false);
                 }
-               
+
                 break;
             case GameManager.Turn.SetItem:
                 if (Input.GetButtonDown(_selectButton) &&
@@ -158,9 +162,30 @@ public class PlayerCursor : MonoBehaviour
     {
         if (Turn == GameManager.Turn.SetItem || Turn == GameManager.Turn.SelectItem)
         {
-            float verticalInput = -_speed * Input.GetAxisRaw(_vertical);
-            float horizontalInput = _speed * Input.GetAxisRaw(_horizontal);
-            rb.velocity = new Vector2(horizontalInput, verticalInput);
+            Vector2 thisPos = this.gameObject.transform.position;
+            if (_under <= thisPos.y && thisPos.y <= _top && _left <= thisPos.x && thisPos.x <= _right)
+            {
+                float verticalInput = -_speed * Input.GetAxisRaw(_vertical);
+                float horizontalInput = _speed * Input.GetAxisRaw(_horizontal);
+                rb.velocity = new Vector2(horizontalInput, verticalInput);
+            }
+            ///無理やりここから画面外に出るなってした
+            else if (_under >= thisPos.y)
+            {
+                rb.velocity = new Vector2(0, 20);
+            }
+            else if (thisPos.y >= _top)
+            {
+                rb.velocity = new Vector2(0, -20);
+            }
+            else if (_left >= thisPos.x)
+            {
+                rb.velocity = new Vector2(20, 0);
+            }
+            else if (thisPos.x >= _right)
+            {
+                rb.velocity = new Vector2(-20, 0);
+            }
         }
     }
 }
