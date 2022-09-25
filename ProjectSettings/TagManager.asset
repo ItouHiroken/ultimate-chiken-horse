@@ -10,6 +10,7 @@ TagManager:
   - Coin
   - isUsed
   - isChoice
+  - GameManager
   layers:
   - Default
   - TransparentFX

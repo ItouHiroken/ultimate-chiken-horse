@@ -58,7 +58,11 @@ public class PlayerCursor : MonoBehaviour
             _overlapItem = collision.gameObject;
         }
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
 
+        _overlapItem = null;
+    }
     private void CursolAndItem(GameObject gameObject)
     {
         if (gameObject == null) return;
@@ -135,11 +139,7 @@ public class PlayerCursor : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-
-        _overlapItem = null;
-    }
+  
     /// <summary>
     /// アイテムにカーソルを合わせたあと、何かしらの操作をすると、ついてきてほしい。
     /// </summary>
@@ -148,10 +148,6 @@ public class PlayerCursor : MonoBehaviour
         if (isFollowing)
         {
             gameObject.transform.position = this.gameObject.transform.position;
-            if (gameObject.TryGetComponent(out DestroyItem destroyItem))
-            {
-                destroyItem._isSelect = true;
-            }
         }
     }
     void TurnChecker(GameObject a)
@@ -163,13 +159,13 @@ public class PlayerCursor : MonoBehaviour
         if (Turn == GameManager.Turn.SetItem || Turn == GameManager.Turn.SelectItem)
         {
             Vector2 thisPos = this.gameObject.transform.position;
+            ///無理やりここから画面外に出るなってした
             if (_under <= thisPos.y && thisPos.y <= _top && _left <= thisPos.x && thisPos.x <= _right)
             {
                 float verticalInput = -_speed * Input.GetAxisRaw(_vertical);
                 float horizontalInput = _speed * Input.GetAxisRaw(_horizontal);
                 rb.velocity = new Vector2(horizontalInput, verticalInput);
             }
-            ///無理やりここから画面外に出るなってした
             else if (_under >= thisPos.y)
             {
                 rb.velocity = new Vector2(0, 20);
