@@ -1,4 +1,4 @@
-# Bomber-Man
+# Ultimate-Chiken-Horse
 ![unknown](https://user-images.githubusercontent.com/106290558/192110097-9df55dc3-d435-4892-92e5-96d2928943f9.png)
 
 # 概要
