@@ -15,9 +15,10 @@ public class Coin : ItemBase
 
     protected new void Update()
     {
+        base.Update();
         if (!_isUsed)
         {
-            TurnChecker();
+            base.TurnChecker();
 
             if (nowTurn == GameManager.Turn.GamePlay)
             {
@@ -45,8 +46,9 @@ public class Coin : ItemBase
             }
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+   protected new void OnTriggerEnter2D(Collider2D collision)
     {
+        base.OnTriggerEnter2D(collision);
         if (!_isCollision && nowTurn == GameManager.Turn.GamePlay)
         {
             _collisionPlayer = collision.gameObject;
@@ -72,9 +74,5 @@ public class Coin : ItemBase
     void FollowPlayerBack()
     {
         DOTween.Sequence().Append(transform.DOMove(new Vector3(_collisionPlayer.transform.position.x, _collisionPlayer.transform.position.y + 3, _collisionPlayer.transform.position.z), 2f)).Play().SetAutoKill();
-    }
-    void TurnChecker()
-    {
-        nowTurn = _gameManager.NowTurn;
     }
 }

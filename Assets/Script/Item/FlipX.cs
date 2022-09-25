@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Ž©•ª‚ÌYŽ²‚ð180‰ñ‚µ‚½‚¢ƒAƒCƒeƒ€‚É‚Â‚¯‚é
+/// </summary>
+
 public class FlipX : MonoBehaviour
 {
     public bool _flipX;
-    private void Start()
-    {
-
-    }
     void Update()
     {
         if (_flipX)

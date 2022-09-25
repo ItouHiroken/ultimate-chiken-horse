@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 全部のアイテムにつけるもの
+/// </summary>
 public class DestroyItem : MonoBehaviour
 {
-    public GameManager.Turn Turn;
+    private GameManager.Turn Turn;
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
-    public bool _isSelect = false;
     private void Start()
     {
         _gameManager = GameObject.Find("GameManager").gameObject;
@@ -14,7 +15,7 @@ public class DestroyItem : MonoBehaviour
     private void Update()
     {
         Turn = _gameManager.GetComponent<GameManager>().NowTurn;
-        if (Turn == GameManager.Turn.SetItem && !_isSelect&&gameObject.tag!="isChoice")
+        if (Turn == GameManager.Turn.SetItem&&gameObject.tag!="isChoice")
         {
             Destroy(gameObject);
         }

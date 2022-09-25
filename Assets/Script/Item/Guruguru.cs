@@ -7,20 +7,15 @@ using UnityEngine;
 /// </summary>
 public class Guruguru : ItemBase
 {
-    GameObject _manager;
-    GameManager.Turn _turn;
     [SerializeField]float _kaitenSpeed;
-    private void Start()
-    {
-        _manager = GameObject.Find("GameManager").gameObject;
-    }
     protected new void Update()
     {
-        TurnChecker(_manager);
-        if(_turn==GameManager.Turn.GamePlay)
+        base.TurnChecker();
+        if(base._nowTurn==GameManager.Turn.GamePlay)
         {
             Mawaru();
         } 
+        base.Update();
     }
     void Mawaru()
     {
@@ -29,9 +24,5 @@ public class Guruguru : ItemBase
         Quaternion q = gameObject.transform.rotation;
         // çáê¨ÇµÇƒÅAé©êgÇ…ê›íË
         gameObject.transform.rotation = q * rot;
-    }
-    void TurnChecker(GameObject a)
-    {
-        _turn = a.GetComponent<GameManager>().NowTurn;
     }
 }

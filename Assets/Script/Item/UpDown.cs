@@ -6,25 +6,24 @@ public class UpDown: ItemBase
 {
     [SerializeField] float _speed;
     [SerializeField] float _distans;
-    [SerializeField] GameObject _manager;
-    [SerializeField] GameManager.Turn _turn;
     [SerializeField] Vector3 _moveDirection = Vector3.up + Vector3.right;
     [SerializeField] float _moveSeconds;
 
     [SerializeField] Vector2 _kokomade;
     public float nowPosi;
 
-    void Start()
+    protected new void Start()
     {
-        _manager = GameObject.Find("GameManager").gameObject;
+        base.Start();
         nowPosi = this.transform.position.y;
     }
 
     // Update is called once per frame
     protected new void Update()
     {
-        TurnChecker();
-        if (_turn == GameManager.Turn.GamePlay)
+        base.Update();
+        base.TurnChecker();
+        if (_nowTurn == GameManager.Turn.GamePlay)
         {
             Move();
         }
@@ -32,9 +31,5 @@ public class UpDown: ItemBase
     void Move()
     {
         transform.position = new Vector3(transform.position.x, nowPosi + Mathf.PingPong(Time.time/_speed, _distans), transform.position.z);
-    }
-    void TurnChecker()
-    {
-        _turn = _manager.GetComponent<GameManager>().NowTurn;
     }
 }

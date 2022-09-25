@@ -11,36 +11,29 @@ public abstract class ItemBase : MonoBehaviour
     private string playername;
     //    public abstract void Activate1();
     //    public abstract void Activate2();
-
-    [SerializeField] bool _isFollowing;
-    bool p1Follow;
+    [SerializeField] protected bool _isFollowing;
     [SerializeField] Color _color1;
     [SerializeField] Color _color2;
     [SerializeField] protected GameManager _gameManager;
-    [SerializeField] GameObject _selectImage;
-    private void Start()
+    [SerializeField] protected GameManager.Turn _nowTurn;
+    [SerializeField] protected GameObject _selectImage;
+    protected void Start()
     {
-        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _gameManager = GameObject.FindGameObjectWithTag("GameManager").gameObject.GetComponent<GameManager>();
     }
     protected void Update()
     {
-        
-        if (_selectImage == null) return;
-        if (_gameManager.NowTurn == GameManager.Turn.SelectItem)
+        if (_nowTurn == GameManager.Turn.SetItem && gameObject.tag != "isChoice")
         {
-            _selectImage.gameObject.SetActive(true);
+            Destroy(gameObject);
         }
-        else
-        {
-            _selectImage.gameObject.SetActive(false);
-        }
-        if (gameObject.CompareTag("IsChoice"))
+        if (gameObject.CompareTag("isChoice"))
         {
             ChangeColor(true, _color2);
         }
+        ShowImage();
     }
-    
-    void OnTriggerStay2D(Collider2D collision)
+    protected void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Cursor"))
         {
@@ -48,14 +41,14 @@ public abstract class ItemBase : MonoBehaviour
             ChangeColor(true, _color1);
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Cursor"))
         {
             ChangeColor(true, _color1);
         }
     }
-    private void OnTriggerExit2D(Collider2D collider)
+    protected void OnTriggerExit2D(Collider2D collider)
     {
         if (collider.CompareTag("Cursor"))
         {
@@ -64,24 +57,40 @@ public abstract class ItemBase : MonoBehaviour
     }
 
     /// <summary>
+    /// 動くアイテムがどのように動くかプレイヤーたちに教える画像があったら画像のOnOff切り替えしてほしい
+    /// </summary>
+    protected void ShowImage()
+    {
+        if (_selectImage != null)
+        {
+            if (_gameManager.NowTurn == GameManager.Turn.SelectItem)
+            {
+                _selectImage.gameObject.SetActive(true);
+            }
+            else
+            {
+                _selectImage.gameObject.SetActive(false);
+            }
+        }
+    }
+    /// <summary>
     /// アイテム選択時、アイテムにカーソル合わさると色が変わる。
     /// </summary>
     /// <param name="cursorcheck"></param>
     protected virtual void ChangeColor(bool cursorcheck, Color color)
     {
 
-            if (cursorcheck)
-            {
-                gameObject.GetComponent<SpriteRenderer>().color = color;
+        if (cursorcheck)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = color;
 
-            }
-            else if (!cursorcheck)
-            {
-                gameObject.GetComponent<SpriteRenderer>().color = color;
-            }
-        
+        }
+        else if (!cursorcheck)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = color;
+        }
+
     }
-
     /// <summary>
     /// 選択されたらコライダーが全部なくなっててほしい、また置くときはコライダーまた戻ってもらう。
     /// </summary>
@@ -100,5 +109,9 @@ public abstract class ItemBase : MonoBehaviour
         {
             PC2D.enabled = colliderSwitch;
         }
+    }
+    protected void TurnChecker()
+    {
+        _nowTurn = _gameManager.NowTurn;
     }
 }

@@ -11,17 +11,16 @@ public class Turret : ItemBase
     [SerializeField] float _shotPower;
     [SerializeField] AudioSource _audioSource;
     [SerializeField] AudioClip _audioClip;
-    [SerializeField] GameObject _gm;
-    [SerializeField] GameManager.Turn _turn;
-    private void Start()
+    protected new void Start()
     {
-        _gm = GameObject.Find("GameManager").gameObject;
+        base.Start();
         _audioSource = GetComponent<AudioSource>(); 
     }
     protected new void Update()
     {
-        TurnChecker(_gm);
-        if (_turn == GameManager.Turn.GamePlay&&gameObject.CompareTag("isChoice"))
+        base.TurnChecker();
+        base.Update();
+        if (base._nowTurn == GameManager.Turn.GamePlay&&gameObject.CompareTag("isChoice"))
         {
             _currentTime += Time.deltaTime;
         }
@@ -31,10 +30,6 @@ public class Turret : ItemBase
             Shot(_direction.transform);
             _currentTime = 0;
         }
-    }
-    void TurnChecker(GameObject a)
-    {
-        _turn = a.GetComponent<GameManager>().NowTurn;
     }
     void Shot(Transform dir)
     {
