@@ -5,8 +5,26 @@ using PlayerState;
 /// <summary>
 /// プレイヤーの移動に関するもの
 /// </summary>
-public class PlayerMove : PlayerBase
+public class PlayerMove : MonoBehaviour
 {
+    [Header("自分の状態")]
+    public DeBuff _deBuff = DeBuff.Default;
+    public GameManager.Turn Turn;
+    [Header("ジャンプ")]
+    [Tooltip("ジャンプ力"), SerializeField] float _jumpPower = 40f; protected float JumpPower { get { return _jumpPower; } }
+
+    protected bool isreturn = false;
+
+    Rigidbody2D _rb = default;
+    [Header("見たいだけ")]
+
+    [SerializeField] private int _jumpChecker = 0;
+    [SerializeField] bool _groundCheck; protected bool GroundCheck { get { return _groundCheck; } }
+    [SerializeField] bool _rightWallCheck; protected bool RightWallCheck { get { return _leftWallCheck; } }
+    [SerializeField] bool _leftWallCheck; protected bool LeftWallCheck { get { return _rightWallCheck; } }
+    [SerializeField][Tooltip("違うレイヤーで当たり判定とるよ！")] private LayerMask levelMask;
+
+
     [Header("入力ボタンの名前")]
     [SerializeField] string _jump;
     [SerializeField] string _horizontal;
@@ -16,12 +34,19 @@ public class PlayerMove : PlayerBase
     [SerializeField][Tooltip("左右の速度")] private float _horizonSpeedLimiter;
     [SerializeField][Tooltip("上下の速度")] private float _jumpSpeedLimiter;
 
-    [Header("自分を入れる")]
-    [SerializeField][Tooltip("自分の動きonoffするため")] PlayerMove controller;
+    [Header("左右移動する速度")]
+    [Tooltip("現在速度")][SerializeField] private float _speed;
+
+    [Tooltip("通常速度")] private float _defaultSpeed = 5f;
+
+    [Tooltip("スロウ速度")] private float _slowSpeed = default;
+
+    [Tooltip("滑った速度")] private float _splitSpeed = default;
+
+    [Tooltip("歩いた時の速度制限"), SerializeField] private float _walkSpeedLimiter = 30f;
 
     [Header("ターンは把握用")]
-    public GameManager.Turn Turn;
-    [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
+    [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameManager _gameManager;
 
     [Header("ポイント関係")]
     public PlayerState.GetScore Score;
@@ -34,24 +59,36 @@ public class PlayerMove : PlayerBase
     [SerializeField] AudioClip _audioClipJump;
     [SerializeField] AudioClip _audioClipDamage;
     [SerializeField] AudioClip _audioClipCoin;
+
+    [Header("自分を入れる")]
+    [SerializeField][Tooltip("自分の動きonoffするため")] PlayerMove controller;
+
     //[Tooltip("走れるかどうかチェック")] bool _dashCheck;
     void SpeedController()
     {
         switch (_deBuff)
         {
             case DeBuff.Default:
-                _horizonSpeedLimiter = WalkSpeedLimiter;
+                _horizonSpeedLimiter = _walkSpeedLimiter;
                 break;
             case DeBuff.Split:
-                _horizonSpeedLimiter = WalkSpeedLimiter * 2;
+                _horizonSpeedLimiter = _walkSpeedLimiter * 2;
                 break;
             case DeBuff.Slow:
-                _horizonSpeedLimiter = WalkSpeedLimiter / 2;
+                _horizonSpeedLimiter = _walkSpeedLimiter / 2;
                 break;
         }
         _jumpSpeedLimiter = 50f;
     }
-    protected new void Update()
+    void Start()
+    {
+        _gameManager = GameObject.FindGameObjectWithTag("GameManager").gameObject.GetComponent<GameManager>();
+        _rb = GetComponent<Rigidbody2D>();
+        _speed = _defaultSpeed;
+        _slowSpeed = _defaultSpeed / 2;
+        _splitSpeed = _defaultSpeed * 2;
+    }
+    void Update()
     {
         if (Input.anyKeyDown)
         {
@@ -67,93 +104,99 @@ public class PlayerMove : PlayerBase
         }
         ////
         SpeedController();
-        TurnChecker(_gameManager);
+        TurnChecker();
         if (Turn == GameManager.Turn.GamePlay)
         {
-            base.Update();
-            //if (Input.GetKeyDown(KeyCode.LeftShift))
-            //{
-            //    _dashCheck = !_dashCheck;
-            //}
             bool jump = Input.GetButtonDown(_jump);
             if (jump)
             {
                 Debug.Log(_horizontal);
-                if (JumpChecker == 1 && GroundCheck)
+                if (_jumpChecker == 1 && GroundCheck)
                 {
-                    Rb.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
+                    _rb.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
                     _audioSource.PlayOneShot(_audioClipJump);
                 }
-                if (JumpChecker == 1 && !GroundCheck && RightWallCheck)
+                if (_jumpChecker == 1 && !GroundCheck && RightWallCheck)
                 {
-                    Rb.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
-                    Rb.AddForce(Vector2.right * 40, ForceMode2D.Impulse);
+                    _rb.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
+                    _rb.AddForce(Vector2.right * 40, ForceMode2D.Impulse);
                     _audioSource.PlayOneShot(_audioClipJump);
                 }
-                if (JumpChecker == 1 && !GroundCheck && LeftWallCheck)
+                if (_jumpChecker == 1 && !GroundCheck && LeftWallCheck)
                 {
-                    Rb.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
-                    Rb.AddForce(Vector2.left * 40, ForceMode2D.Impulse);
+                    _rb.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
+                    _rb.AddForce(Vector2.left * 40, ForceMode2D.Impulse);
                     _audioSource.PlayOneShot(_audioClipJump);
                 }
             }
         }
+        RightWallCheker(Vector3.right); // 右に広げる
+        LeftWallCheker(Vector3.left); // 左に広げる
+        GroundCheker(Vector3.down); // 下に広げる
+        if (_deBuff == DeBuff.Default)
+        {
+            _speed = _defaultSpeed;
+        }
+        if (_deBuff == DeBuff.Slow)
+        {
+            _speed = _slowSpeed;
+        }
+        if (_deBuff == DeBuff.Split)
+        {
+            _speed = _splitSpeed;
+        }
+        if ((_deBuff & DeBuff.Slow) == DeBuff.Slow)
+        {
+
+        }
+        if (RightWallCheck || LeftWallCheck)
+        {
+            _rb.AddForce(Vector2.down * 0.3f, ForceMode2D.Impulse);
+        }
     }
     private void FixedUpdate()
     {
-        TurnChecker(_gameManager);
+        TurnChecker();
         if (Turn == GameManager.Turn.GamePlay)
         {
             float horizontalKey = Input.GetAxis(_horizontal);
             bool TF = horizontalKey != 0 ? true : false;
             animator.SetBool("Horizontal", TF);
-            base.FlipX(horizontalKey);
+            FlipX(horizontalKey);
             Debug.Log(gameObject.name);
             //右入力で左向きに動く
             if (horizontalKey > 0)
             {
-                Rb.AddForce(Vector2.right * Speed, ForceMode2D.Impulse);
-                //if (_dashCheck == true)
-                //{
-                //    _horizonSpeedLimiter = RunSpeedLimiter;
-                //}
+                _rb.AddForce(Vector2.right * _speed, ForceMode2D.Impulse);
             }
             //左入力で左向きに動く
             else if (horizontalKey < 0)
             {
-                Rb.AddForce(Vector2.left * Speed, ForceMode2D.Impulse);
-                //if (_dashCheck == true)
-                //{
-                //    _horizonSpeedLimiter = RunSpeedLimiter;
-                //}
+                _rb.AddForce(Vector2.left * _speed, ForceMode2D.Impulse);
             }
-            //if (_dashCheck == false)
-            //{
-            //    _horizonSpeedLimiter = WalkSpeedLimiter;
-            //}
-            if (Rb.velocity.y < -_jumpSpeedLimiter)
+            if (_rb.velocity.y < -_jumpSpeedLimiter)
             {
-                Rb.velocity = new Vector2(Rb.velocity.x, -_jumpSpeedLimiter);
+                _rb.velocity = new Vector2(_rb.velocity.x, -_jumpSpeedLimiter);
             }
 
             if (RightWallCheck || LeftWallCheck)
             {
-                if (Rb.velocity.y < -_jumpSpeedLimiter / 2)
+                if (_rb.velocity.y < -_jumpSpeedLimiter / 2)
                 {
-                    Rb.velocity = new Vector2(Rb.velocity.x, -_jumpSpeedLimiter / 2);
+                    _rb.velocity = new Vector2(_rb.velocity.x, -_jumpSpeedLimiter / 2);
                 }
             }
-            if (Rb.velocity.y > _jumpSpeedLimiter)
+            if (_rb.velocity.y > _jumpSpeedLimiter)
             {
-                Rb.velocity = new Vector2(Rb.velocity.x, _jumpSpeedLimiter);
+                _rb.velocity = new Vector2(_rb.velocity.x, _jumpSpeedLimiter);
             }
-            if (Rb.velocity.x > _horizonSpeedLimiter)
+            if (_rb.velocity.x > _horizonSpeedLimiter)
             {
-                Rb.velocity = new Vector2(_horizonSpeedLimiter, Rb.velocity.y);
+                _rb.velocity = new Vector2(_horizonSpeedLimiter, _rb.velocity.y);
             }
-            if (Rb.velocity.x < -_horizonSpeedLimiter)
+            if (_rb.velocity.x < -_horizonSpeedLimiter)
             {
-                Rb.velocity = new Vector2(-_horizonSpeedLimiter, Rb.velocity.y);
+                _rb.velocity = new Vector2(-_horizonSpeedLimiter, _rb.velocity.y);
             }
         }
     }
@@ -161,7 +204,7 @@ public class PlayerMove : PlayerBase
     /// ダメージ受ける用
     /// </summary>
     /// <param name="collision"></param>
-    protected void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent(out DamageController damage))
         {
@@ -188,9 +231,113 @@ public class PlayerMove : PlayerBase
             Debug.Log(Score);
         }
     }
-
-    void TurnChecker(GameObject a)
+    void OnCollisionStay2D(Collision2D collision)
     {
-        Turn = a.GetComponent<GameManager>().NowTurn;
+        _jumpChecker = 1;
+    }
+
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        _jumpChecker = 0;
+    }
+
+    /// <summary>
+    /// 自分の絵を左右反転させる
+    /// </summary>
+    /// <param name="horizontal"></param>
+    public void FlipX(float horizontal)
+    {
+        /*
+         * 左を入力されたら[キャラクターを左に向ける。
+         * 左右を反転させるには、Transform:Scale:X に -1 を掛ける。
+         * Sprite Renderer の Flip:X を操作しても反転する。
+         * */
+        if (horizontal > 0)
+        {
+            this.transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x), this.transform.localScale.y, this.transform.localScale.z);
+            isreturn = false;
+        }
+        else if (horizontal < 0)
+        {
+            this.transform.localScale = new Vector3(-1 * Mathf.Abs(this.transform.localScale.x), this.transform.localScale.y, this.transform.localScale.z);
+            isreturn = true;
+        }
+    }
+
+    /// <summary>
+    /// 右にレイ飛ばしてウォールチェックをonoffする、できてない
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns></returns>
+    private void RightWallCheker(Vector3 direction)
+    {
+        for (int i = 1; i < 2; i++)
+        {
+            // ブロックとの当たり判定の結果を格納する変数
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1, levelMask);
+            // 左右に何も存在しない場合
+            if (!hit.collider)
+            {
+                _rightWallCheck = false;
+            }
+            // 左右にブロックが存在する場合
+            else
+            {
+                _rightWallCheck = true;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 左にレイ飛ばしてウォールチェックをonoffする、できてない
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns></returns>
+    private void LeftWallCheker(Vector3 direction)
+    {
+        for (int i = 1; i < 2; i++)
+        {
+            // ブロックとの当たり判定の結果を格納する変数
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1, levelMask);
+            // 左右に何も存在しない場合
+            if (!hit.collider)
+            {
+                _leftWallCheck = false;
+            }
+            // 左右にブロックが存在する場合
+            else
+            {
+                _leftWallCheck = true;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 足元にレイ飛ばしてグラウンドチェックをonoffする、できてない
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns></returns>
+    private void GroundCheker(Vector3 direction)
+    {
+        for (int i = 1; i < 2; i++)
+        {
+            // ブロックとの当たり判定の結果を格納する変数
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1, levelMask);
+            // 下に何も存在しない場合
+            if (!hit.collider)
+            {
+                _groundCheck = false;
+            }
+            // 下にブロックが存在する場合
+            else
+            {
+                _groundCheck = true;
+            }
+        }
+    }
+    void TurnChecker()
+    {
+        Turn = _gameManager.NowTurn;
     }
 }

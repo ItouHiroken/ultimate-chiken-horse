@@ -119,6 +119,7 @@ MonoBehaviour:
   _color1: {r: 1, g: 1, b: 1, a: 0.49411765}
   _color2: {r: 1, g: 1, b: 1, a: 1}
   _gameManager: {fileID: 0}
+  _nowTurn: 0
   _selectImage: {fileID: 0}
 --- !u!114 &1967472043632879581
 MonoBehaviour:
@@ -132,9 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ae518b6f231e8c43b15f1e28848d43b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Turn: 0
   _gameManager: {fileID: 0}
-  _isSelect: 0
 --- !u!61 &1967472043632879576
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -189,9 +188,9 @@ GameObject:
   - component: {fileID: 433439763362894461}
   - component: {fileID: 433439763362894451}
   - component: {fileID: 433439763362894450}
-  m_Layer: 12
+  m_Layer: 3
   m_Name: Spike_03
-  m_TagString: Untagged
+  m_TagString: isChoice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

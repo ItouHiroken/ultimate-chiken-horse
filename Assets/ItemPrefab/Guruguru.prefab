@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6701293700572126400}
   - component: {fileID: 6701293700572126414}
   - component: {fileID: 6701293700572126401}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,9 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ae518b6f231e8c43b15f1e28848d43b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Turn: 0
   _gameManager: {fileID: 0}
-  _isSelect: 0
 --- !u!114 &6701293700977695604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,6 +181,7 @@ MonoBehaviour:
   _color1: {r: 1, g: 1, b: 1, a: 0.49803922}
   _color2: {r: 1, g: 1, b: 1, a: 1}
   _gameManager: {fileID: 0}
+  _nowTurn: 0
   _selectImage: {fileID: 0}
   _kaitenSpeed: 1
 --- !u!61 &6701293700977695603
@@ -287,7 +286,7 @@ GameObject:
   - component: {fileID: 6701293701919594933}
   - component: {fileID: 6701293701919594931}
   - component: {fileID: 6701293701919594930}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -398,7 +397,7 @@ GameObject:
   - component: {fileID: 6701293702021847629}
   - component: {fileID: 6701293702021847627}
   - component: {fileID: 6701293702021847626}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -509,7 +508,7 @@ GameObject:
   - component: {fileID: 6701293702092257636}
   - component: {fileID: 6701293702092257634}
   - component: {fileID: 6701293702092257637}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -620,7 +619,7 @@ GameObject:
   - component: {fileID: 6701293702191428008}
   - component: {fileID: 6701293702191428054}
   - component: {fileID: 6701293702191428009}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
