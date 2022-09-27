@@ -11,15 +11,15 @@ public class CinemachineGroup : MonoBehaviour
     public bool _cursorCameraReset;
 
     [Header("アサインしたいものたち")]
-    [SerializeField,Tooltip("プレイヤーの位置")] List<Transform> players = new();
-    [SerializeField,Tooltip("プレイヤーがシネマシーングループに入っているか")] List<bool> inCinemachine = new();
+    [SerializeField,Tooltip("プレイヤーの位置")] List<Transform> _players = new();
+    [SerializeField,Tooltip("プレイヤーがシネマシーングループに入っているか")] List<bool> _inCinemachine = new();
 
-    CinemachineTargetGroup cinemachineTargetGroup;
+    CinemachineTargetGroup _cinemachineTargetGroup;
     void Start()
     {
-        cinemachineTargetGroup = GetComponent<CinemachineTargetGroup>();
+        _cinemachineTargetGroup = GetComponent<CinemachineTargetGroup>();
 
-        for (int i = 0; i < players.Count; i++)
+        for (int i = 0; i < _players.Count; i++)
         {
             AddCinemachineArray(i);
         }
@@ -27,12 +27,12 @@ public class CinemachineGroup : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i < players.Count; i++)
+        for (int i = 0; i < _players.Count; i++)
         {
             CheckCameraForcas(i);
             if (_playerCameraReset)
             {
-                Debug.Log(players[i].name);
+                Debug.Log(_players[i].name);
                 RemoveCinemachineArray(i);
                 AddCinemachineArray(i);
             }
@@ -41,24 +41,24 @@ public class CinemachineGroup : MonoBehaviour
     }
     void AddCinemachineArray(int playerNum)
     {
-        cinemachineTargetGroup.AddMember(players[playerNum].transform, 1, 0);
-        inCinemachine[playerNum] = true;
+        _cinemachineTargetGroup.AddMember(_players[playerNum].transform, 1, 0);
+        _inCinemachine[playerNum] = true;
     }
     void RemoveCinemachineArray(int playerNum)
     {
-        if (inCinemachine[playerNum])
+        if (_inCinemachine[playerNum])
         {
-            cinemachineTargetGroup.RemoveMember(players[playerNum]);
-            inCinemachine[playerNum] = false;
+            _cinemachineTargetGroup.RemoveMember(_players[playerNum]);
+            _inCinemachine[playerNum] = false;
         }
     }
     void CheckCameraForcas(int number)
     {
-        if(players[number].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal)||
-            players[number].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
+        if(_players[number].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal)||
+            _players[number].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
         {
-            cinemachineTargetGroup.RemoveMember(players[number]);
-            inCinemachine[number]=false;
+            _cinemachineTargetGroup.RemoveMember(_players[number]);
+            _inCinemachine[number]=false;
         }
     }
 }

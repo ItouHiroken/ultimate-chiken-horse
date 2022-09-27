@@ -13,14 +13,11 @@ public class Goal : MonoBehaviour
     [SerializeField][Tooltip("ポイントマネージャーに渡すゴール順番リスト")] public List<GameObject> goalPlayers = new List<GameObject>(Menu._playerNumber);
     [SerializeField][Tooltip("ゲームマネージャー")] GameObject _gameManager;
     [SerializeField] List<GameObject> _players;
-    [Tooltip("ターンチェンジの関数使いたいからとってくる")] GameManager gameManagerScript;
+    [Tooltip("ターンチェンジの関数使いたいからとってくる")] GameManager _gameManagerScript;
     [SerializeField] PointManager _pointManager;
-    int playerCount;
-    bool _soloCheck;
     void Start()
     {
-        gameManagerScript = _gameManager.GetComponent<GameManager>();
-        playerCount = Menu._playerNumber;
+        _gameManagerScript = _gameManager.GetComponent<GameManager>();
     }
 
     void Update()
@@ -35,42 +32,13 @@ public class Goal : MonoBehaviour
                 switch (goalPlayers.Count)
                 {
                     case 1:
-                        if (goalPlayers[0].name == "Player1")
-                        {
-                            goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Solo;
-                        }
-                        else if (goalPlayers[0].name == "Player2")
-                        {
-                            goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Solo;
-                        }
-                        else if (goalPlayers[0].name == "Player3")
-                        {
-                            goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Solo;
-                        }
-                        else if (goalPlayers[0].name == "Player4")
-                        {
-                            goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Solo;
-                        }
+                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Solo;
+
                         Debug.Log(goalPlayers[0] + "が一人だけゴール");
                         break;
                     case 2:
                     case 3:
-                        if (goalPlayers[0].name == "Player1")
-                        {
-                            goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.First;
-                        }
-                        else if (goalPlayers[0].name == "Player2")
-                        {
-                            goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.First;
-                        }
-                        else if (goalPlayers[0].name == "Player3")
-                        {
-                            goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.First;
-                        }
-                        else if (goalPlayers[0].name == "Player4")
-                        {
-                            goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.First;
-                        }
+                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.First;
                         Debug.Log(goalPlayers[0].name + "が一位");
                         break;
                     case 4:
@@ -79,10 +47,9 @@ public class Goal : MonoBehaviour
                             goalPlayers[i].GetComponent<PlayerMove>().Score = 0;
                         }
                         Debug.Log("全員ゴールしたからポイントは増えないよ");
-
                         break;
                     default:
-                        break;        
+                        break;
                 }
                 _pointManager._isCheck = true;
                 _gameManager.GetComponent<GameManager>().TurnChange();
@@ -94,76 +61,23 @@ public class Goal : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (collision.name == "Player1")
+            PlayerMove playerscript;
+            playerscript = collision.GetComponent<PlayerMove>();
+            if (playerscript.enabled == true)
             {
-                PlayerMove playerscript;
-                playerscript = collision.GetComponent<PlayerMove>();
-                if (playerscript.enabled == true)
-                {
-                    goalPlayers.Add(collision.gameObject);
-                }
-                playerscript.enabled = false;
+                goalPlayers.Add(collision.gameObject);
             }
-            if (collision.name == "Player2")
-            {
-                PlayerMove playerscript;
-                playerscript = collision.GetComponent<PlayerMove>();
-                if (playerscript.enabled == true)
-                {
-                    goalPlayers.Add(collision.gameObject);
-                }
-                playerscript.enabled = false;
-            }
-            if (collision.name == "Player3")
-            {
-                PlayerMove playerscript;
-                playerscript = collision.GetComponent<PlayerMove>();
-                if (playerscript.enabled == true)
-                {
-                    goalPlayers.Add(collision.gameObject);
-                }
-                playerscript.enabled = false;
-            }
-            if (collision.name == "Player4")
-            {
-                PlayerMove playerscript;
-                playerscript = collision.GetComponent<PlayerMove>();
-                if (playerscript.enabled == true)
-                {
-                    goalPlayers.Add(collision.gameObject);
-                }
-                playerscript.enabled = false;
-            }
+            playerscript.enabled = false;
+
         }
     }
     void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            if (collision.name == "Player1")
-            {
-                PlayerMove playerscript;
-                playerscript = collision.GetComponent<PlayerMove>();
-                playerscript.enabled = false;
-            }
-            if (collision.name == "Player2")
-            {
-                PlayerMove playerscript;
-                playerscript = collision.GetComponent<PlayerMove>();
-                playerscript.enabled = false;
-            }
-            if (collision.name == "Player3")
-            {
-                PlayerMove playerscript;
-                playerscript = collision.GetComponent<PlayerMove>();
-                playerscript.enabled = false;
-            }
-            if (collision.name == "Player4")
-            {
-                PlayerMove playerscript;
-                playerscript = collision.GetComponent<PlayerMove>();
-                playerscript.enabled = false;
-            }
+            PlayerMove playerscript;
+            playerscript = collision.GetComponent<PlayerMove>();
+            playerscript.enabled = false;
         }
     }
 }

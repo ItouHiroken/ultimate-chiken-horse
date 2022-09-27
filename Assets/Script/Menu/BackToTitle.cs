@@ -6,7 +6,7 @@ public class BackToTitle : MonoBehaviour
 {
     [SerializeField] AudioSource _audioSource;
     [SerializeField] AudioClip _clip;
-    [SerializeField] string SceneName;
+    [SerializeField] string _sceneName;
     [SerializeField] float _time;
     [SerializeField] float _a;
     private void Update()
@@ -15,7 +15,7 @@ public class BackToTitle : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R) || _a >= _time)
         {
             _audioSource.PlayOneShot(_clip);
-            SceneManager.LoadScene(SceneName);
+            SceneManager.LoadScene(_sceneName);
         }
     }
 
