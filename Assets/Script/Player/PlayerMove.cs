@@ -7,61 +7,55 @@ using PlayerState;
 /// </summary>
 public class PlayerMove : MonoBehaviour
 {
-    [Header("自分の状態")]
-    public DeBuff _deBuff = DeBuff.Default;
-    public GameManager.Turn Turn;
+
+    [Header("動き関係")]
     [Header("ジャンプ")]
-    [Tooltip("ジャンプ力"), SerializeField] float _jumpPower = 40f; protected float JumpPower { get { return _jumpPower; } }
-
-    protected bool isreturn = false;
-
-    Rigidbody2D _rb = default;
-    [Header("見たいだけ")]
-
+    [Tooltip("ジャンプ力"), SerializeField] float _jumpPower = 40f;
     [SerializeField] private int _jumpChecker = 0;
-    [SerializeField] bool _groundCheck; protected bool GroundCheck { get { return _groundCheck; } }
-    [SerializeField] bool _rightWallCheck; protected bool RightWallCheck { get { return _leftWallCheck; } }
-    [SerializeField] bool _leftWallCheck; protected bool LeftWallCheck { get { return _rightWallCheck; } }
-    [SerializeField][Tooltip("違うレイヤーで当たり判定とるよ！")] private LayerMask levelMask;
+    [SerializeField] bool _groundCheck;
+    [SerializeField] bool _rightWallCheck;
+    [SerializeField] bool _leftWallCheck;
 
+    [Header("左右移動")]
+    [SerializeField, Tooltip("現在速度")] private float _speed;
+    [SerializeField, Tooltip("通常速度")] private float _defaultSpeed = 5f;
+    [Tooltip("スロウ速度")] private float _slowSpeed = default;
+    [Tooltip("滑った速度")] private float _splitSpeed = default;
+
+    [Header("速度制限")]
+    [SerializeField, Tooltip("速度制限")] private float _walkSpeedLimiter = 30f;
+    [Tooltip("左右の速度")] private float _horizonSpeedLimiter;
+    [Tooltip("上下の速度")] private float _jumpSpeedLimiter;
+    [Header("ターンは把握用")]
+    [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameManager _gameManager;
+
+    [Header("当たり判定")]
+    [SerializeField, Tooltip("ジャンプ用の当たり判定レイヤー！")] private LayerMask levelMask;
 
     [Header("入力ボタンの名前")]
     [SerializeField] string _jump;
     [SerializeField] string _horizontal;
 
-    [Header("見たいだけ")]
+    [Header("見たいだけ、今の状態")]
     [SerializeField][Tooltip("体力")] private int _hp = default;
-    [SerializeField][Tooltip("左右の速度")] private float _horizonSpeedLimiter;
-    [SerializeField][Tooltip("上下の速度")] private float _jumpSpeedLimiter;
-
-    [Header("左右移動する速度")]
-    [Tooltip("現在速度")][SerializeField] private float _speed;
-
-    [Tooltip("通常速度")] private float _defaultSpeed = 5f;
-
-    [Tooltip("スロウ速度")] private float _slowSpeed = default;
-
-    [Tooltip("滑った速度")] private float _splitSpeed = default;
-
-    [Tooltip("歩いた時の速度制限"), SerializeField] private float _walkSpeedLimiter = 30f;
-
-    [Header("ターンは把握用")]
-    [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameManager _gameManager;
+    public DeBuff _deBuff = DeBuff.Default;
+    public GameManager.Turn Turn;
 
     [Header("ポイント関係")]
     public PlayerState.GetScore Score;
     [SerializeField, Tooltip("ゴールに自分を渡したい")] GameObject _goal;
     [SerializeField] public int _scorePoint;
-
     [Header("音とアニメーション")]
     [SerializeField] Animator animator;
     [SerializeField] AudioSource _audioSource;
     [SerializeField] AudioClip _audioClipJump;
     [SerializeField] AudioClip _audioClipDamage;
     [SerializeField] AudioClip _audioClipCoin;
-
     [Header("自分を入れる")]
     [SerializeField][Tooltip("自分の動きonoffするため")] PlayerMove controller;
+
+    Rigidbody2D _rb = default;
+    bool isreturn = false;
 
     //[Tooltip("走れるかどうかチェック")] bool _dashCheck;
     void SpeedController()
@@ -90,19 +84,6 @@ public class PlayerMove : MonoBehaviour
     }
     void Update()
     {
-        if (Input.anyKeyDown)
-        {
-            foreach (KeyCode code in System.Enum.GetValues(typeof(KeyCode)))
-            {
-                if (Input.GetKeyDown(code))
-                {
-                    //処理を書く
-                    Debug.Log(code);
-                    break;
-                }
-            }
-        }
-        ////
         SpeedController();
         TurnChecker();
         if (Turn == GameManager.Turn.GamePlay)
@@ -111,20 +92,22 @@ public class PlayerMove : MonoBehaviour
             if (jump)
             {
                 Debug.Log(_horizontal);
-                if (_jumpChecker == 1 && GroundCheck)
+                if (_jumpChecker == 1 && _groundCheck)
                 {
-                    _rb.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
+                    _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
                     _audioSource.PlayOneShot(_audioClipJump);
                 }
-                if (_jumpChecker == 1 && !GroundCheck && RightWallCheck)
+                //壁じゃん
+                if (_jumpChecker == 1 && !_groundCheck && _rightWallCheck)
                 {
-                    _rb.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
+                    _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
                     _rb.AddForce(Vector2.right * 40, ForceMode2D.Impulse);
                     _audioSource.PlayOneShot(_audioClipJump);
                 }
-                if (_jumpChecker == 1 && !GroundCheck && LeftWallCheck)
+                //壁じゃん
+                if (_jumpChecker == 1 && !_groundCheck && _leftWallCheck)
                 {
-                    _rb.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
+                    _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
                     _rb.AddForce(Vector2.left * 40, ForceMode2D.Impulse);
                     _audioSource.PlayOneShot(_audioClipJump);
                 }
@@ -133,6 +116,8 @@ public class PlayerMove : MonoBehaviour
         RightWallCheker(Vector3.right); // 右に広げる
         LeftWallCheker(Vector3.left); // 左に広げる
         GroundCheker(Vector3.down); // 下に広げる
+
+        //自分の速度を変える所
         if (_deBuff == DeBuff.Default)
         {
             _speed = _defaultSpeed;
@@ -145,11 +130,7 @@ public class PlayerMove : MonoBehaviour
         {
             _speed = _splitSpeed;
         }
-        if ((_deBuff & DeBuff.Slow) == DeBuff.Slow)
-        {
-
-        }
-        if (RightWallCheck || LeftWallCheck)
+        if (_rightWallCheck || _leftWallCheck)
         {
             _rb.AddForce(Vector2.down * 0.3f, ForceMode2D.Impulse);
         }
@@ -174,18 +155,20 @@ public class PlayerMove : MonoBehaviour
             {
                 _rb.AddForce(Vector2.left * _speed, ForceMode2D.Impulse);
             }
+            //落下速度制限
             if (_rb.velocity.y < -_jumpSpeedLimiter)
             {
                 _rb.velocity = new Vector2(_rb.velocity.x, -_jumpSpeedLimiter);
             }
-
-            if (RightWallCheck || LeftWallCheck)
+            //壁に触れた時落下速度が遅くなる
+            if (_rightWallCheck || _leftWallCheck)
             {
                 if (_rb.velocity.y < -_jumpSpeedLimiter / 2)
                 {
                     _rb.velocity = new Vector2(_rb.velocity.x, -_jumpSpeedLimiter / 2);
                 }
             }
+            //速度制限書いたところ
             if (_rb.velocity.y > _jumpSpeedLimiter)
             {
                 _rb.velocity = new Vector2(_rb.velocity.x, _jumpSpeedLimiter);
@@ -218,6 +201,7 @@ public class PlayerMove : MonoBehaviour
                 Debug.Log(Score);
             }
         }
+        //自分をコイン取得状態にする
         if (collision.gameObject.CompareTag("Coin"))
         {
             _audioSource.PlayOneShot(_audioClipCoin);
@@ -225,6 +209,7 @@ public class PlayerMove : MonoBehaviour
             Score |= PlayerState.GetScore.Coin;
             Debug.Log(Score);
         }
+        //自分をゴール状態にする
         if (collision.gameObject.name == "Goal")
         {
             Score |= PlayerState.GetScore.isGoal;
@@ -235,24 +220,16 @@ public class PlayerMove : MonoBehaviour
     {
         _jumpChecker = 1;
     }
-
-
     private void OnCollisionExit2D(Collision2D collision)
     {
         _jumpChecker = 0;
     }
-
     /// <summary>
     /// 自分の絵を左右反転させる
     /// </summary>
     /// <param name="horizontal"></param>
     public void FlipX(float horizontal)
     {
-        /*
-         * 左を入力されたら[キャラクターを左に向ける。
-         * 左右を反転させるには、Transform:Scale:X に -1 を掛ける。
-         * Sprite Renderer の Flip:X を操作しても反転する。
-         * */
         if (horizontal > 0)
         {
             this.transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x), this.transform.localScale.y, this.transform.localScale.z);

@@ -22,86 +22,98 @@ using TMPro;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    [Header("この世の総てを支配する最強Enumくん")]
+    [Header("この世の総てを司る最強Enumくん")]
     public Turn NowTurn;
 
     [Header("インスタンスしたいものたち")]
-    [SerializeField] List<GameObject> _cursolList = new();
-    [SerializeField] List<GameObject> _playerList = new();
-    [SerializeField] List<Canvas> _playerCanvas = new();
-    [SerializeField] GameObject _startingPoint;
-    [SerializeField] GameObject _resetCursorPoint;
-    [SerializeField] GameObject _summonItem;
-    [SerializeField] GameObject _goal;
-    [SerializeField] CinemachineGroup _cinemachineGroup;
-    [SerializeField] Canvas _result;
-    [SerializeField] Text _text;
-    [SerializeField] GameObject _itemTurnCamera;
-
-    
+    [SerializeField, Tooltip("カーソルたち")] List<GameObject> _cursolList = new();
+    [SerializeField, Tooltip("プレイヤーたち")] List<GameObject> _playerList = new();
+    [SerializeField, Tooltip("boolを渡したい")] GameObject _startingPoint;
+    [SerializeField, Tooltip("boolを渡したい")] GameObject _resetCursorPoint;
+    [SerializeField, Tooltip("boolを渡したい")] GameObject _summonItem;
+    [SerializeField, Tooltip("boolを渡したい")] GameObject _goal;
+    [SerializeField, Tooltip("boolを渡したい")] CinemachineGroup _cinemachineGroup;
+    [SerializeField, Tooltip("リザルトのプレイヤーの勝利キャンバス")] List<Canvas> _playerCanvas = new();
+    [SerializeField, Tooltip("リザルトターンの時のキャンバス")] Canvas _result;
+    [SerializeField, Tooltip("デバッグ用、ターンを教えてくれる")] Text _text;
+    [SerializeField, Tooltip("アイテムを選択、設置する時に使うカメラ")] GameObject _itemTurnCamera;
 
     [Header("変数たち")]
-    [SerializeField] int _clearLine = 100;
-    [SerializeField] float _TurnChangeTime = 5;
-    [SerializeField] float _CountChangeTime;
+    [SerializeField,Tooltip("勝利するスコアのライン")] int _clearLine = 100;
+    [SerializeField,Tooltip("リザルトターンの時間")] float _resultTime = 5;
 
     [Header("ほかのところに渡したい")]
-    public List<GameObject> _isChoiceCursol;
-    public List<GameObject> _isPutCursol;
-    public List<GameObject> _choiceList = new();
-
-
-
+    [Tooltip("カーソルがアイテム選択したらここに追加される")]public List<GameObject> _isChoiceCursol;
+    [Tooltip("カーソルが選択したアイテムが追加される")] public List<GameObject> _choiceList = new();
+    [Tooltip("カーソルがアイテム設置したらここに追加される")] public List<GameObject> _isPutCursol;
 
     private void Update()
     {
+        //デバッグ用、今のターンを教えてくれる
         _text.text = NowTurn.ToString();
-        _CountChangeTime += Time.deltaTime;
+        //デバッグ用、ターンを切り替えてくれる
         if (Input.GetKeyDown(KeyCode.Z))
         {
             TurnChange();
         }
+        //もしカーソルが全員アイテムを選んだらターンが切り替わる
         if (_isChoiceCursol.Count == Menu._playerNumber)
         {
             TurnChange();
             _isChoiceCursol.Clear();
         }
+        //もしカーソルが全員アイテムを設置したらターンが切り替わる
         if (_isPutCursol.Count == Menu._playerNumber)
         {
             TurnChange();
             _isPutCursol.Clear();
-        }
-        if (NowTurn == Turn.Result)
-        {
-            if (_CountChangeTime >= _TurnChangeTime) TurnChange();
         }
     }
     public void TurnChange()
     {
         switch (NowTurn)
         {
+            //////////////////
+            ///Play→Result///
+            //////////////////
             case Turn.GamePlay://GamePlay終わりの時
-
+                //リザルトのキャンバスをtrue
                 _result.gameObject.SetActive(true);
-                _CountChangeTime = 0;
-
+                //リザルトターンの時間を制御する
+                Invoke(nameof(TurnChange),_resultTime);
+                //今のターンをリザルトターンに切り替える
                 NowTurn = GameManager.Turn.Result;
                 break;
+
+            ////////////////////
+            ///Result→Select///
+            /////////→End//////
+            ////////////////////
             case Turn.Result://Result終わりの時
+
+                ///今のターンをアイテム選択ターンに切り替える
                 NowTurn = GameManager.Turn.SelectItem;
-                
+                //カーソルを呼び起こす
                 for (int i = 0; i < _cursolList.Count; i++)
                 {
                     _cursolList[i].SetActive(true);
                 }
+                //リザルトキャンバスを消す
                 _result.gameObject.SetActive(false);
+                //カーソルの機能の「ついてきて」のboolをfalseにする
                 for (int i = 0; i < _cursolList.Count; i++)
                 {
-                    _cursolList[i].GetComponent<PlayerCursor>()._isFollowing = false; 
+                    _cursolList[i].GetComponent<PlayerCursor>()._isFollowing = false;
                 }
+                //アイテム選択、設置ターン用のカメラをtrue
                 _itemTurnCamera.SetActive(true);
+                //カーソルを定位置に召喚するbool
                 _resetCursorPoint.GetComponent<CursorStart>().SelectSceneStart = true;
+                //アイテム召喚するbool
                 _summonItem.GetComponent<SummonItem>()._isChoiceItem = true;
+                ////もし誰かが目標点数超えていたら
+                //1.今のターンをゲームエンドに切り替える
+                //2.プレイヤーの勝ったキャンバスをtrue
                 for (int i = 0; i < _playerList.Count; i++)
                 {
                     if (_playerList[0].GetComponent<PlayerMove>()._scorePoint >= _clearLine)
@@ -113,27 +125,39 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 break;
+
+            /////////////////
+            ///Select→Set///
+            /////////////////
             case Turn.SelectItem://Select終わりの時
-                _isChoiceCursol.Clear();//上にも同じこと書いてあるけど、デバッグ用
+                _isChoiceCursol.Clear();//カーソルの僕選びましたよリストの中身をリセットする(なくす)
+                //カーソルはアイテムを選んだらカーソル自身をflaseにするけど、ターンが切り替わってまたtrueにする。
                 for (int i = 0; i < _cursolList.Count; i++)
                 {
                     _cursolList[i].SetActive(true);
                 }
-                for (int i = 0; i < _choiceList.Count; i++)
-                {
-                    _choiceList[i].SetActive(true);
-                }
+                //今のターンをアイテム設置ターンに切り替える
                 NowTurn = GameManager.Turn.SetItem;
                 break;
-            case Turn.SetItem://Set終わりの時
+
+            ///////////////
+            ///Set→Play///
+            ///////////////
+            case Turn.SetItem:
+                //カーソルはもういなくなってほしい
                 for (int i = 0; i < _cursolList.Count; i++)
                 {
                     _cursolList[i].SetActive(false);
                 }
+                //プレイヤーを元のポジションに戻すbool
                 _startingPoint.GetComponent<StartingPoint>().PlaySceneStart = true;
+                //シネマシーンカメラのターゲットグループにプレイヤーたちを入れるbool
                 _cinemachineGroup._playerCameraReset = true;
-                _isPutCursol.Clear();//デバッグ用
+                //デバッグ用
+                _isPutCursol.Clear();
+                //アイテム用カメラを一回消す
                 _itemTurnCamera.SetActive(false);
+                //今のターンをプレイターンに切り替える
                 NowTurn = GameManager.Turn.GamePlay;
                 break;
             case Turn.GameEnd:
@@ -145,6 +169,9 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+    /// <summary>
+    /// 今のターンです
+    /// </summary>
     public enum Turn
     {
         GamePlay,

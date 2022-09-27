@@ -7,7 +7,6 @@ using UnityEngine;
 /// </summary>
 public class PlayerCursor : MonoBehaviour
 {
-
     [Header("ジョイスティックの入力 InputManager内の名前")]
     [SerializeField, Tooltip("横")] string _horizontal;
     [SerializeField, Tooltip("縦")] string _vertical;
@@ -65,8 +64,11 @@ public class PlayerCursor : MonoBehaviour
     }
     private void CursolAndItem(GameObject gameObject)
     {
+        //ゲームオブジェクトなかったら判定しない
         if (gameObject == null) return;
+        //そのゲームオブジェクトにスクリプトがどっちもなかったら判定しない
         if (!(!gameObject.TryGetComponent<ItemKaiten>(out ItemKaiten _Item) || !gameObject.TryGetComponent<FlipX>(out FlipX flipXCheck))) return;
+        //ターンによって判定が違う
         switch (Turn)
         {
             case GameManager.Turn.SelectItem:
@@ -77,39 +79,40 @@ public class PlayerCursor : MonoBehaviour
                 {
                     Debug.Log(_gameManager.GetComponent<GameManager>()._isChoiceCursol);
                     _audioSource.PlayOneShot(_choiceSound);
-                    _isFollowing = true;
-                    gameObject.tag = "isChoice";
+                    _isFollowing = true;//アイテムがついてくるようになる
+                    gameObject.tag = "isChoice";//アイテムを選んだ印つけ
+                    gameObject.SetActive(false);//アイテムは一回消えてほしい
                     _gameManager.GetComponent<GameManager>()._choiceList.Add(gameObject);
-                    gameObject.SetActive(false);
-                    _gameManager.GetComponent<GameManager>()._isChoiceCursol.Add(base.gameObject);
-
-                    this.gameObject.SetActive(false);
+                    _gameManager.GetComponent<GameManager>()._isChoiceCursol.Add(this.gameObject);//自分は選んだって伝える
+                    this.gameObject.SetActive(false);//自分が一回いなくなる
                 }
-
                 break;
             case GameManager.Turn.SetItem:
+                //選択ボタン押したら
                 if (Input.GetButtonDown(_selectButton) &&
                     !_gameManager.GetComponent<GameManager>()._isPutCursol.Contains(this.gameObject))
                 {
                     _audioSource.PlayOneShot(_choiceSound);
-                    _isFollowing = false;
+                    _isFollowing = false;//アイテムが付いてこなくなる
+                    
+                    //爆弾かどうか判定し、爆弾だった場合使う
                     if (gameObject.TryGetComponent(out Bomb bomb))
                     {
                         bomb._use = true;
                     }
-                    _gameManager.GetComponent<GameManager>()._isPutCursol.Add(base.gameObject);
+                    _gameManager.GetComponent<GameManager>()._isPutCursol.Add(this.gameObject);//自分が置いたよって伝える
                     Debug.Log(_gameManager.GetComponent<GameManager>()._isPutCursol);
-                    this.gameObject.SetActive(false);
+                    this.gameObject.SetActive(false);//自分がいなくなる
                 }
+
+                //回転のこと書いてる
                 if (Input.GetButtonDown(_kaitenLeftName))
                 {
                     Debug.Log("左呼ばれたよ");
                     if (gameObject.gameObject.TryGetComponent(out ItemKaiten kaiten))
                     {
-                        Quaternion rot = Quaternion.AngleAxis(kaiten._kaitenIndex, Vector3.forward);
-                        // 現在の自信の回転の情報を取得する。
-                        Quaternion q = gameObject.transform.rotation;
-                        // 合成して、自身に設定
+                        Quaternion rot = Quaternion.AngleAxis(kaiten._kaitenIndex, Vector3.forward);// 現在の自信の回転の情報を取得する。
+                        Quaternion q = gameObject.transform.rotation;// 合成して、自身に設定
                         gameObject.transform.rotation = q * rot;
                     }
                     if (gameObject.gameObject.TryGetComponent(out FlipX flipX))
@@ -122,10 +125,8 @@ public class PlayerCursor : MonoBehaviour
                     Debug.Log("右呼ばれたよ");
                     if (gameObject.gameObject.TryGetComponent(out ItemKaiten kaiten))
                     {
-                        Quaternion rot = Quaternion.AngleAxis(kaiten._kaitenIndex, Vector3.back);
-                        // 現在の自信の回転の情報を取得する。
-                        Quaternion q = gameObject.transform.rotation;
-                        // 合成して、自身に設定
+                        Quaternion rot = Quaternion.AngleAxis(kaiten._kaitenIndex, Vector3.back);// 現在の自信の回転の情報を取得する。
+                        Quaternion q = gameObject.transform.rotation;// 合成して、自身に設定
                         gameObject.transform.rotation = q * rot;
                     }
                     if (gameObject.gameObject.TryGetComponent(out FlipX flipX))
@@ -139,7 +140,7 @@ public class PlayerCursor : MonoBehaviour
         }
     }
 
-  
+
     /// <summary>
     /// アイテムにカーソルを合わせたあと、何かしらの操作をすると、ついてきてほしい。
     /// </summary>

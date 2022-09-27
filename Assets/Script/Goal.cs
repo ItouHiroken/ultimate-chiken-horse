@@ -10,9 +10,9 @@ using UnityEngine;
 /// </summary>
 public class Goal : MonoBehaviour
 {
-    [SerializeField][Tooltip("ポイントマネージャーに渡すゴール順番リスト")] public List<GameObject> goalPlayers = new List<GameObject>(Menu._playerNumber);
-    [SerializeField][Tooltip("ゲームマネージャー")] GameObject _gameManager;
-    [SerializeField] List<GameObject> _players;
+    [Tooltip("ポイントマネージャーに渡すゴール順番リスト")] public List<GameObject> GoalPlayers = new List<GameObject>(Menu._playerNumber);
+    [SerializeField,Tooltip("ゲームマネージャー")] GameObject _gameManager;
+    [SerializeField,Tooltip("プレイヤーのリスト")] List<GameObject> _players;
     [Tooltip("ターンチェンジの関数使いたいからとってくる")] GameManager _gameManagerScript;
     [SerializeField] PointManager _pointManager;
     void Start()
@@ -24,39 +24,49 @@ public class Goal : MonoBehaviour
     {
         if (_gameManager.GetComponent<GameManager>().NowTurn == GameManager.Turn.GamePlay)
         {
+            //４人のプレイヤーが全員ゴールまたはデス状態になったら、
+            //一人だけゴールしたかどうかのチェック
+            //一位のチェック
+            //全員ゴールしてるかのチェックをする
             if ((_players[0].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || _players[0].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
             && (_players[1].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || _players[1].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
             && (_players[2].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || _players[2].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
             && (_players[3].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || _players[3].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death)))
             {
-                switch (goalPlayers.Count)
+                switch (GoalPlayers.Count)
                 {
                     case 1:
-                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Solo;
+                        GoalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.Solo;
 
-                        Debug.Log(goalPlayers[0] + "が一人だけゴール");
+                        Debug.Log(GoalPlayers[0] + "が一人だけゴール");
                         break;
                     case 2:
                     case 3:
-                        goalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.First;
-                        Debug.Log(goalPlayers[0].name + "が一位");
+                        GoalPlayers[0].gameObject.GetComponent<PlayerMove>().Score |= PlayerState.GetScore.First;
+                        Debug.Log(GoalPlayers[0].name + "が一位");
                         break;
                     case 4:
-                        for (int i = 0; i < goalPlayers.Count; i++)
+                        for (int i = 0; i < GoalPlayers.Count; i++)
                         {
-                            goalPlayers[i].GetComponent<PlayerMove>().Score = 0;
+                            GoalPlayers[i].GetComponent<PlayerMove>().Score = 0;
                         }
                         Debug.Log("全員ゴールしたからポイントは増えないよ");
                         break;
                     default:
                         break;
                 }
+                //ここで得点Enumを変更した後にポイントマネージャーに点数確認してもらう
                 _pointManager._isCheck = true;
+                //ターンの切り替え  
                 _gameManager.GetComponent<GameManager>().TurnChange();
-                goalPlayers.Clear();
             }
         }
     }
+    /// <summary>
+    /// このプレイヤーはゴールしたよリストに追加する
+    /// プレイヤーに触れたら動きを止める
+    /// </summary>
+    /// <param name="collision"></param>
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -65,12 +75,17 @@ public class Goal : MonoBehaviour
             playerscript = collision.GetComponent<PlayerMove>();
             if (playerscript.enabled == true)
             {
-                goalPlayers.Add(collision.gameObject);
+                GoalPlayers.Add(collision.gameObject);
             }
             playerscript.enabled = false;
 
         }
     }
+    /// <summary>
+    /// プレイヤーに触れたら動きを止める
+    /// </summary>
+    /// <param name="collision"></param>
+
     void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

@@ -494,7 +494,7 @@ Transform:
   - {fileID: 1930513167}
   - {fileID: 2126958248}
   m_Father: {fileID: 1075127125}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &73469040
 MonoBehaviour:
@@ -508,16 +508,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5748d0d454f25e49951c2e05d0559ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player1Point: {fileID: 1276793020}
-  _player2Point: {fileID: 1056944236}
-  _player3Point: {fileID: 1930513166}
-  _player4Point: {fileID: 2126958247}
-  _player1: {fileID: 1113396832}
-  _player2: {fileID: 1550497215}
-  _player3: {fileID: 1896357095}
-  _player4: {fileID: 804740863}
-  _gameManager: {fileID: 336041240}
-  Turn: 0
+  _cursors: []
+  _position: []
   SelectSceneStart: 0
 --- !u!1 &91113958
 GameObject:
@@ -957,7 +949,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 1027927714}
   _clip: {fileID: 8300000, guid: 6999d840775d62746bcdfaad2ad2b996, type: 3}
-  SceneName: Menu
+  _sceneName: 
   _time: 20
   _a: 0
 --- !u!1 &101729454
@@ -1497,7 +1489,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1577844344}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &191309759
 MonoBehaviour:
@@ -8295,7 +8287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 1783321865}
   _clip: {fileID: 8300000, guid: 6999d840775d62746bcdfaad2ad2b996, type: 3}
-  SceneName: Menu
+  _sceneName: 
   _time: 20
   _a: 0
 --- !u!1 &326638020
@@ -8392,7 +8384,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1577844344}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &336041242
 MonoBehaviour:
@@ -8417,25 +8409,24 @@ MonoBehaviour:
   - {fileID: 1783321858}
   - {fileID: 655970512}
   - {fileID: 1027927707}
-  _playerCanvas:
-  - {fileID: 1120440516}
-  - {fileID: 319843182}
-  - {fileID: 1461551174}
-  - {fileID: 99841719}
   _startingPoint: {fileID: 2040222814}
   _resetCursorPoint: {fileID: 73469038}
   _summonItem: {fileID: 515958655}
   _goal: {fileID: 1316280470}
   _cinemachineGroup: {fileID: 424380400}
+  _playerCanvas:
+  - {fileID: 1120440516}
+  - {fileID: 319843182}
+  - {fileID: 1461551174}
+  - {fileID: 99841719}
   _result: {fileID: 248390830}
   _text: {fileID: 822019888}
   _itemTurnCamera: {fileID: 746041943}
   _clearLine: 100
-  _TurnChangeTime: 5
-  _CountChangeTime: 0
+  _resultTime: 5
   _isChoiceCursol: []
-  _isPutCursol: []
   _choiceList: []
+  _isPutCursol: []
 --- !u!1 &366723989
 GameObject:
   m_ObjectHideFlags: 0
@@ -8633,12 +8624,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerCameraReset: 0
   _cursorCameraReset: 0
-  players:
-  - {fileID: 1982765605}
-  - {fileID: 1783321859}
-  - {fileID: 655970513}
-  - {fileID: 1027927708}
-  inCinemachine: 00000000
+  _players: []
+  _inCinemachine: 
 --- !u!1 &430862455
 GameObject:
   m_ObjectHideFlags: 0
@@ -9083,7 +9070,7 @@ Transform:
   - {fileID: 1724137085}
   - {fileID: 566722044}
   m_Father: {fileID: 1577844344}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &515958657
 MonoBehaviour:
@@ -9097,9 +9084,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39eaba788027b2046a33d9f96ba7baae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myList: []
-  itemList: []
-  useList: []
   itemPrefabs:
   - {fileID: 8320102934500330112, guid: 64ef83cf94aef4b4eb8e379ffa6e1c9a, type: 3}
   - {fileID: 1967472043632879578, guid: 5e70670a6b5302d4d884e0aee77058f7, type: 3}
@@ -9122,6 +9106,8 @@ MonoBehaviour:
   - {fileID: 1169489044}
   - {fileID: 1724137084}
   - {fileID: 566722043}
+  useList: []
+  myList: []
   _isChoiceItem: 0
 --- !u!1 &519420028
 GameObject:
@@ -10131,7 +10117,7 @@ Transform:
   - {fileID: 551772917}
   - {fileID: 24488571}
   m_Father: {fileID: 1075127125}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &655970512
 GameObject:
@@ -10142,10 +10128,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 655970513}
-  - component: {fileID: 655970516}
-  - component: {fileID: 655970515}
-  - component: {fileID: 655970514}
   - component: {fileID: 655970517}
+  - component: {fileID: 655970514}
+  - component: {fileID: 655970515}
+  - component: {fileID: 655970516}
   - component: {fileID: 655970518}
   - component: {fileID: 655970519}
   m_Layer: 7
@@ -10271,24 +10257,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aec8a9dd4e7a874b81866002f4791d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deBuff: 0
-  Turn: 0
   _jumpPower: 70
   _jumpChecker: 0
   _groundCheck: 0
   _rightWallCheck: 0
   _leftWallCheck: 0
+  _speed: 5
+  _defaultSpeed: 5
+  _walkSpeedLimiter: 20
+  _gameManager: {fileID: 336041242}
   levelMask:
     serializedVersion: 2
     m_Bits: 21505
   _jump: P3Jump
   _horizontal: P3Horizontal
   _hp: 0
-  _horizonSpeedLimiter: 0
-  _jumpSpeedLimiter: 0
-  _speed: 5
-  _walkSpeedLimiter: 20
-  _gameManager: {fileID: 336041240}
+  _deBuff: 0
+  Turn: 0
   Score: 0
   _goal: {fileID: 1316280470}
   _scorePoint: 0
@@ -13198,10 +13183,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1027927708}
-  - component: {fileID: 1027927711}
-  - component: {fileID: 1027927710}
-  - component: {fileID: 1027927709}
   - component: {fileID: 1027927712}
+  - component: {fileID: 1027927709}
+  - component: {fileID: 1027927710}
+  - component: {fileID: 1027927711}
   - component: {fileID: 1027927713}
   - component: {fileID: 1027927714}
   m_Layer: 7
@@ -13327,24 +13312,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aec8a9dd4e7a874b81866002f4791d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deBuff: 0
-  Turn: 0
   _jumpPower: 70
   _jumpChecker: 0
   _groundCheck: 0
   _rightWallCheck: 0
   _leftWallCheck: 0
+  _speed: 5
+  _defaultSpeed: 5
+  _walkSpeedLimiter: 20
+  _gameManager: {fileID: 336041242}
   levelMask:
     serializedVersion: 2
     m_Bits: 21505
   _jump: P4Jump
   _horizontal: P4Horizontal
   _hp: 0
-  _horizonSpeedLimiter: 0
-  _jumpSpeedLimiter: 0
-  _speed: 5
-  _walkSpeedLimiter: 20
-  _gameManager: {fileID: 336041240}
+  _deBuff: 0
+  Turn: 0
   Score: 0
   _goal: {fileID: 1316280470}
   _scorePoint: 0
@@ -13694,7 +13678,6 @@ Transform:
   - {fileID: 1316280472}
   - {fileID: 903897995}
   - {fileID: 1283325816}
-  - {fileID: 1857122619}
   - {fileID: 73469039}
   - {fileID: 632239574}
   m_Father: {fileID: 0}
@@ -13715,7 +13698,7 @@ MonoBehaviour:
   useDefaultBackgroundColor: 0
   backgroundColor:
     serializedVersion: 2
-    rgba: 4278494335
+    rgba: 4278234400
   useDefaultTextColor: 0
   textColor:
     serializedVersion: 2
@@ -14189,7 +14172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 1982765610}
   _clip: {fileID: 8300000, guid: 6999d840775d62746bcdfaad2ad2b996, type: 3}
-  SceneName: Menu
+  _sceneName: 
   _time: 20
   _a: 0
 --- !u!4 &1125676954 stripped
@@ -14994,8 +14977,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1283325816}
-  - component: {fileID: 1283325818}
   - component: {fileID: 1283325817}
+  - component: {fileID: 1283325818}
   m_Layer: 0
   m_Name: MapLimit
   m_TagString: Untagged
@@ -15327,8 +15310,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1316280472}
-  - component: {fileID: 1316280471}
   - component: {fileID: 1316280475}
+  - component: {fileID: 1316280471}
   - component: {fileID: 1316280474}
   - component: {fileID: 1316280473}
   m_Layer: 0
@@ -15464,7 +15447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d886330d40c25e48809daa34f46e253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goalPlayers: []
+  GoalPlayers: []
   _gameManager: {fileID: 336041240}
   _players:
   - {fileID: 1982765601}
@@ -16425,7 +16408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 655970519}
   _clip: {fileID: 8300000, guid: 6999d840775d62746bcdfaad2ad2b996, type: 3}
-  SceneName: Menu
+  _sceneName: 
   _time: 20
   _a: 0
 --- !u!1 &1464138708
@@ -17181,11 +17164,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 515958656}
   - {fileID: 336041241}
+  - {fileID: 515958656}
   - {fileID: 1658719275}
-  - {fileID: 1851034216}
   - {fileID: 191309758}
+  - {fileID: 1851034216}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -17432,7 +17415,7 @@ MonoBehaviour:
   useDefaultBackgroundColor: 0
   backgroundColor:
     serializedVersion: 2
-    rgba: 4278253823
+    rgba: 4278437588
   useDefaultTextColor: 0
   textColor:
     serializedVersion: 2
@@ -17748,7 +17731,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5f37d6bad90e9247964c2a0234f737b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameManager: {fileID: 336041242}
   _goal: {fileID: 1316280475}
   _players:
   - {fileID: 1982765601}
@@ -17760,8 +17742,8 @@ MonoBehaviour:
   - {fileID: 618594819}
   - {fileID: 766437653}
   - {fileID: 240911448}
-  _isCheck: 0
   _changeValueInterval: 3
+  _isCheck: 0
 --- !u!1 &1661102845
 GameObject:
   m_ObjectHideFlags: 0
@@ -18392,10 +18374,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1783321859}
-  - component: {fileID: 1783321862}
-  - component: {fileID: 1783321861}
-  - component: {fileID: 1783321860}
   - component: {fileID: 1783321863}
+  - component: {fileID: 1783321860}
+  - component: {fileID: 1783321861}
+  - component: {fileID: 1783321862}
   - component: {fileID: 1783321864}
   - component: {fileID: 1783321865}
   m_Layer: 7
@@ -18521,24 +18503,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aec8a9dd4e7a874b81866002f4791d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deBuff: 0
-  Turn: 0
   _jumpPower: 70
   _jumpChecker: 0
   _groundCheck: 0
   _rightWallCheck: 0
   _leftWallCheck: 0
+  _speed: 5
+  _defaultSpeed: 5
+  _walkSpeedLimiter: 20
+  _gameManager: {fileID: 336041242}
   levelMask:
     serializedVersion: 2
     m_Bits: 21505
   _jump: P2Jump
   _horizontal: P2Horizontal
   _hp: 0
-  _horizonSpeedLimiter: 0
-  _jumpSpeedLimiter: 0
-  _speed: 5
-  _walkSpeedLimiter: 20
-  _gameManager: {fileID: 336041240}
+  _deBuff: 0
+  Turn: 0
   Score: 0
   _goal: {fileID: 1316280470}
   _scorePoint: 0
@@ -18906,7 +18887,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1577844344}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1851034217
 AudioSource:
@@ -19021,37 +19002,6 @@ MonoBehaviour:
   _audioSource: {fileID: 1851034217}
   _openClip: {fileID: 8300000, guid: 3631899d4273932449dabec76e3ca9df, type: 3}
   _closeClip: {fileID: 8300000, guid: 83cb5035dc5eb6845b04fe5cb2693634, type: 3}
---- !u!1 &1857122618
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1857122619}
-  m_Layer: 0
-  m_Name: O
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1857122619
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1857122618}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 20, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1075127125}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1860679057
 GameObject:
   m_ObjectHideFlags: 0
@@ -19635,10 +19585,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1982765605}
-  - component: {fileID: 1982765603}
-  - component: {fileID: 1982765602}
-  - component: {fileID: 1982765604}
   - component: {fileID: 1982765609}
+  - component: {fileID: 1982765604}
+  - component: {fileID: 1982765602}
+  - component: {fileID: 1982765603}
   - component: {fileID: 1982765608}
   - component: {fileID: 1982765610}
   m_Layer: 7
@@ -19784,24 +19734,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aec8a9dd4e7a874b81866002f4791d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deBuff: 0
-  Turn: 0
   _jumpPower: 70
   _jumpChecker: 0
   _groundCheck: 0
   _rightWallCheck: 0
   _leftWallCheck: 0
+  _speed: 5
+  _defaultSpeed: 5
+  _walkSpeedLimiter: 20
+  _gameManager: {fileID: 336041242}
   levelMask:
     serializedVersion: 2
     m_Bits: 21505
   _jump: P1Jump
   _horizontal: P1Horizontal
   _hp: 0
-  _horizonSpeedLimiter: 0
-  _jumpSpeedLimiter: 0
-  _speed: 5
-  _walkSpeedLimiter: 20
-  _gameManager: {fileID: 336041240}
+  _deBuff: 0
+  Turn: 0
   Score: 0
   _goal: {fileID: 1316280470}
   _scorePoint: 0
@@ -20133,8 +20082,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2040222815}
-  - component: {fileID: 2040222819}
   - component: {fileID: 2040222816}
+  - component: {fileID: 2040222819}
   - component: {fileID: 2040222818}
   - component: {fileID: 2040222817}
   m_Layer: 0
@@ -20175,16 +20124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a23d0cc49cabaf4f89e0c3b368a4c20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player1Point: {fileID: 557701732}
-  Player2Point: {fileID: 154808590}
-  Player3Point: {fileID: 939081495}
-  Player4Point: {fileID: 823999593}
-  Player1: {fileID: 1982765601}
-  Player2: {fileID: 1783321858}
-  Player3: {fileID: 655970512}
-  Player4: {fileID: 1027927707}
-  _gameManager: {fileID: 336041240}
-  Turn: 0
+  _players: []
+  _position: []
   PlaySceneStart: 0
 --- !u!61 &2040222817
 BoxCollider2D:
@@ -22721,7 +22662,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2091675839}
   - component: {fileID: 2091675838}
-  - component: {fileID: 2091675836}
   - component: {fileID: 2091675840}
   m_Layer: 8
   m_Name: CameraLimit
@@ -22730,28 +22670,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!66 &2091675836
-CompositeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2091675835}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
-  m_GenerationType: 0
-  m_EdgeRadius: 0
-  m_ColliderPaths: []
-  m_CompositePaths:
-    m_Paths: []
-  m_VertexDistance: 6.07
-  m_OffsetDistance: 0.00005
 --- !u!50 &2091675838
 Rigidbody2D:
   serializedVersion: 4

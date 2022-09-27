@@ -1,47 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// ゲームマネージャーからの指示でカーソルを定位置につかせる
+/// </summary>
 public class CursorStart : MonoBehaviour
 {
-    [SerializeField] GameObject _player1Point;
-    [SerializeField] GameObject _player2Point;
-    [SerializeField] GameObject _player3Point;
-    [SerializeField] GameObject _player4Point;
-
-    [SerializeField] GameObject _player1;
-    [SerializeField] GameObject _player2;
-    [SerializeField] GameObject _player3;
-    [SerializeField] GameObject _player4;
-
-    [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
-    public GameManager.Turn Turn;
+    [SerializeField, Tooltip("カーソルたち")] List<GameObject> _cursors = new();
+    [SerializeField, Tooltip("カーソルの定位置")] List<GameObject> _position = new();
     public bool SelectSceneStart;
-    private void Start()
-    {
-        _player1 = GameObject.Find("Player1Cursor");
-        _player2 = GameObject.Find("Player2Cursor");
-        _player3 = GameObject.Find("Player3Cursor");
-        _player4 = GameObject.Find("Player4Cursor");
-    }
     private void Update()
     {
-        TurnChecker(_gameManager);
         if (SelectSceneStart == true)
         {
-            _player1.transform.position = _player1Point.transform.position;
-            _player2.transform.position = _player2Point.transform.position;
-            _player3.transform.position = _player3Point.transform.position;
-            _player4.transform.position = _player4Point.transform.position;
-            _player1.GetComponent<PlayerCursor>().enabled = true;
-            _player2.GetComponent<PlayerCursor>().enabled = true;
-            _player3.GetComponent<PlayerCursor>().enabled = true;
-            _player4.GetComponent<PlayerCursor>().enabled = true;
+            for (int i = 0; i < Menu._playerNumber; i++)
+            {
+                _cursors[i].transform.position = _position[i].transform.position;//カーソルを定位置に移動させる
+                _cursors[i].GetComponent<PlayerCursor>().enabled = true;//カーソルが動くようにする
+            }
             SelectSceneStart = false;
         }
-    }
-    public void TurnChecker(GameObject a)
-    {
-        Turn = a.GetComponent<GameManager>().NowTurn;
     }
 }

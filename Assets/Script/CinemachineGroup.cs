@@ -39,11 +39,18 @@ public class CinemachineGroup : MonoBehaviour
         }
         _playerCameraReset = false;
     }
+    /// <summary>
+    /// シネマシーンのグループの配列にプレイヤーのリストを入れる
+    /// </summary>
+    /// <param name="playerNum"></param>
     void AddCinemachineArray(int playerNum)
     {
         _cinemachineTargetGroup.AddMember(_players[playerNum].transform, 1, 0);
         _inCinemachine[playerNum] = true;
     }
+    /// <summary>
+    /// シネマシーンのグループの配列の中身を全部消す
+    /// </summary>
     void RemoveCinemachineArray(int playerNum)
     {
         if (_inCinemachine[playerNum])
@@ -52,6 +59,10 @@ public class CinemachineGroup : MonoBehaviour
             _inCinemachine[playerNum] = false;
         }
     }
+    /// <summary>
+    /// プレイヤーたちを監視し、ゴールまたはデスしたときにターゲットグループの配列から抜ける
+    /// </summary>
+    /// <param name="number"></param>
     void CheckCameraForcas(int number)
     {
         if(_players[number].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal)||

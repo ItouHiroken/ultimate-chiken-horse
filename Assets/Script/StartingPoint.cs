@@ -1,51 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// ゲームマネージャーからの指示でプレイヤーの召喚と起動
+/// </summary>
 public class StartingPoint : MonoBehaviour
 {
-    [SerializeField] GameObject Player1Point;
-    [SerializeField] GameObject Player2Point;
-    [SerializeField] GameObject Player3Point;
-    [SerializeField] GameObject Player4Point;
-
-    [SerializeField] GameObject Player1;
-    [SerializeField] GameObject Player2;
-    [SerializeField] GameObject Player3;
-    [SerializeField] GameObject Player4;
-
-    [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameObject _gameManager;
-    public GameManager.Turn Turn;
+    [SerializeField] public List<GameObject> _players = new();
+    [SerializeField] List<GameObject> _position = new();
     public bool PlaySceneStart;
-    private void Start()
-    {
-        Player1 = GameObject.Find("Player1");
-        Player2 = GameObject.Find("Player2");
-        Player3 = GameObject.Find("Player3");
-        Player4 = GameObject.Find("Player4");
-    }
     private void Update()
     {
-        TurnChecker(_gameManager);
         if (PlaySceneStart == true)
         {
-            Player1.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-            Player2.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-            Player3.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-            Player4.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-            Player1.transform.position = Player1Point.transform.position;
-            Player2.transform.position = Player2Point.transform.position;
-            Player3.transform.position = Player3Point.transform.position;
-            Player4.transform.position = Player4Point.transform.position;
-            Player1.GetComponent<PlayerMove>().enabled = true;
-            Player2.GetComponent<PlayerMove>().enabled = true;
-            Player3.GetComponent<PlayerMove>().enabled = true;
-            Player4.GetComponent<PlayerMove>().enabled = true;
+            for (int i = 0; i < Menu._playerNumber; i++)
+            {
+                _players[i].GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);//速度を一回0にする
+                _players[i].transform.position = _position[i].transform.position;//プレイヤーを定位置に置く
+                _players[i].GetComponent<PlayerMove>().enabled = true;//プレイヤーが動けるようにする
+            }
             PlaySceneStart = false;
         }
-    }
-    public void TurnChecker(GameObject a)
-    {
-        Turn = a.GetComponent<GameManager>().NowTurn;
     }
 }
