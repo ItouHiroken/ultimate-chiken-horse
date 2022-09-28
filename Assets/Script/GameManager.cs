@@ -39,13 +39,13 @@ public class GameManager : MonoBehaviour
     [SerializeField, Tooltip("アイテムを選択、設置する時に使うカメラ")] GameObject _itemTurnCamera;
 
     [Header("変数たち")]
-    [SerializeField,Tooltip("勝利するスコアのライン")] int _clearLine = 100;
-    [SerializeField,Tooltip("リザルトターンの時間")] float _resultTime = 5;
+    [SerializeField, Tooltip("勝利するスコアのライン")] int _clearLine = 100;
+    [SerializeField, Tooltip("リザルトターンの時間")] float _resultTime = 5;
 
     [Header("ほかのところに渡したい")]
-    [Tooltip("カーソルがアイテム選択したらここに追加される")]public List<GameObject> _isChoiceCursol;
-    [Tooltip("カーソルが選択したアイテムが追加される")] public List<GameObject> _choiceList = new();
-    [Tooltip("カーソルがアイテム設置したらここに追加される")] public List<GameObject> _isPutCursol;
+    [Tooltip("カーソルがアイテム選択したらここに追加される")] public List<GameObject> IsChoiceCursol;
+    [Tooltip("カーソルが選択したアイテムが追加される")] public List<GameObject> ChoiceList = new();
+    [Tooltip("カーソルがアイテム設置したらここに追加される")] public List<GameObject> IsPutCursol;
 
     private void Update()
     {
@@ -57,38 +57,34 @@ public class GameManager : MonoBehaviour
             TurnChange();
         }
         //もしカーソルが全員アイテムを選んだらターンが切り替わる
-        if (_isChoiceCursol.Count == Menu._playerNumber)
+        if (IsChoiceCursol.Count == Menu._playerNumber)
         {
             TurnChange();
-            _isChoiceCursol.Clear();
+            IsChoiceCursol.Clear();
         }
         //もしカーソルが全員アイテムを設置したらターンが切り替わる
-        if (_isPutCursol.Count == Menu._playerNumber)
+        if (IsPutCursol.Count == Menu._playerNumber)
         {
             TurnChange();
-            _isPutCursol.Clear();
+            IsPutCursol.Clear();
         }
     }
     public void TurnChange()
     {
         switch (NowTurn)
         {
-            //////////////////
-            ///Play→Result///
-            //////////////////
+            ///Play→Result
             case Turn.GamePlay://GamePlay終わりの時
                 //リザルトのキャンバスをtrue
                 _result.gameObject.SetActive(true);
                 //リザルトターンの時間を制御する
-                Invoke(nameof(TurnChange),_resultTime);
+                Invoke(nameof(TurnChange), _resultTime);
                 //今のターンをリザルトターンに切り替える
                 NowTurn = GameManager.Turn.Result;
                 break;
 
-            ////////////////////
-            ///Result→Select///
-            /////////→End//////
-            ////////////////////
+            ///Result→Select
+            ///      →End
             case Turn.Result://Result終わりの時
 
                 ///今のターンをアイテム選択ターンに切り替える
@@ -125,24 +121,24 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 break;
-
-            /////////////////
-            ///Select→Set///
-            /////////////////
+            ///Select→Set
             case Turn.SelectItem://Select終わりの時
-                _isChoiceCursol.Clear();//カーソルの僕選びましたよリストの中身をリセットする(なくす)
+                IsChoiceCursol.Clear();//カーソルの僕選びましたよリストの中身をリセットする(なくす)
                 //カーソルはアイテムを選んだらカーソル自身をflaseにするけど、ターンが切り替わってまたtrueにする。
                 for (int i = 0; i < _cursolList.Count; i++)
                 {
                     _cursolList[i].SetActive(true);
                 }
+                //選んだアイテムたちをfalse
+                for (int i = 0; i < ChoiceList.Count; i++)
+                {
+                    ChoiceList[i].SetActive(true);
+                }
                 //今のターンをアイテム設置ターンに切り替える
                 NowTurn = GameManager.Turn.SetItem;
                 break;
 
-            ///////////////
-            ///Set→Play///
-            ///////////////
+            ///Set→Play
             case Turn.SetItem:
                 //カーソルはもういなくなってほしい
                 for (int i = 0; i < _cursolList.Count; i++)
@@ -154,14 +150,13 @@ public class GameManager : MonoBehaviour
                 //シネマシーンカメラのターゲットグループにプレイヤーたちを入れるbool
                 _cinemachineGroup._playerCameraReset = true;
                 //デバッグ用
-                _isPutCursol.Clear();
+                IsPutCursol.Clear();
                 //アイテム用カメラを一回消す
                 _itemTurnCamera.SetActive(false);
                 //今のターンをプレイターンに切り替える
                 NowTurn = GameManager.Turn.GamePlay;
                 break;
             case Turn.GameEnd:
-
 
                 break;
 

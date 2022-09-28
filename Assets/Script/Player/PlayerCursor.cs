@@ -75,33 +75,33 @@ public class PlayerCursor : MonoBehaviour
 
                 //選択ボタン押したら
                 if (Input.GetButtonDown(_selectButton) &&
-                    !_gameManager.GetComponent<GameManager>()._isChoiceCursol.Contains(this.gameObject))
+                    !_gameManager.GetComponent<GameManager>().IsChoiceCursol.Contains(this.gameObject))
                 {
-                    Debug.Log(_gameManager.GetComponent<GameManager>()._isChoiceCursol);
+                    Debug.Log(_gameManager.GetComponent<GameManager>().IsChoiceCursol);
                     _audioSource.PlayOneShot(_choiceSound);
                     _isFollowing = true;//アイテムがついてくるようになる
                     gameObject.tag = "isChoice";//アイテムを選んだ印つけ
                     gameObject.SetActive(false);//アイテムは一回消えてほしい
-                    _gameManager.GetComponent<GameManager>()._choiceList.Add(gameObject);
-                    _gameManager.GetComponent<GameManager>()._isChoiceCursol.Add(this.gameObject);//自分は選んだって伝える
+                    _gameManager.GetComponent<GameManager>().ChoiceList.Add(gameObject);
+                    _gameManager.GetComponent<GameManager>().IsChoiceCursol.Add(this.gameObject);//自分は選んだって伝える
                     this.gameObject.SetActive(false);//自分が一回いなくなる
                 }
                 break;
             case GameManager.Turn.SetItem:
                 //選択ボタン押したら
                 if (Input.GetButtonDown(_selectButton) &&
-                    !_gameManager.GetComponent<GameManager>()._isPutCursol.Contains(this.gameObject))
+                    !_gameManager.GetComponent<GameManager>().IsPutCursol.Contains(this.gameObject))
                 {
                     _audioSource.PlayOneShot(_choiceSound);
                     _isFollowing = false;//アイテムが付いてこなくなる
-                    
+
                     //爆弾かどうか判定し、爆弾だった場合使う
                     if (gameObject.TryGetComponent(out Bomb bomb))
                     {
                         bomb._use = true;
                     }
-                    _gameManager.GetComponent<GameManager>()._isPutCursol.Add(this.gameObject);//自分が置いたよって伝える
-                    Debug.Log(_gameManager.GetComponent<GameManager>()._isPutCursol);
+                    _gameManager.GetComponent<GameManager>().IsPutCursol.Add(this.gameObject);//自分が置いたよって伝える
+                    Debug.Log(_gameManager.GetComponent<GameManager>().IsPutCursol);
                     this.gameObject.SetActive(false);//自分がいなくなる
                 }
 
@@ -146,7 +146,7 @@ public class PlayerCursor : MonoBehaviour
     /// </summary>
     void ItemFollowCursor(GameObject gameObject, bool isFollowing)
     {
-        if (isFollowing)
+        if (isFollowing && gameObject != null)
         {
             gameObject.transform.position = this.gameObject.transform.position;
         }

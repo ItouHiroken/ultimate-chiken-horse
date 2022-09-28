@@ -211,7 +211,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &60820893
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8424,9 +8424,9 @@ MonoBehaviour:
   _itemTurnCamera: {fileID: 746041943}
   _clearLine: 100
   _resultTime: 5
-  _isChoiceCursol: []
-  _choiceList: []
-  _isPutCursol: []
+  IsChoiceCursol: []
+  ChoiceList: []
+  IsPutCursol: []
 --- !u!1 &366723989
 GameObject:
   m_ObjectHideFlags: 0
@@ -8624,8 +8624,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerCameraReset: 0
   _cursorCameraReset: 0
-  _players: []
-  _inCinemachine: 
+  _players:
+  - {fileID: 1982765605}
+  - {fileID: 1783321859}
+  - {fileID: 655970513}
+  - {fileID: 1027927708}
+  _inCinemachine: 00000000
 --- !u!1 &430862455
 GameObject:
   m_ObjectHideFlags: 0
@@ -11457,7 +11461,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Turn
 --- !u!222 &822019889
 CanvasRenderer:
   m_ObjectHideFlags: 0

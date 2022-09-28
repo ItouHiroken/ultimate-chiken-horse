@@ -11,33 +11,33 @@ public class PlayerMove : MonoBehaviour
     [Header("動き関係")]
     [Header("ジャンプ")]
     [Tooltip("ジャンプ力"), SerializeField] float _jumpPower = 40f;
-    [SerializeField] private int _jumpChecker = 0;
+    [SerializeField] int _jumpChecker = 0;
     [SerializeField] bool _groundCheck;
     [SerializeField] bool _rightWallCheck;
     [SerializeField] bool _leftWallCheck;
 
     [Header("左右移動")]
-    [SerializeField, Tooltip("現在速度")] private float _speed;
-    [SerializeField, Tooltip("通常速度")] private float _defaultSpeed = 5f;
-    [Tooltip("スロウ速度")] private float _slowSpeed = default;
-    [Tooltip("滑った速度")] private float _splitSpeed = default;
+    [SerializeField, Tooltip("現在速度")] float _speed;
+    [SerializeField, Tooltip("通常速度")] float _defaultSpeed = 5f;
+    [Tooltip("スロウ速度")] float _slowSpeed = default;
+    [Tooltip("滑った速度")] float _splitSpeed = default;
 
     [Header("速度制限")]
-    [SerializeField, Tooltip("速度制限")] private float _walkSpeedLimiter = 30f;
-    [Tooltip("左右の速度")] private float _horizonSpeedLimiter;
-    [Tooltip("上下の速度")] private float _jumpSpeedLimiter;
+    [SerializeField, Tooltip("速度制限")] float _walkSpeedLimiter = 30f;
+    [Tooltip("左右の速度")] float _horizonSpeedLimiter;
+    [Tooltip("上下の速度")] float _jumpSpeedLimiter;
     [Header("ターンは把握用")]
     [SerializeField, Tooltip("ゲームマネージャーから参照したい")] GameManager _gameManager;
 
     [Header("当たり判定")]
-    [SerializeField, Tooltip("ジャンプ用の当たり判定レイヤー！")] private LayerMask levelMask;
+    [SerializeField, Tooltip("ジャンプ用の当たり判定レイヤー！")] LayerMask levelMask;
 
     [Header("入力ボタンの名前")]
     [SerializeField] string _jump;
     [SerializeField] string _horizontal;
 
     [Header("見たいだけ、今の状態")]
-    [SerializeField][Tooltip("体力")] private int _hp = default;
+    [SerializeField][Tooltip("体力")] int _hp = default;
     public DeBuff _deBuff = DeBuff.Default;
     public GameManager.Turn Turn;
 
@@ -56,24 +56,6 @@ public class PlayerMove : MonoBehaviour
 
     Rigidbody2D _rb = default;
     bool isreturn = false;
-
-    //[Tooltip("走れるかどうかチェック")] bool _dashCheck;
-    void SpeedController()
-    {
-        switch (_deBuff)
-        {
-            case DeBuff.Default:
-                _horizonSpeedLimiter = _walkSpeedLimiter;
-                break;
-            case DeBuff.Split:
-                _horizonSpeedLimiter = _walkSpeedLimiter * 2;
-                break;
-            case DeBuff.Slow:
-                _horizonSpeedLimiter = _walkSpeedLimiter / 2;
-                break;
-        }
-        _jumpSpeedLimiter = 50f;
-    }
     void Start()
     {
         _gameManager = GameObject.FindGameObjectWithTag("GameManager").gameObject.GetComponent<GameManager>();
@@ -97,18 +79,18 @@ public class PlayerMove : MonoBehaviour
                     _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
                     _audioSource.PlayOneShot(_audioClipJump);
                 }
-                //壁じゃん
+                //左に壁じゃん
                 if (_jumpChecker == 1 && !_groundCheck && _rightWallCheck)
                 {
                     _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-                    _rb.AddForce(Vector2.right * 40, ForceMode2D.Impulse);
+                    _rb.AddForce(Vector2.left * 40, ForceMode2D.Impulse);
                     _audioSource.PlayOneShot(_audioClipJump);
                 }
-                //壁じゃん
+                //右に壁じゃん
                 if (_jumpChecker == 1 && !_groundCheck && _leftWallCheck)
                 {
                     _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-                    _rb.AddForce(Vector2.left * 40, ForceMode2D.Impulse);
+                    _rb.AddForce(Vector2.right * 40, ForceMode2D.Impulse);
                     _audioSource.PlayOneShot(_audioClipJump);
                 }
             }
@@ -144,7 +126,6 @@ public class PlayerMove : MonoBehaviour
             bool TF = horizontalKey != 0 ? true : false;
             animator.SetBool("Horizontal", TF);
             FlipX(horizontalKey);
-            Debug.Log(gameObject.name);
             //右入力で左向きに動く
             if (horizontalKey > 0)
             {
@@ -241,77 +222,85 @@ public class PlayerMove : MonoBehaviour
             isreturn = true;
         }
     }
+    /// <summary>
+    /// 最大速度変更
+    /// </summary>
+    void SpeedController()
+    {
+        switch (_deBuff)
+        {
+            case DeBuff.Default:
+                _horizonSpeedLimiter = _walkSpeedLimiter;
+                break;
+            case DeBuff.Split:
+                _horizonSpeedLimiter = _walkSpeedLimiter * 2;
+                break;
+            case DeBuff.Slow:
+                _horizonSpeedLimiter = _walkSpeedLimiter / 2;
+                break;
+        }
+        _jumpSpeedLimiter = 50f;
+    }
 
     /// <summary>
-    /// 右にレイ飛ばしてウォールチェックをonoffする、できてない
+    /// 右にレイ飛ばしてウォールチェックをonoffする
     /// </summary>
     /// <param name="direction"></param>
     /// <returns></returns>
     private void RightWallCheker(Vector3 direction)
     {
-        for (int i = 1; i < 2; i++)
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1, 0), direction, 1, levelMask);
+        Debug.DrawRay(transform.position + new Vector3(0, 1, 0), direction);
+        if (!hit.collider)
         {
-            // ブロックとの当たり判定の結果を格納する変数
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1, levelMask);
-            // 左右に何も存在しない場合
-            if (!hit.collider)
-            {
-                _rightWallCheck = false;
-            }
-            // 左右にブロックが存在する場合
-            else
-            {
-                _rightWallCheck = true;
-            }
+            _rightWallCheck = false;
+        }
+        else
+        {
+            _rightWallCheck = true;
         }
     }
 
+
     /// <summary>
-    /// 左にレイ飛ばしてウォールチェックをonoffする、できてない
+    /// 左にレイ飛ばしてウォールチェックをonoffする
     /// </summary>
     /// <param name="direction"></param>
     /// <returns></returns>
     private void LeftWallCheker(Vector3 direction)
     {
-        for (int i = 1; i < 2; i++)
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1, 0), direction, 1, levelMask);
+        Debug.DrawRay(transform.position + new Vector3(0, 1, 0), direction);
+        if (!hit.collider)
         {
-            // ブロックとの当たり判定の結果を格納する変数
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1, levelMask);
-            // 左右に何も存在しない場合
-            if (!hit.collider)
-            {
-                _leftWallCheck = false;
-            }
-            // 左右にブロックが存在する場合
-            else
-            {
-                _leftWallCheck = true;
-            }
+            _leftWallCheck = false;
         }
+        else
+        {
+            _leftWallCheck = true;
+        }
+
     }
 
     /// <summary>
-    /// 足元にレイ飛ばしてグラウンドチェックをonoffする、できてない
+    /// 足元にレイ飛ばしてグラウンドチェックをonoffする
     /// </summary>
     /// <param name="direction"></param>
     /// <returns></returns>
     private void GroundCheker(Vector3 direction)
     {
-        for (int i = 1; i < 2; i++)
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position+new Vector3(0,1,0), direction, 1, levelMask);
+        Debug.DrawRay(transform.position + new Vector3(0, 1, 0), direction);
+        if (!hit.collider)
         {
-            // ブロックとの当たり判定の結果を格納する変数
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1, levelMask);
-            // 下に何も存在しない場合
-            if (!hit.collider)
-            {
-                _groundCheck = false;
-            }
-            // 下にブロックが存在する場合
-            else
-            {
-                _groundCheck = true;
-            }
+            _groundCheck = false;
         }
+        else
+        {
+            _groundCheck = true;
+        }
+
     }
     void TurnChecker()
     {

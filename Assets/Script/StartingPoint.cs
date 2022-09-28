@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class StartingPoint : MonoBehaviour
 {
-    [SerializeField] public List<GameObject> _players = new();
+    [SerializeField] List<GameObject> _players = new();
     [SerializeField] List<GameObject> _position = new();
     public bool PlaySceneStart;
     private void Update()
