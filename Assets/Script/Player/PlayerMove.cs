@@ -63,11 +63,11 @@ public class PlayerMove : MonoBehaviour
         _speed = _defaultSpeed;
         _slowSpeed = _defaultSpeed / 2;
         _splitSpeed = _defaultSpeed * 2;
+        _gameManager.TurnChangeActionMethod += TurnChecker;
     }
     void Update()
     {
         SpeedController();
-        TurnChecker();
         if (Turn == GameManager.Turn.GamePlay)
         {
             bool jump = Input.GetButtonDown(_jump);

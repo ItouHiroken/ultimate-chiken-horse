@@ -13,11 +13,16 @@ public class CursorStart : MonoBehaviour
     {
         if (SelectSceneStart == true)
         {
-            for (int i = 0; i < Menu._playerNumber; i++)
+            for (int i = 0; i < _cursors.Count; i++)
             {
                 _cursors[i].transform.position = _position[i].transform.position;//カーソルを定位置に移動させる
                 _cursors[i].GetComponent<PlayerCursor>().enabled = true;//カーソルが動くようにする
             }
+            //for (int i = 0; i < Menu._playerNumber; i++)
+            //{
+            //    _cursors[i].transform.position = _position[i].transform.position;//カーソルを定位置に移動させる
+            //    _cursors[i].GetComponent<PlayerCursor>().enabled = true;//カーソルが動くようにする
+            //}
             SelectSceneStart = false;
         }
     }

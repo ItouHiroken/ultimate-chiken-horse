@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3632275895182433236}
   - component: {fileID: 3632275895182433247}
   - component: {fileID: 3632275895182433232}
-  - component: {fileID: 3632275895182433233}
   - component: {fileID: 3632275895182433234}
   - component: {fileID: 3632275895182433235}
   m_Layer: 12
@@ -104,22 +103,8 @@ MonoBehaviour:
   _color1: {r: 1, g: 1, b: 1, a: 0.49803922}
   _color2: {r: 1, g: 1, b: 1, a: 1}
   _gameManager: {fileID: 0}
+  _nowTurn: 2
   _selectImage: {fileID: 0}
---- !u!114 &3632275895182433233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3632275895182433237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ae518b6f231e8c43b15f1e28848d43b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Turn: 0
-  _gameManager: {fileID: 0}
-  _isSelect: 0
 --- !u!114 &3632275895182433234
 MonoBehaviour:
   m_ObjectHideFlags: 0

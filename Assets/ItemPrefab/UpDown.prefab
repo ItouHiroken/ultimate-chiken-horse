@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7394988533070869856}
   - component: {fileID: 7394988533070869860}
   - component: {fileID: 7394988533070869863}
-  - component: {fileID: 7394988533070869862}
   - component: {fileID: 7394988533070869857}
   m_Layer: 12
   m_Name: UpDown
@@ -130,30 +129,14 @@ MonoBehaviour:
   _color1: {r: 1, g: 1, b: 1, a: 0.5058824}
   _color2: {r: 1, g: 1, b: 1, a: 1}
   _gameManager: {fileID: 0}
+  _nowTurn: 2
   _selectImage: {fileID: 0}
   _speed: 0.2
   _distans: 10
-  _manager: {fileID: 0}
-  _turn: 0
   _moveDirection: {x: 1, y: 1, z: 0}
   _moveSeconds: 0
   _kokomade: {x: 0, y: 0}
   nowPosi: 0
---- !u!114 &7394988533070869862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7394988533070869858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ae518b6f231e8c43b15f1e28848d43b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Turn: 0
-  _gameManager: {fileID: 0}
-  _isSelect: 0
 --- !u!114 &7394988533070869857
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1088125471184842473}
   - component: {fileID: 2964571772346376148}
   - component: {fileID: 1088125471184842474}
-  - component: {fileID: 1088125471184842476}
   - component: {fileID: 5876126062805855166}
   m_Layer: 12
   m_Name: Coin
@@ -53,8 +52,8 @@ MonoBehaviour:
   _color1: {r: 1, g: 1, b: 1, a: 0.5764706}
   _color2: {r: 1, g: 1, b: 1, a: 1}
   _gameManager: {fileID: 0}
+  _nowTurn: 2
   _selectImage: {fileID: 0}
-  nowTurn: 0
   _isCollision: 0
   _flag: 0
   _isUsed: 0
@@ -147,21 +146,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1088125471184842476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1088125471184842470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ae518b6f231e8c43b15f1e28848d43b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Turn: 0
-  _gameManager: {fileID: 0}
-  _isSelect: 0
 --- !u!114 &5876126062805855166
 MonoBehaviour:
   m_ObjectHideFlags: 0

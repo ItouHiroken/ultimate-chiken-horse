@@ -24,14 +24,16 @@ public class GameManager : MonoBehaviour
 {
     [Header("この世の総てを司る最強Enumくん")]
     public Turn NowTurn;
-
+    [Tooltip("ターンチェンジするときのアクションデリゲート")]
+    public delegate void TurnChangeAction();
+    public TurnChangeAction TurnChangeActionMethod = default;
     [Header("インスタンスしたいものたち")]
     [SerializeField, Tooltip("カーソルたち")] List<GameObject> _cursolList = new();
     [SerializeField, Tooltip("プレイヤーたち")] List<GameObject> _playerList = new();
-    [SerializeField, Tooltip("boolを渡したい")] GameObject _startingPoint;
-    [SerializeField, Tooltip("boolを渡したい")] GameObject _resetCursorPoint;
-    [SerializeField, Tooltip("boolを渡したい")] GameObject _summonItem;
-    [SerializeField, Tooltip("boolを渡したい")] GameObject _goal;
+    [SerializeField, Tooltip("boolを渡したい")] StartingPoint _startingPoint;
+    [SerializeField, Tooltip("boolを渡したい")] CursorStart _resetCursorPoint;
+    [SerializeField, Tooltip("boolを渡したい")] SummonItem _summonItem;
+    [SerializeField, Tooltip("boolを渡したい")] Goal _goal;
     [SerializeField, Tooltip("boolを渡したい")] CinemachineGroup _cinemachineGroup;
     [SerializeField, Tooltip("リザルトのプレイヤーの勝利キャンバス")] List<Canvas> _playerCanvas = new();
     [SerializeField, Tooltip("リザルトターンの時のキャンバス")] Canvas _result;
@@ -71,6 +73,7 @@ public class GameManager : MonoBehaviour
     }
     public void TurnChange()
     {
+        Debug.Log("さっきは"+NowTurn);
         switch (NowTurn)
         {
             ///Play→Result
@@ -78,9 +81,11 @@ public class GameManager : MonoBehaviour
                 //リザルトのキャンバスをtrue
                 _result.gameObject.SetActive(true);
                 //リザルトターンの時間を制御する
-                Invoke(nameof(TurnChange), _resultTime);
+                //発表会用で消してる↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+                //Invoke(nameof(TurnChange), _resultTime);
                 //今のターンをリザルトターンに切り替える
                 NowTurn = GameManager.Turn.Result;
+                TurnChangeActionMethod();
                 break;
 
             ///Result→Select
@@ -117,9 +122,11 @@ public class GameManager : MonoBehaviour
                         NowTurn = GameManager.Turn.GameEnd;
                         Debug.Log("GameEnd");
                         _playerCanvas[i].gameObject.SetActive(true);
+                        TurnChangeActionMethod();
                         break;
                     }
                 }
+                TurnChangeActionMethod();
                 break;
             ///Select→Set
             case Turn.SelectItem://Select終わりの時
@@ -132,10 +139,12 @@ public class GameManager : MonoBehaviour
                 //選んだアイテムたちをfalse
                 for (int i = 0; i < ChoiceList.Count; i++)
                 {
+                    if (!ChoiceList[i]) { break; }
                     ChoiceList[i].SetActive(true);
                 }
                 //今のターンをアイテム設置ターンに切り替える
                 NowTurn = GameManager.Turn.SetItem;
+                TurnChangeActionMethod();
                 break;
 
             ///Set→Play
@@ -155,14 +164,16 @@ public class GameManager : MonoBehaviour
                 _itemTurnCamera.SetActive(false);
                 //今のターンをプレイターンに切り替える
                 NowTurn = GameManager.Turn.GamePlay;
+                TurnChangeActionMethod();
                 break;
             case Turn.GameEnd:
-
+                TurnChangeActionMethod();
                 break;
 
             default:
                 break;
         }
+        Debug.Log("今は"+NowTurn);
     }
     /// <summary>
     /// 今のターンです

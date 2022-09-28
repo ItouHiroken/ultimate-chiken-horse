@@ -13,12 +13,21 @@ public class StartingPoint : MonoBehaviour
     {
         if (PlaySceneStart == true)
         {
-            for (int i = 0; i < Menu._playerNumber; i++)
+
+            //デバッグ用
+            for (int i = 0; i < _players.Count; i++)
             {
                 _players[i].GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);//速度を一回0にする
                 _players[i].transform.position = _position[i].transform.position;//プレイヤーを定位置に置く
                 _players[i].GetComponent<PlayerMove>().enabled = true;//プレイヤーが動けるようにする
             }
+
+            //for (int i = 0; i < Menu._playerNumber; i++)
+            //{
+            //    _players[i].GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);//速度を一回0にする
+            //    _players[i].transform.position = _position[i].transform.position;//プレイヤーを定位置に置く
+            //    _players[i].GetComponent<PlayerMove>().enabled = true;//プレイヤーが動けるようにする
+            //}
             PlaySceneStart = false;
         }
     }

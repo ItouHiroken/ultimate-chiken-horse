@@ -10,7 +10,6 @@ public class Guruguru : ItemBase
     [SerializeField]float _kaitenSpeed;
     protected new void Update()
     {
-        base.TurnChecker();
         if(base._nowTurn==GameManager.Turn.GamePlay)
         {
             Mawaru();

@@ -508,8 +508,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5748d0d454f25e49951c2e05d0559ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cursors: []
-  _position: []
+  _cursors:
+  - {fileID: 1113396832}
+  - {fileID: 1550497215}
+  - {fileID: 1896357095}
+  - {fileID: 804740863}
+  _position:
+  - {fileID: 1276793020}
+  - {fileID: 1056944236}
+  - {fileID: 1930513166}
+  - {fileID: 2126958247}
   SelectSceneStart: 0
 --- !u!1 &91113958
 GameObject:
@@ -583,7 +591,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -295
   m_Sprite: {fileID: 21300000, guid: 7531ee5749d7b3c41a9c675fd9e784e9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -8409,10 +8417,10 @@ MonoBehaviour:
   - {fileID: 1783321858}
   - {fileID: 655970512}
   - {fileID: 1027927707}
-  _startingPoint: {fileID: 2040222814}
-  _resetCursorPoint: {fileID: 73469038}
-  _summonItem: {fileID: 515958655}
-  _goal: {fileID: 1316280470}
+  _startingPoint: {fileID: 2040222816}
+  _resetCursorPoint: {fileID: 73469040}
+  _summonItem: {fileID: 515958657}
+  _goal: {fileID: 1316280475}
   _cinemachineGroup: {fileID: 424380400}
   _playerCanvas:
   - {fileID: 1120440516}
@@ -11175,7 +11183,7 @@ MonoBehaviour:
   _right: 42
   _isFollowing: 0
   _overlapItem: {fileID: 0}
-  _gameManager: {fileID: 336041240}
+  _gameManager: {fileID: 336041242}
   Turn: 0
   _audioSource: {fileID: 804740869}
   _choiceSound: {fileID: 8300000, guid: 59d47fd7fe1ee9445b5aff5ee3a0ffb0, type: 3}
@@ -11635,7 +11643,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -137
   m_Sprite: {fileID: 21300000, guid: 9cd9401400962034eb249e1823bc1917, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -13166,7 +13174,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1096
   m_Sprite: {fileID: 21300000, guid: 7531ee5749d7b3c41a9c675fd9e784e9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -13756,7 +13764,7 @@ MonoBehaviour:
   _right: 42
   _isFollowing: 0
   _overlapItem: {fileID: 0}
-  _gameManager: {fileID: 336041240}
+  _gameManager: {fileID: 336041242}
   Turn: 0
   _audioSource: {fileID: 1113396838}
   _choiceSound: {fileID: 8300000, guid: 59d47fd7fe1ee9445b5aff5ee3a0ffb0, type: 3}
@@ -15452,12 +15460,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GoalPlayers: []
-  _gameManager: {fileID: 336041240}
+  _gameManager: {fileID: 336041242}
   _players:
-  - {fileID: 1982765601}
-  - {fileID: 1783321858}
-  - {fileID: 655970512}
-  - {fileID: 1027927707}
+  - {fileID: 1982765609}
+  - {fileID: 1783321863}
+  - {fileID: 655970517}
+  - {fileID: 1027927712}
   _pointManager: {fileID: 1658719276}
 --- !u!1 &1347982949
 GameObject:
@@ -16904,7 +16912,7 @@ MonoBehaviour:
   _right: 42
   _isFollowing: 0
   _overlapItem: {fileID: 0}
-  _gameManager: {fileID: 336041240}
+  _gameManager: {fileID: 336041242}
   Turn: 0
   _audioSource: {fileID: 1550497221}
   _choiceSound: {fileID: 8300000, guid: 59d47fd7fe1ee9445b5aff5ee3a0ffb0, type: 3}
@@ -17737,10 +17745,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _goal: {fileID: 1316280475}
   _players:
-  - {fileID: 1982765601}
-  - {fileID: 1783321858}
-  - {fileID: 655970512}
-  - {fileID: 1027927707}
+  - {fileID: 1982765609}
+  - {fileID: 1783321863}
+  - {fileID: 655970517}
+  - {fileID: 1027927712}
   _sliders:
   - {fileID: 1621188639}
   - {fileID: 618594819}
@@ -19289,7 +19297,7 @@ MonoBehaviour:
   _right: 42
   _isFollowing: 0
   _overlapItem: {fileID: 0}
-  _gameManager: {fileID: 336041240}
+  _gameManager: {fileID: 336041242}
   Turn: 0
   _audioSource: {fileID: 1896357101}
   _choiceSound: {fileID: 8300000, guid: 59d47fd7fe1ee9445b5aff5ee3a0ffb0, type: 3}

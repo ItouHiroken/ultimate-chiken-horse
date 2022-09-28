@@ -11,7 +11,7 @@ public class PointManager : MonoBehaviour
 {
     [Header("インスタンスしたいもの")]
     [SerializeField, Tooltip("Goalのゴールした人数を使いたい")] Goal _goal;
-    [SerializeField, Tooltip("プレイヤーのリスト")] List<GameObject> _players = new();
+    [SerializeField, Tooltip("プレイヤーのリスト")] List<PlayerMove> _players = new();
     [SerializeField, Tooltip("スライダーのリスト")] List<Slider> _sliders = new();
     [SerializeField, Tooltip("スライダーの変化時間")] float _changeValueInterval;
 
@@ -25,7 +25,7 @@ public class PointManager : MonoBehaviour
             //点数計算後にプレイヤーがわかるようにスライダーを動かす
             for (int i = 0; i < _players.Count; i++)
             {
-                ChangeSliderValue(_sliders[i], _players[i].GetComponent<PlayerMove>()._scorePoint);
+                ChangeSliderValue(_sliders[i], _players[i]._scorePoint);
             }
             //ゴールプレイヤーのリストのクリア
             _goal.GoalPlayers.Clear();
@@ -45,45 +45,45 @@ public class PointManager : MonoBehaviour
             {
                 //ゴールしたかどうか判定
                 //していなかった場合点数なし
-                if (_players[i].GetComponent<PlayerMove>().Score.HasFlag(GetScore.isGoal))
+                if (_players[i].Score.HasFlag(GetScore.isGoal))
                 {
                     //死んでいるか判定
                     //死んでいた場合点数は少ししかもらえない
-                    if (_players[i].GetComponent<PlayerMove>().Score.HasFlag(GetScore.Death))
+                    if (_players[i].Score.HasFlag(GetScore.Death))
                     {
-                        _players[i].GetComponent<PlayerMove>()._scorePoint += 10;
-                        Debug.Log(_players[i].name + "のScore状態は" + _players[i].GetComponent<PlayerMove>().Score);
-                        _players[i].GetComponent<PlayerMove>().Score = 0;
+                        _players[i]._scorePoint += 10;
+                        Debug.Log(_players[i].name + "のScore状態は" + _players[i].Score);
+                        _players[i].Score = 0;
                     }
                     else
                     {
                         //ゴールした時のポイント デス判定があるからここに書いた
-                        _players[i].GetComponent<PlayerMove>()._scorePoint += 20;
+                        _players[i]._scorePoint += 20;
                         //一位判定
-                        if (_players[i].GetComponent<PlayerMove>().Score.HasFlag(GetScore.First))
+                        if (_players[i].Score.HasFlag(GetScore.First))
                         {
-                            _players[i].GetComponent<PlayerMove>()._scorePoint += 10;
+                            _players[i]._scorePoint += 10;
                         }
                         //一人だけゴール判定
-                        else if (_players[i].GetComponent<PlayerMove>().Score.HasFlag(GetScore.Solo))
+                        else if (_players[i].Score.HasFlag(GetScore.Solo))
                         {
-                            _players[i].GetComponent<PlayerMove>()._scorePoint += 20;
+                            _players[i]._scorePoint += 20;
                         }
                         //コイン判定
-                        if (_players[i].GetComponent<PlayerMove>().Score.HasFlag(GetScore.Coin))
+                        if (_players[i].Score.HasFlag(GetScore.Coin))
                         {
-                            _players[i].GetComponent<PlayerMove>()._scorePoint += 15;
+                            _players[i]._scorePoint += 15;
                         }
-                        Debug.Log(_players[i].name + "のScore状態は" + _players[i].GetComponent<PlayerMove>().Score);
-                        _players[i].GetComponent<PlayerMove>().Score = 0;
+                        Debug.Log(_players[i].name + "のScore状態は" + _players[i].Score);
+                        _players[i].Score = 0;
                     }
                 }
                 else
                 {
-                    Debug.Log(_players[i].name + "のScore状態は" + _players[i].GetComponent<PlayerMove>().Score);
+                    Debug.Log(_players[i].name + "のScore状態は" + _players[i].Score);
                     _players[i].GetComponent<PlayerMove>().Score = 0;
                 }
-                Debug.Log(_players[i].name + "のポイントは" + _players[i].GetComponent<PlayerMove>()._scorePoint);
+                Debug.Log(_players[i].name + "のポイントは" + _players[i]._scorePoint);
             }
         }
     }

@@ -29,7 +29,6 @@ public class Bomb : ItemBase
     protected new void Update()
     {
         base.Update();
-        base.TurnChecker();
         UseBomb();
     }
     /// <summary>

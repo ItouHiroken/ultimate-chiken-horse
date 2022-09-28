@@ -18,7 +18,6 @@ public class Turret : ItemBase
     }
     protected new void Update()
     {
-        base.TurnChecker();
         base.Update();
         if (base._nowTurn == GameManager.Turn.GamePlay&&gameObject.CompareTag("isChoice"))
         {

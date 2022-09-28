@@ -22,7 +22,6 @@ public class UpDown: ItemBase
     protected new void Update()
     {
         base.Update();
-        base.TurnChecker();
         if (_nowTurn == GameManager.Turn.GamePlay)
         {
             Move();

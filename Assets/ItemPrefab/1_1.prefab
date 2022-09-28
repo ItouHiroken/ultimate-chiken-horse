@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8320102934500330113}
   - component: {fileID: 8320102934500330115}
   - component: {fileID: 8320102934500330116}
-  - component: {fileID: 8320102934500330119}
   - component: {fileID: 8320102934500330117}
   - component: {fileID: 8320102934500330118}
   - component: {fileID: 8320102934500330114}
@@ -102,21 +101,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _kaitenIndex: 0
---- !u!114 &8320102934500330119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8320102934500330112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ae518b6f231e8c43b15f1e28848d43b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Turn: 0
-  _gameManager: {fileID: 0}
-  _isSelect: 0
 --- !u!114 &8320102934500330117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,6 +117,7 @@ MonoBehaviour:
   _color1: {r: 1, g: 1, b: 1, a: 0.49411765}
   _color2: {r: 1, g: 1, b: 1, a: 1}
   _gameManager: {fileID: 0}
+  _nowTurn: 2
   _selectImage: {fileID: 0}
 --- !u!58 &8320102934500330118
 CircleCollider2D:

@@ -15,16 +15,20 @@ public abstract class ItemBase : MonoBehaviour
     [SerializeField] Color _color1;
     [SerializeField] Color _color2;
     [SerializeField] protected GameManager _gameManager;
-    [SerializeField] protected GameManager.Turn _nowTurn;
+    [SerializeField] protected GameManager.Turn _nowTurn = GameManager.Turn.SelectItem;
     [SerializeField] protected GameObject _selectImage;
     protected void Start()
     {
         _gameManager = GameObject.FindGameObjectWithTag("GameManager").gameObject.GetComponent<GameManager>();
+        _gameManager.TurnChangeActionMethod += TurnChecker;
+        _nowTurn = GameManager.Turn.SelectItem;
+        Debug.Log("“ü‚Á‚½‚æ");
     }
     protected void Update()
     {
         if (_nowTurn == GameManager.Turn.SetItem && gameObject.tag != "isChoice")
         {
+            _gameManager.TurnChangeActionMethod -= TurnChecker;
             Destroy(gameObject);
         }
         if (gameObject.CompareTag("isChoice"))

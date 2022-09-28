@@ -10,9 +10,11 @@ public class SummonItem : MonoBehaviour
     [Header("インスタンスしたいもの")]
     [SerializeField, Tooltip("作ったアイテムをここに入れる、アイテムリセットするときにコピーする用")] List<GameObject> itemPrefabs;
     [SerializeField, Tooltip("召喚場所")] List<GameObject> SummonPositionList;
+    
     [Header("見たいだけ")]
     [SerializeField, Tooltip("召喚アイテムリスト")]  List<GameObject> useList = new List<GameObject>();
     [SerializeField, Tooltip("アイテム召喚用リスト")] List<GameObject> myList;
+   
     [Header("他のところに渡したい")]
     [Tooltip("ゲームマネージャーの指令")] public bool _isChoiceItem;
     private void Update()

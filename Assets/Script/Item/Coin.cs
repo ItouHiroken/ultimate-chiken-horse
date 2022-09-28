@@ -5,7 +5,6 @@ using DG.Tweening;
 
 public class Coin : ItemBase
 {
-    [SerializeField] GameManager.Turn nowTurn;
     GameObject _collisionPlayer;
     [SerializeField] bool _isCollision = false;
     [SerializeField] bool _flag;
@@ -18,19 +17,17 @@ public class Coin : ItemBase
         base.Update();
         if (!_isUsed)
         {
-            base.TurnChecker();
-
-            if (nowTurn == GameManager.Turn.GamePlay)
+            if (_nowTurn == GameManager.Turn.GamePlay)
             {
                 _circleCollider.isTrigger = true;
                 gameObject.tag = "Coin";
             }
             else { _circleCollider.isTrigger = false; }
-            if (nowTurn == GameManager.Turn.GamePlay && _isCollision)
+            if (_nowTurn == GameManager.Turn.GamePlay && _isCollision)
             {
                 UpDown();
             }
-            if (nowTurn == GameManager.Turn.GamePlay && _isCollision && _flag)
+            if (_nowTurn == GameManager.Turn.GamePlay && _isCollision && _flag)
             {
                 if (_collisionPlayer != null)
                 {
@@ -49,13 +46,13 @@ public class Coin : ItemBase
    protected new void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
-        if (!_isCollision && nowTurn == GameManager.Turn.GamePlay)
+        if (!_isCollision && _nowTurn == GameManager.Turn.GamePlay)
         {
             _collisionPlayer = collision.gameObject;
             _isCollision = true;
         }
 
-        if (nowTurn == GameManager.Turn.GamePlay && collision.gameObject.name == "Goal")
+        if (_nowTurn == GameManager.Turn.GamePlay && collision.gameObject.name == "Goal")
         {
             _isUsed = true;
             this.gameObject.transform.position = new Vector3(1000,1000,1000);

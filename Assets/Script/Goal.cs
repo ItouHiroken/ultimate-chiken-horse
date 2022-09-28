@@ -11,8 +11,8 @@ using UnityEngine;
 public class Goal : MonoBehaviour
 {
     [Tooltip("ポイントマネージャーに渡すゴール順番リスト")] public List<GameObject> GoalPlayers = new List<GameObject>(Menu._playerNumber);
-    [SerializeField,Tooltip("ゲームマネージャー")] GameObject _gameManager;
-    [SerializeField,Tooltip("プレイヤーのリスト")] List<GameObject> _players;
+    [SerializeField, Tooltip("ゲームマネージャー")] GameManager _gameManager;
+    [SerializeField, Tooltip("プレイヤーのリスト")] List<PlayerMove> _players;
     [Tooltip("ターンチェンジの関数使いたいからとってくる")] GameManager _gameManagerScript;
     [SerializeField] PointManager _pointManager;
     void Start()
@@ -22,16 +22,16 @@ public class Goal : MonoBehaviour
 
     void Update()
     {
-        if (_gameManager.GetComponent<GameManager>().NowTurn == GameManager.Turn.GamePlay)
+        if (_gameManagerScript.NowTurn == GameManager.Turn.GamePlay)
         {
             //４人のプレイヤーが全員ゴールまたはデス状態になったら、
             //一人だけゴールしたかどうかのチェック
             //一位のチェック
             //全員ゴールしてるかのチェックをする
-            if ((_players[0].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || _players[0].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
-            && (_players[1].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || _players[1].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
-            && (_players[2].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || _players[2].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death))
-            && (_players[3].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.isGoal) || _players[3].GetComponent<PlayerMove>().Score.HasFlag(PlayerState.GetScore.Death)))
+            if ((_players[0].Score.HasFlag(PlayerState.GetScore.isGoal) || _players[0].Score.HasFlag(PlayerState.GetScore.Death))
+            && (_players[1].Score.HasFlag(PlayerState.GetScore.isGoal) || _players[1].Score.HasFlag(PlayerState.GetScore.Death))
+            && (_players[2].Score.HasFlag(PlayerState.GetScore.isGoal) || _players[2].Score.HasFlag(PlayerState.GetScore.Death))
+            && (_players[3].Score.HasFlag(PlayerState.GetScore.isGoal) || _players[3].Score.HasFlag(PlayerState.GetScore.Death)))
             {
                 switch (GoalPlayers.Count)
                 {
@@ -58,7 +58,7 @@ public class Goal : MonoBehaviour
                 //ここで得点Enumを変更した後にポイントマネージャーに点数確認してもらう
                 _pointManager._isCheck = true;
                 //ターンの切り替え  
-                _gameManager.GetComponent<GameManager>().TurnChange();
+                _gameManager.TurnChange();
             }
         }
     }
